@@ -1,0 +1,26 @@
+{
+  "step_1_fundq_rows": 753594,
+  "step_2_gap_filtered_rows": 740523,
+  "step_3_rolling_features_rows": 740523,
+  "step_3_gap_var_t_notnull": 639604,
+  "step_3_gap_dev_t_notnull": 639604,
+  "step_4_post_dropna_rows": 639604,
+  "step_5_post_ccm_bridge_rows": 639604,
+  "step_5_cusip8_notnull": 639604,
+  "step_5_ff12_unique": 12,
+  "step_6_post_nt_exclusion_rows": 620290,
+  "gap_var_t_quantiles": {
+    "q01": 0.8345229603962795,
+    "q25": 5.936168397046637,
+    "q50": 12.153041947242205,
+    "q75": 19.715385580085123,
+    "q99": 44.1892807777129
+  },
+  "gap_dev_t_quantiles": {
+    "q01": -18.5,
+    "q25": -1.5,
+    "q50": 0.0,
+    "q75": 5.0,
+    "q99": 61.5
+  }
+}

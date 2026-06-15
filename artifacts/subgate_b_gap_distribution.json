@@ -1,0 +1,45 @@
+{
+  "subgate": "(b) rdq-datadate gap distribution GRADUATED",
+  "verdict": "PASS",
+  "thresholds": {
+    "PASS_median_range": [
+      25,
+      90
+    ],
+    "PASS_yield_floor": 0.7,
+    "BORDERLINE_median_range": [
+      20,
+      100
+    ],
+    "BORDERLINE_yield_floor": 0.6,
+    "gap_filter_window_days": [
+      10,
+      180
+    ]
+  },
+  "n_rows_raw": 2116530,
+  "n_rows_post_indl_std_c_d_usd": 1882379,
+  "n_rows_post_rdq_notna": 1218911,
+  "n_rows_period_1999_2024": 753594,
+  "n_firms_pre_filter": 21897,
+  "n_firms_post_filter": 21680,
+  "n_rows_post_gap_filter": 740523,
+  "median_days": 39.0,
+  "mean_days": 47.618315697842604,
+  "std_days": 53.03539146159381,
+  "pct_in_filter_window": 0.9826551166808652,
+  "pct_neg_gap": 0.00012473560033652073,
+  "pct_zero_gap": 9.686913643155333e-05,
+  "pct_over_365d": 0.004547541514396346,
+  "quantiles": {
+    "q01": 14.0,
+    "q05": 19.0,
+    "q10": 22.0,
+    "q25": 29.0,
+    "q50": 39.0,
+    "q75": 47.0,
+    "q90": 79.0,
+    "q95": 95.0,
+    "q99": 247.0
+  }
+}

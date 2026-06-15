@@ -1,0 +1,17 @@
+{
+  "subgate": "(c) V5 SEC Form NT differentiation 3-axis + NT-proxy exclusion",
+  "method": "gap-based proxy (no SEC EDGAR offline; Rule 6 compliant)",
+  "thresholds": {
+    "non_annual_gap_threshold_days": 75,
+    "annual_gap_threshold_days": 100
+  },
+  "n_total_firm_q": 740523,
+  "n_nt_proxy_firm_q": 29864,
+  "pct_nt_proxy_firm_q": 4.033,
+  "n_after_nt_exclusion": 710659,
+  "pct_retained_after_exclusion": 95.967,
+  "n_firms_with_any_nt_proxy_q": 11056,
+  "n_firms_total": 21680,
+  "pct_firms_touched_by_nt_proxy": 50.996,
+  "exclusion_pool_csv": "d:/vscode/us_compustat_rdq_recognition_timing_xs/artifacts/subgate_c_nt_proxy_exclusion_pool.csv.gz"
+}

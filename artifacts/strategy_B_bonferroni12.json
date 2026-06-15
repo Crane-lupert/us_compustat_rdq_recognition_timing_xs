@@ -1,0 +1,26 @@
+{
+  "strategy": "B - within-firm rolling baseline deviation XS (RD7)",
+  "verdict_bonferroni_12": "KILL",
+  "pass_count_of_12": 0,
+  "threshold_t": 2.78,
+  "n_panel_rows": 620290,
+  "n_panel_with_returns": 371847,
+  "lds": {
+    "axes": {
+      "1_signal_well_defined": 1,
+      "2_sample_size_sufficient": 1,
+      "3_bonferroni_pass_floor": 0,
+      "4_sign_majority_correct": 0,
+      "5_horizon_robustness": 0,
+      "6_subcell_diversity": 0,
+      "7_anchor_post_pub_decay_resilience": 0
+    },
+    "score": 2,
+    "max": 7,
+    "verdict": "PRACTITIONER-PAPER-ONLY",
+    "pass_cells": 0,
+    "sign_correct_cells": 5,
+    "paper_practical_ok": false
+  },
+  "cells_csv": "d:/vscode/us_compustat_rdq_recognition_timing_xs/artifacts/strategy_B_bonferroni12.csv"
+}

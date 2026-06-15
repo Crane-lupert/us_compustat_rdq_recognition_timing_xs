@@ -1,0 +1,28 @@
+{
+  "strategy": "A - rdq-datadate gap variance XS (RD1)",
+  "verdict_bonferroni_12": "PASS",
+  "pass_count_of_12": 4,
+  "threshold_t": 2.78,
+  "n_panel_rows": 620290,
+  "n_panel_with_returns": 371847,
+  "n_cells_pass": 4,
+  "n_cells_borderline_floor": 2,
+  "n_cells_kill_max": 1,
+  "lds": {
+    "axes": {
+      "1_signal_well_defined": 1,
+      "2_sample_size_sufficient": 1,
+      "3_bonferroni_pass_floor": 1,
+      "4_sign_majority_correct": 1,
+      "5_horizon_robustness": 0,
+      "6_subcell_diversity": 1,
+      "7_anchor_post_pub_decay_resilience": 1
+    },
+    "score": 6,
+    "max": 7,
+    "verdict": "LIVE-DEPLOYABLE-STRONG",
+    "pass_cells": 4,
+    "sign_correct_cells": 12
+  },
+  "cells_csv": "d:/vscode/us_compustat_rdq_recognition_timing_xs/artifacts/strategy_A_bonferroni12.csv"
+}

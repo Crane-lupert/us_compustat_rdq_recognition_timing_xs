@@ -1,0 +1,16 @@
+{
+  "subgate": "(d) RD1 vs RD7 rho redundancy BINARY",
+  "verdict": "PASS",
+  "threshold": 0.85,
+  "max_abs_rho": 0.2577886024358643,
+  "decoupling_margin_to_threshold": 0.5922113975641357,
+  "rhos": {
+    "pearson_raw": 0.06593427635009678,
+    "spearman_raw": -0.013464412392060195,
+    "pearson_abs_gap_dev": 0.2577886024358643,
+    "spearman_abs_gap_dev": 0.17372000459068102
+  },
+  "n_observations": 620290,
+  "panel_path": "d:/vscode/us_compustat_rdq_recognition_timing_xs/artifacts/panel_post_nt_excl.parquet",
+  "note": "\u03c1 \u2265 0.85 on any of 4 axes \u2192 KILL (drop Strategy B); \u03c1 < 0.85 on all 4 axes \u2192 PASS (retain both)"
+}
