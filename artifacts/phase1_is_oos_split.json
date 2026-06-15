@@ -1,0 +1,59 @@
+{
+  "phase": 1,
+  "step": 1,
+  "day": 1,
+  "generated_utc": "2026-06-15T20:28:08.191108+00:00",
+  "lock_d_section_3": "IS 1999-01-01..2016-12-31 / OOS 2017-01-01..2024-12-31",
+  "source": {
+    "path": "d:/vscode/us_compustat_rdq_recognition_timing_xs/artifacts/panel_with_returns.parquet",
+    "rows": 620290,
+    "sha256": "4e83a37590699baa6286c4712e99b5c2b4d4cf46009f287f530480e5fa649c31"
+  },
+  "is_partition": {
+    "path": "d:/vscode/us_compustat_rdq_recognition_timing_xs/artifacts/panel_is.parquet",
+    "rows": 436916,
+    "sha256": "c2929544d0a1f818be0b6e5193636cd3c3edac178a846fcbf75283473e84924e",
+    "n_with_returns": 245198,
+    "year_counts": {
+      "2000": 13522,
+      "2001": 32171,
+      "2002": 32047,
+      "2003": 30449,
+      "2004": 29135,
+      "2005": 28231,
+      "2006": 27300,
+      "2007": 26518,
+      "2008": 25968,
+      "2009": 25170,
+      "2010": 24371,
+      "2011": 23871,
+      "2012": 23573,
+      "2013": 23492,
+      "2014": 23749,
+      "2015": 23991,
+      "2016": 23358
+    }
+  },
+  "oos_partition": {
+    "path": "d:/vscode/us_compustat_rdq_recognition_timing_xs/artifacts/panel_oos.parquet",
+    "rows": 178210,
+    "sha256": "b5d039bc0892a9cd4fc91481de6f3ffd1a397840fab6029c1756c6c05cdb76e6",
+    "n_with_returns": 122527,
+    "year_counts": {
+      "2017": 22601,
+      "2018": 22059,
+      "2019": 21797,
+      "2020": 21184,
+      "2021": 21694,
+      "2022": 22872,
+      "2023": 23405,
+      "2024": 22598
+    },
+    "sealed_until": "Day 4 (STEP 4) \u2014 strategy_A_bonferroni verbatim"
+  },
+  "excluded": {
+    "pre_1999": 0,
+    "post_2024": 5164
+  },
+  "row_balance_check": true
+}
