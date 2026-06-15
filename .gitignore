@@ -1,0 +1,67 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual envs
+.venv/
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Data (local cache — never commit raw WRDS dumps)
+data/raw/
+data/interim/
+data/processed/
+*.parquet
+*.csv.gz
+*.csv
+!_vendored/asof_manifest/*.json
+!data/asof-manifest/*.json
+
+# Logs + temp
+*.log
+*.tmp
+.tmp/
+state/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Secrets — never commit credentials
+.env
+.env.*
+!.env.example
+*.pgpass
+credentials.json
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Pytest
+.pytest_cache/
+.coverage
+htmlcov/
+
+# mypy / ruff
+.mypy_cache/
+.ruff_cache/
