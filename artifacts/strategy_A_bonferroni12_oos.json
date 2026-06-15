@@ -1,0 +1,39 @@
+{
+  "strategy": "A - rdq-datadate gap variance XS (RD1)",
+  "phase": 1,
+  "step": 4,
+  "day": 4,
+  "partition": "OOS (2017-01-01..2024-12-31) -- SEAL BROKEN",
+  "input_panel": "d:/vscode/us_compustat_rdq_recognition_timing_xs/artifacts/panel_oos.parquet",
+  "n_panel_rows": 178210,
+  "n_panel_with_returns": 122527,
+  "verdict_bonferroni_12_oos": "KILL",
+  "pass_count_of_12_oos": 0,
+  "primary_cells": [
+    "A120-LH",
+    "A120-SH",
+    "A180-LH",
+    "A180-SL"
+  ],
+  "primary_pass_count_of_4": 0,
+  "primary_verdict": "PAPER-PRACTICAL-ONLY",
+  "k2_status": "K2 FIRES",
+  "threshold_t": 2.78,
+  "lds_oos": {
+    "axes": {
+      "1_signal_well_defined": 1,
+      "2_sample_size_sufficient": 1,
+      "3_bonferroni_pass_floor": 0,
+      "4_sign_majority_correct": 1,
+      "5_horizon_robustness": 0,
+      "6_subcell_diversity": 0,
+      "7_anchor_post_pub_decay_resilience": 0
+    },
+    "score": 3,
+    "max": 7,
+    "verdict": "PRACTITIONER-PAPER-ONLY",
+    "pass_cells": 0,
+    "sign_correct_cells": 11
+  },
+  "cells_csv": "d:/vscode/us_compustat_rdq_recognition_timing_xs/artifacts/strategy_A_bonferroni12_oos.csv"
+}
