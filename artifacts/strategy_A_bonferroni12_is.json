@@ -1,0 +1,39 @@
+{
+  "strategy": "A - rdq-datadate gap variance XS (RD1)",
+  "phase": 1,
+  "step": 2,
+  "day": 2,
+  "partition": "IS (1999-01-01..2016-12-31)",
+  "input_panel": "d:/vscode/us_compustat_rdq_recognition_timing_xs/artifacts/panel_is.parquet",
+  "n_panel_rows": 436916,
+  "n_panel_with_returns": 245198,
+  "verdict_bonferroni_12_is": "PASS",
+  "pass_count_of_12_is": 4,
+  "primary_cells": [
+    "A120-LH",
+    "A120-SH",
+    "A180-LH",
+    "A180-SL"
+  ],
+  "primary_pass_count_of_4": 3,
+  "primary_halt_floor": 3,
+  "primary_verdict": "PASS",
+  "threshold_t": 2.78,
+  "lds_is": {
+    "axes": {
+      "1_signal_well_defined": 1,
+      "2_sample_size_sufficient": 1,
+      "3_bonferroni_pass_floor": 1,
+      "4_sign_majority_correct": 1,
+      "5_horizon_robustness": 1,
+      "6_subcell_diversity": 1,
+      "7_anchor_post_pub_decay_resilience": 1
+    },
+    "score": 7,
+    "max": 7,
+    "verdict": "LIVE-DEPLOYABLE-STRONG",
+    "pass_cells": 4,
+    "sign_correct_cells": 12
+  },
+  "cells_csv": "d:/vscode/us_compustat_rdq_recognition_timing_xs/artifacts/strategy_A_bonferroni12_is.csv"
+}
