@@ -1,0 +1,39 @@
+{
+  "phase": 1,
+  "step": 5,
+  "day": 5,
+  "axis": "(a) sector concentration on OOS (paper anchor; K3 moot since K2 fired)",
+  "lock_d_section_5_per_cell": {
+    "A120-LH": {
+      "criterion": "BusEq AND Hlth both sign-correct positive",
+      "buseq_mu_spread": 0.04318195491490694,
+      "buseq_pos": true,
+      "hlth_mu_spread": 0.05670751576113779,
+      "hlth_pos": true,
+      "passes_lock_d_5": true
+    },
+    "A120-SH": {
+      "criterion": "BusEq AND Hlth both sign-correct positive",
+      "buseq_mu_spread": 0.06604749062104476,
+      "buseq_pos": true,
+      "hlth_mu_spread": 0.06728084440784943,
+      "hlth_pos": true,
+      "passes_lock_d_5": true
+    },
+    "A180-LH": {
+      "criterion": "BusEq AND Hlth both sign-correct positive",
+      "buseq_mu_spread": 0.05063161171014062,
+      "buseq_pos": true,
+      "hlth_mu_spread": 0.10653379485591184,
+      "hlth_pos": true,
+      "passes_lock_d_5": true
+    },
+    "A180-SL": {
+      "criterion": ">=6 of 9 low-tilt sectors sign-correct positive",
+      "n_low_tilt_pos": 5,
+      "n_low_tilt_present": 9,
+      "passes_lock_d_5": false
+    }
+  },
+  "sector_csv": "d:/vscode/us_compustat_rdq_recognition_timing_xs/artifacts/strategy_A_sector_oos.csv"
+}
