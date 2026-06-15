@@ -1,10 +1,23 @@
 # us_compustat_rdq_recognition_timing_xs
 
 **ID**: RD1-merged-RD7
-**Status**: Phase 0 entry — **LAUNCH-with-tag MERGE 2-strategy paper-practical**
+**Status**: **Phase 1 CLOSED — paper-practical PARTIAL** (K2 fired Day 4 OOS reveal; LAYER A LOCK denied)
 **Date**: 2026-06-16
 **Iter**: 22 (user-origin "WRDS fundamental data × market participant recognition timing")
 **Project type (Gate G)**: methodology/discovery — `reports/papers/` lane
+
+## Phase 1 close summary (2026-06-16)
+
+- **Outcome**: paper-practical (Phase 1 outcome taxonomy bucket 2). Compustat-Recognition-Timing pod 1st LOCKED slot NOT CLAIMED.
+- **IS Bonferroni-12 (1999-2016)**: 4/12 PASS, primary 3/4 PASS (HALT floor met).
+- **OOS Bonferroni-12 (2017-2024)**: 0/12 PASS, primary 0/4 (K2 fires). 11/12 sign-correct OOS.
+- **Sector OOS (Lock D §5)**: 3/4 PASS (3 high-tilt; A180-SL 5/9 FAIL).
+- **K4 WITH-NT inflation ratio**: 2.0 at threshold, NOT_TRIGGERED.
+- **TC overlay IS**: 4/4 above 25% K5 floor.
+- **Variance-of-X family**: 1/3 paper-practical PASS (RD1 1st in family); 0/3 LAYER A LOCKED.
+- **Phase 1 close audit**: `audits/2026-06-16-RD1-merged-RD7-phase1-close.md`
+- **Paper outline**: `reports/papers/RD1-strategy-A-paper-outline.md`
+- **Meta-harness PARTIAL report**: `D:/vscode/meta-harness/audits/2026-06-16-RD1-merged-RD7-phase1-PARTIAL-close-report.md`
 
 ## Source of truth
 
