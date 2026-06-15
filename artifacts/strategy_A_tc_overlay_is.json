@@ -1,0 +1,54 @@
+{
+  "phase": 1,
+  "step": 3,
+  "day": 3,
+  "axis": "(d) TC overlay 100bp two-way (Lock D \u00a77)",
+  "partition": "IS (1999-01-01..2016-12-31)",
+  "input_panel": "d:/vscode/us_compustat_rdq_recognition_timing_xs/artifacts/panel_is.parquet",
+  "tc_assumption": {
+    "deduction_pct_per_round_trip": 1.0,
+    "interpretation": "100bp two-way = 1.0% off gross Q1-Q5 spread (50bp entry + 50bp exit, long+short paper trade)",
+    "binding_floor": "25% retention (Phase 1 entry \u00a75 L5 + \u00a74 K5)",
+    "strong_advisory_floor": "75% retention (Lock D \u00a77 STRONG indicator)"
+  },
+  "primary_cells_above_25pct_floor_of_4": 4,
+  "primary_cells_above_75pct_strong_of_4": 2,
+  "verdict_binding_K5_K_floor": "PASS-IS",
+  "verdict_advisory_strong": "ADVISORY-WEAK",
+  "note_binding": "K5 / L5 are evaluated on OOS partition in Day 5; this IS-only check is advisory pre-screen",
+  "primary_cell_detail": [
+    {
+      "cell": "A120-LH",
+      "mu_gross": 0.033724162119225,
+      "mu_net_100bp_2way": 0.023724162119224998,
+      "retention_pct": 70.35,
+      "retention_above_25pct_floor": true,
+      "retention_above_75pct_strong": false
+    },
+    {
+      "cell": "A120-SH",
+      "mu_gross": 0.0265572188305503,
+      "mu_net_100bp_2way": 0.0165572188305503,
+      "retention_pct": 62.35,
+      "retention_above_25pct_floor": true,
+      "retention_above_75pct_strong": false
+    },
+    {
+      "cell": "A180-LH",
+      "mu_gross": 0.0413571085752689,
+      "mu_net_100bp_2way": 0.0313571085752689,
+      "retention_pct": 75.82,
+      "retention_above_25pct_floor": true,
+      "retention_above_75pct_strong": true
+    },
+    {
+      "cell": "A180-SL",
+      "mu_gross": 0.0493400665031114,
+      "mu_net_100bp_2way": 0.0393400665031114,
+      "retention_pct": 79.73,
+      "retention_above_25pct_floor": true,
+      "retention_above_75pct_strong": true
+    }
+  ],
+  "all_cells_csv": "d:/vscode/us_compustat_rdq_recognition_timing_xs/artifacts/strategy_A_tc_overlay_is.csv"
+}
