@@ -1,0 +1,13 @@
+{
+  "strategy": "B asymmetric decomposition (24 cells = 3 horizons * 4 sub-cells * 2 legs)",
+  "bonferroni_threshold_t": 2.92,
+  "pass_count_of_24": 0,
+  "sign_correct_count_of_24": 8,
+  "late_leg_pass": 0,
+  "late_leg_sign_correct": 4,
+  "late_leg_mean_t": 0.10810834124899749,
+  "early_leg_pass": 0,
+  "early_leg_sign_correct": 4,
+  "early_leg_mean_t": -0.4652289219733718,
+  "verdict": "DEAD-CONFIRMED (no leg recovery)"
+}

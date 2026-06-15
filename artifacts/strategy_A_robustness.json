@@ -1,0 +1,46 @@
+{
+  "cells": {
+    "A120-LH": {
+      "max_abs_sector_share_pct": 147.63,
+      "n_sectors_pos": 3,
+      "n_sectors_neg": 0,
+      "concentration_risk": "HIGH"
+    },
+    "A120-SH": {
+      "max_abs_sector_share_pct": 164.43,
+      "n_sectors_pos": 3,
+      "n_sectors_neg": 0,
+      "concentration_risk": "HIGH"
+    },
+    "A180-LH": {
+      "max_abs_sector_share_pct": 157.06,
+      "n_sectors_pos": 3,
+      "n_sectors_neg": 0,
+      "concentration_risk": "HIGH"
+    },
+    "A180-SL": {
+      "max_abs_sector_share_pct": 195.37,
+      "n_sectors_pos": 8,
+      "n_sectors_neg": 1,
+      "concentration_risk": "HIGH"
+    }
+  },
+  "regime": {
+    "A120-LH": {
+      "passes_local_bonf12": 0,
+      "regime_stability": "WEAK"
+    },
+    "A120-SH": {
+      "passes_local_bonf12": 0,
+      "regime_stability": "WEAK"
+    },
+    "A180-LH": {
+      "passes_local_bonf12": 1,
+      "regime_stability": "MODERATE"
+    },
+    "A180-SL": {
+      "passes_local_bonf12": 1,
+      "regime_stability": "MODERATE"
+    }
+  }
+}
