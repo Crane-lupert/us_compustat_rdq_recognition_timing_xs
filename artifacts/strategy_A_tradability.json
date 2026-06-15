@@ -1,0 +1,124 @@
+{
+  "phase": 1,
+  "step": "augmentation_tradability",
+  "purpose": "render PARTIAL verdict intuitively visible via practitioner tradability metrics",
+  "tc_assumption": "Per-month TC charged against monthly Q1-Q5 spread. Treats each month's portfolio formation as one round-trip on long+short legs. 20bps/mo is moderate institutional convention; 100bps/mo is conservative.",
+  "is_verdict": {
+    "median_sharpe_gross_ann": 1.0515506191983517,
+    "median_sharpe_net20bps_ann": 0.9991336546383949,
+    "median_hit_rate": 0.6527035056446822,
+    "median_max_drawdown": -0.7647409969843236,
+    "median_tc_break_even_bps_pm": 375.40635347246973,
+    "tradability_tier": "TRADABLE-MODERATE"
+  },
+  "oos_verdict": {
+    "median_sharpe_gross_ann": 0.8935195024017732,
+    "median_sharpe_net20bps_ann": 0.8373281671364523,
+    "median_hit_rate": 0.625,
+    "median_max_drawdown": -0.6387038000010703,
+    "median_tc_break_even_bps_pm": 362.3154862874621,
+    "tradability_tier": "TRADABLE-MODERATE"
+  },
+  "is_to_oos_sharpe_net_degradation_pct": -16.194578848462772,
+  "k2_fire_status": "K2 already fired Day 4; this tradability check is descriptive",
+  "summary_table": [
+    {
+      "cell": "A120-LH",
+      "partition": "IS",
+      "n_months": 198,
+      "ann_mu_gross_pct": 40.468994543070046,
+      "sharpe_gross_ann": 1.0434238423370648,
+      "hit_rate": 0.6111111111111112,
+      "max_drawdown": -0.48124082514849714,
+      "ann_mu_net20bps_pct": 38.06899454307005,
+      "sharpe_net20bps_ann": 0.9815439451495084,
+      "tc_break_even_bps_pm": 337.2416211922504
+    },
+    {
+      "cell": "A120-LH",
+      "partition": "OOS",
+      "n_months": 96,
+      "ann_mu_gross_pct": 29.816199694716573,
+      "sharpe_gross_ann": 0.8512842755477609,
+      "hit_rate": 0.5833333333333334,
+      "max_drawdown": -0.3383771603725958,
+      "ann_mu_net20bps_pct": 27.41619969471657,
+      "sharpe_net20bps_ann": 0.7827617179370181,
+      "tc_break_even_bps_pm": 248.46833078930476
+    },
+    {
+      "cell": "A120-SH",
+      "partition": "IS",
+      "n_months": 187,
+      "ann_mu_gross_pct": 31.868662596660414,
+      "sharpe_gross_ann": 0.5905459145960505,
+      "hit_rate": 0.679144385026738,
+      "max_drawdown": -0.9538227026092472,
+      "ann_mu_net20bps_pct": 29.468662596660415,
+      "sharpe_net20bps_ann": 0.5460724387879053,
+      "tc_break_even_bps_pm": 265.57218830550346
+    },
+    {
+      "cell": "A120-SH",
+      "partition": "OOS",
+      "n_months": 90,
+      "ann_mu_gross_pct": 44.807764107197656,
+      "sharpe_gross_ann": 0.7541193786228623,
+      "hit_rate": 0.6444444444444445,
+      "max_drawdown": -0.8704433695993475,
+      "ann_mu_net20bps_pct": 42.407764107197664,
+      "sharpe_net20bps_ann": 0.713727126414854,
+      "tc_break_even_bps_pm": 373.39803422664716
+    },
+    {
+      "cell": "A180-LH",
+      "partition": "IS",
+      "n_months": 198,
+      "ann_mu_gross_pct": 49.628530290322686,
+      "sharpe_gross_ann": 1.0945855078603317,
+      "hit_rate": 0.6262626262626263,
+      "max_drawdown": -0.5756592913594001,
+      "ann_mu_net20bps_pct": 47.22853029032269,
+      "sharpe_net20bps_ann": 1.0416521406319041,
+      "tc_break_even_bps_pm": 413.57108575268904
+    },
+    {
+      "cell": "A180-LH",
+      "partition": "OOS",
+      "n_months": 96,
+      "ann_mu_gross_pct": 42.147952601793236,
+      "sharpe_gross_ann": 0.9457476311226044,
+      "hit_rate": 0.625,
+      "max_drawdown": -0.421866209247885,
+      "ann_mu_net20bps_pct": 39.74795260179324,
+      "sharpe_net20bps_ann": 0.8918946163358865,
+      "tc_break_even_bps_pm": 351.232938348277
+    },
+    {
+      "cell": "A180-SL",
+      "partition": "IS",
+      "n_months": 200,
+      "ann_mu_gross_pct": 59.208079803733725,
+      "sharpe_gross_ann": 1.0596773960596386,
+      "hit_rate": 0.735,
+      "max_drawdown": -0.9825429652442552,
+      "ann_mu_net20bps_pct": 56.808079803733726,
+      "sharpe_net20bps_ann": 1.0167233641272813,
+      "tc_break_even_bps_pm": 493.40066503111444
+    },
+    {
+      "cell": "A180-SL",
+      "partition": "OOS",
+      "n_months": 96,
+      "ann_mu_gross_pct": 55.486471408002934,
+      "sharpe_gross_ann": 0.9357547292557855,
+      "hit_rate": 0.625,
+      "max_drawdown": -0.8555413907542555,
+      "ann_mu_net20bps_pct": 53.086471408002936,
+      "sharpe_net20bps_ann": 0.8952797937764684,
+      "tc_break_even_bps_pm": 462.3872617333578
+    }
+  ],
+  "csv_per_cell": "d:/vscode/us_compustat_rdq_recognition_timing_xs/artifacts/strategy_A_tradability.csv",
+  "raw_monthly_series_csv": "d:/vscode/us_compustat_rdq_recognition_timing_xs/artifacts/strategy_A_monthly_returns.csv"
+}
