@@ -1,34 +1,27 @@
-"""Vol-matched-to-benchmark PnL figure (fig2).
+"""Vol-matched-to-LS-benchmark PnL figure (fig2).
 
-Builds a publication + LinkedIn-quality figure that compares the cadence-
-variance long-short strategy (vol-matched) to a long-only universe benchmark
-on the same vol footing. Distinct from fig1 (which vol-scaled to a fixed
-10pct target, no external benchmark).
+The cadence-variance strategy is a long-short portfolio. The natural benchmark
+is therefore an LS benchmark, not a long-only basket. The convention in the
+asset-pricing literature is to use the Fama-French 5-factor model plus Carhart
+momentum (UMD) as the LS benchmark, computed as the in-sample maximum-Sharpe
+tangent combination of the six factor portfolios. This is V5's make_fig1
+convention.
 
 Inputs:
-  artifacts/panel_with_returns_ext.parquet   -- monthly universe basket (long-only)
-  artifacts/strategy_A_pit_clean_monthly.csv -- PIT-clean monthly Q1-Q5 spreads
+  artifacts/strategy_A_pit_clean_monthly.csv  -- monthly Q1-Q5 spread per cell
+  data/ff5_umd_monthly.jsonl                  -- FF5 + UMD monthly factor returns (% per month)
 
 Output:
-  reports/figures/fig2_vs_universe_benchmark.png
+  reports/figures/fig2_vs_ff5umd_tangent.png
 
-The benchmark is "buy the universe basket at each calendar month, hold H days":
-the equal-weighted mean forward H-day cumulative log return across all firms
-whose rdq falls in that month. This is the natural practitioner benchmark for
-an event-anchored strategy because:
-  (a) Same cadence (monthly) as the long-short basket.
-  (b) Same forward horizon (H days).
-  (c) Same opportunity set (universe of firms with announcement in that month).
-  (d) Same data source -- avoids data-vendor / index-methodology heterogeneity.
+The figure:
+  - Strategy = composite (equal-weighted across 4 mirror-of-primary cells)
+  - Strategy net = composite minus 20 bps/month round-trip TC
+  - FF5+UMD tangent = in-sample max-Sharpe portfolio of (Mkt-RF, SMB, HML, RMW, CMA, MOM)
+  - Vol-match: strategy scaled so its in-sample annualized vol matches the
+    in-sample tangent vol (no out-of-sample look-ahead in the scaling factor)
 
-The strategy series is the PIT-clean composite (equal-weighted across the 4
-mirror-of-primary cells: A120-SW1-LH, A120-SW1-SH, A180-SW1-LH, A180-SW1-SL).
-Vol-matching is at the IN-SAMPLE realized vol of the benchmark, applied to the
-full strategy series. This avoids look-ahead in the vol-scaling.
-
-Per checklist §7.6, this figure does NOT overwrite fig1 -- the primary
-specification's pre-registered headline remains fig1. fig2 is the
-post-hoc PIT-clean live-implementable specification.
+Compact layout: single panel, minimal legend, inline IS/OOS Sharpe text only.
 """
 from __future__ import annotations
 
@@ -47,6 +40,7 @@ sys.path.insert(0, str(REPO / "scripts"))
 from strategy_A_bonferroni import newey_west_se  # type: ignore  # noqa: E402
 
 ART = REPO / "artifacts"
+DATA = REPO / "data"
 FIG_DIR = REPO / "reports" / "figures"
 FIG_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -55,11 +49,12 @@ OOS_START = pd.Timestamp("2017-01-01")
 OOS_END = pd.Timestamp("2024-12-31")
 TC_PER_MONTH = 20 / 10_000  # 20 bps round-trip
 PRIMARY_MIRROR = ["A120-SW1-LH", "A120-SW1-SH", "A180-SW1-LH", "A180-SW1-SL"]
+FACTORS = ["Mkt-RF", "SMB", "HML", "RMW", "CMA", "MOM"]
 
 plt.rcParams.update({
     "font.family": "DejaVu Serif",
     "font.size": 10,
-    "axes.titlesize": 11,
+    "axes.titlesize": 12,
     "axes.labelsize": 10,
     "legend.fontsize": 9,
     "xtick.labelsize": 9,
@@ -67,13 +62,6 @@ plt.rcParams.update({
     "axes.spines.top": False,
     "axes.spines.right": False,
 })
-
-
-def annualized_sharpe(monthly: pd.Series) -> float:
-    monthly = monthly.dropna()
-    if len(monthly) < 12:
-        return float("nan")
-    return float(monthly.mean() / monthly.std(ddof=1) * np.sqrt(12))
 
 
 def annualized_sharpe_hac(monthly: pd.Series, lag: int = 12) -> float:
@@ -89,177 +77,134 @@ def annualized_sharpe_hac(monthly: pd.Series, lag: int = 12) -> float:
     return float(mu / long_run_std_per_period * np.sqrt(12))
 
 
-def vol_match(monthly: pd.Series, target_vol_ann: float, vol_calib_window) -> pd.Series:
-    """Scale monthly series to target annualized vol; calibration uses the
-    in-sample window only to avoid look-ahead."""
-    calib = monthly.loc[vol_calib_window].dropna()
-    realized_vol_ann = calib.std(ddof=1) * np.sqrt(12)
-    if realized_vol_ann <= 0 or np.isnan(realized_vol_ann):
-        return monthly
-    scale = target_vol_ann / realized_vol_ann
-    return monthly * scale
+def load_ff5umd_monthly() -> pd.DataFrame:
+    rows = [json.loads(l) for l in (DATA / "ff5_umd_monthly.jsonl").open(encoding="utf-8")]
+    df = pd.DataFrame(rows)
+    # FF returns are in percentage points; convert to fractional
+    for c in FACTORS + ["RF"]:
+        df[c] = df[c].astype(float) / 100.0
+    df["month"] = pd.to_datetime(df["year_month"] + "-01")
+    df = df.set_index("month").sort_index()
+    return df
 
 
-def cumulative_growth(monthly: pd.Series) -> pd.Series:
-    """Additive cumulative return (in percentage points). Same convention as
-    V5 make_fig1 -- the per-month observation is an H-day cumulative log
-    return, so multiplicative compounding overstates dramatically. Additive
-    cumsum is the convention for overlapping-cohort visualizations."""
-    return 100.0 * monthly.fillna(0).cumsum()
+def tangent_weights(returns: pd.DataFrame) -> np.ndarray:
+    """In-sample max-Sharpe tangent weights for the FF5+UMD basket. Standard
+    closed form: w proportional to Sigma^{-1} mu. Normalized to sum to one
+    (unitary leverage)."""
+    mu = returns.mean().values
+    sigma = returns.cov().values
+    raw = np.linalg.solve(sigma, mu)
+    w = raw / raw.sum()
+    return w
 
 
 def main() -> int:
-    # ---- 1. Strategy series (PIT-clean composite) ----
+    # ---- 1. Strategy: PIT-clean composite ----
     strat_monthly = pd.read_csv(ART / "strategy_A_pit_clean_monthly.csv",
                                 index_col="month", parse_dates=True)
     strat_monthly = strat_monthly[strat_monthly.index <= OOS_END]
     composite = strat_monthly[PRIMARY_MIRROR].mean(axis=1, skipna=True)
     composite_net = composite - TC_PER_MONTH
 
-    # ---- 2. Benchmark: universe-basket forward return ----
-    # Per rdq_month, equal-weighted mean of car_180_sw1 across all firms in panel.
-    # This is "buy each announcing firm at rdq+8, hold for 180d" as a long-only basket.
-    panel = pd.read_parquet(ART / "panel_with_returns_ext.parquet")
-    panel = panel.dropna(subset=["rdq", "car_180_sw1"])
-    panel["rdq_month"] = panel["rdq"].dt.to_period("M")
-    universe_monthly = panel.groupby("rdq_month")["car_180_sw1"].mean()
-    universe_monthly.index = universe_monthly.index.to_timestamp()
-    universe_monthly = universe_monthly[universe_monthly.index <= OOS_END]
-
-    # Align benchmark to strategy index (months that have both)
-    common = composite.index.intersection(universe_monthly.index)
+    # ---- 2. FF5+UMD factors and IS-optimal tangent ----
+    ff = load_ff5umd_monthly()
+    common = composite.index.intersection(ff.index)
     composite = composite.reindex(common)
     composite_net = composite_net.reindex(common)
-    universe_monthly = universe_monthly.reindex(common)
+    ff_aligned = ff.loc[common, FACTORS]
 
-    # ---- 3. Vol-match strategy to benchmark IN-SAMPLE vol ----
-    is_window = common <= IS_END
-    bench_is_vol_ann = float(universe_monthly[is_window].std(ddof=1) * np.sqrt(12))
+    is_mask = common <= IS_END
+    oos_mask = (common >= OOS_START) & (common <= OOS_END)
 
-    composite_vm = vol_match(composite, bench_is_vol_ann, is_window)
-    composite_net_vm = vol_match(composite_net, bench_is_vol_ann, is_window)
+    w_tan = tangent_weights(ff_aligned.loc[is_mask])
+    tangent = pd.Series(ff_aligned.values @ w_tan, index=common, name="Tangent")
 
-    # ---- 4. Cumulative growth ----
-    cg_strat_vm = cumulative_growth(composite_vm)
-    cg_strat_net_vm = cumulative_growth(composite_net_vm)
-    cg_bench = cumulative_growth(universe_monthly)
+    # ---- 3. Vol-match strategy to in-sample tangent vol ----
+    tan_is_vol_ann = float(tangent[is_mask].std(ddof=1) * np.sqrt(12))
+    strat_is_vol_ann = float(composite[is_mask].std(ddof=1) * np.sqrt(12))
+    scale = tan_is_vol_ann / strat_is_vol_ann
 
-    # ---- 5. Stats ----
-    bench_is = universe_monthly[is_window]
-    bench_oos = universe_monthly[~is_window]
-    strat_vm_is = composite_vm[is_window]
-    strat_vm_oos = composite_vm[~is_window]
-    strat_net_vm_is = composite_net_vm[is_window]
-    strat_net_vm_oos = composite_net_vm[~is_window]
+    strat_vm = composite * scale
+    strat_net_vm = composite_net * scale
 
+    # ---- 4. Cumulative additive return ----
+    cg_strat_vm = 100.0 * strat_vm.fillna(0).cumsum()
+    cg_strat_net_vm = 100.0 * strat_net_vm.fillna(0).cumsum()
+    cg_tan = 100.0 * tangent.fillna(0).cumsum()
+
+    # ---- 5. Sharpes ----
     stats = {
-        "bench_is_vol_ann_pct": round(bench_is_vol_ann * 100, 2),
-        "bench_is_sharpe_naive": round(annualized_sharpe(bench_is), 3),
-        "bench_oos_sharpe_naive": round(annualized_sharpe(bench_oos), 3),
-        "bench_is_sharpe_hac": round(annualized_sharpe_hac(bench_is), 3),
-        "bench_oos_sharpe_hac": round(annualized_sharpe_hac(bench_oos), 3),
-        "strat_vm_is_sharpe_naive": round(annualized_sharpe(strat_vm_is), 3),
-        "strat_vm_oos_sharpe_naive": round(annualized_sharpe(strat_vm_oos), 3),
-        "strat_vm_is_sharpe_hac": round(annualized_sharpe_hac(strat_vm_is), 3),
-        "strat_vm_oos_sharpe_hac": round(annualized_sharpe_hac(strat_vm_oos), 3),
-        "strat_net_vm_is_sharpe_hac": round(annualized_sharpe_hac(strat_net_vm_is), 3),
-        "strat_net_vm_oos_sharpe_hac": round(annualized_sharpe_hac(strat_net_vm_oos), 3),
-        "terminal_strat_vm": round(float(cg_strat_vm.iloc[-1]), 2),
-        "terminal_strat_net_vm": round(float(cg_strat_net_vm.iloc[-1]), 2),
-        "terminal_bench": round(float(cg_bench.iloc[-1]), 2),
+        "tan_is_vol_ann_pct": round(tan_is_vol_ann * 100, 2),
+        "tan_is_sharpe": round(annualized_sharpe_hac(tangent[is_mask]), 2),
+        "tan_oos_sharpe": round(annualized_sharpe_hac(tangent[oos_mask]), 2),
+        "strat_vm_is_sharpe": round(annualized_sharpe_hac(strat_vm[is_mask]), 2),
+        "strat_vm_oos_sharpe": round(annualized_sharpe_hac(strat_vm[oos_mask]), 2),
+        "strat_net_vm_is_sharpe": round(annualized_sharpe_hac(strat_net_vm[is_mask]), 2),
+        "strat_net_vm_oos_sharpe": round(annualized_sharpe_hac(strat_net_vm[oos_mask]), 2),
+        "terminal_strat_vm": round(float(cg_strat_vm.iloc[-1])),
+        "terminal_strat_net_vm": round(float(cg_strat_net_vm.iloc[-1])),
+        "terminal_tan": round(float(cg_tan.iloc[-1])),
+        "tangent_weights": {f: round(float(w), 3) for f, w in zip(FACTORS, w_tan)},
     }
 
-    # ---- 6. Figure ----
-    fig = plt.figure(figsize=(9.0, 7.0))
-    gs = fig.add_gridspec(2, 1, height_ratios=[2.8, 1.0], hspace=0.45)
-    ax = fig.add_subplot(gs[0])
-    ax_stats = fig.add_subplot(gs[1])
-    ax_stats.axis("off")
-
-    ax.axvspan(common.min(), IS_END, alpha=0.08, color="C0", label="_nolegend_")
-    ax.axvspan(OOS_START, OOS_END, alpha=0.12, color="C1", label="_nolegend_")
+    # ---- 6. Figure: single panel, minimal legend ----
+    fig, ax = plt.subplots(figsize=(8.4, 4.8))
+    ax.axvspan(common.min(), IS_END, alpha=0.07, color="C0")
+    ax.axvspan(OOS_START, OOS_END, alpha=0.11, color="C1")
     ax.axvline(IS_END, color="black", linewidth=0.7, alpha=0.55, linestyle="--")
 
-    ymax = float(max(cg_strat_vm.max(), cg_strat_net_vm.max(), cg_bench.max()))
-    ax.text(pd.Timestamp("2005-06-01"), ymax * 0.40,
-            "In-sample\n(1999-2016)",
-            ha="center", va="top", fontsize=10, color="C0", alpha=0.75,
-            fontweight="bold")
-    ax.text(pd.Timestamp("2020-06-01"), ymax * 0.93,
-            "Out-of-sample\n(2017-2024)",
-            ha="center", va="top", fontsize=10, color="C1", alpha=0.90,
-            fontweight="bold")
-
     ax.plot(cg_strat_vm.index, cg_strat_vm.values, color="C0", linewidth=1.9,
-            label="PIT-clean long-short, vol-matched to benchmark, gross")
+            label="Strategy")
     ax.plot(cg_strat_net_vm.index, cg_strat_net_vm.values, color="C0",
-            linewidth=1.4, linestyle=":",
-            label="PIT-clean long-short, vol-matched, net of 20 bps/month")
-    ax.plot(cg_bench.index, cg_bench.values, color="C3", linewidth=1.6,
+            linewidth=1.3, linestyle=":",
+            label="Strategy, net of 20 bps/month")
+    ax.plot(cg_tan.index, cg_tan.values, color="C3", linewidth=1.5,
             linestyle="--",
-            label="Universe long-only basket (180d horizon, buy at rdq+8)")
+            label="FF5+UMD tangent (in-sample max-Sharpe)")
     ax.axhline(0.0, color="black", linewidth=0.6, alpha=0.4)
 
-    ax.set_ylabel(f"Cumulative additive return (%)\n"
-                  f"strategy vol-matched to benchmark "
-                  f"({stats['bench_is_vol_ann_pct']:.1f}% ann. in-sample vol)")
-    ax.set_title(
-        "Cadence-variance long-short (PIT-clean, live-implementable) vs\n"
-        "long-only universe benchmark, vol-matched"
+    ymax = float(max(cg_strat_vm.max(), cg_tan.max()))
+    ymin = float(min(cg_strat_vm.min(), cg_tan.min(), 0))
+    pad = (ymax - ymin) * 0.10
+    ax.set_ylim(ymin - pad, ymax + pad)
+
+    # IS / OOS labels (placed in low-density chart area)
+    ax.text(pd.Timestamp("2007-06-01"), ymax * 0.05, "In-sample",
+            ha="center", va="bottom", fontsize=10, color="C0", alpha=0.75,
+            fontweight="bold")
+    ax.text(pd.Timestamp("2020-06-01"), ymax * 0.05, "Out-of-sample",
+            ha="center", va="bottom", fontsize=10, color="C1", alpha=0.90,
+            fontweight="bold")
+
+    # Inline compact Sharpe annotation (3 lines, near top-left under legend)
+    sharpe_text = (
+        f"HAC-corrected Sharpe (IS / OOS):\n"
+        f"   Strategy:                  {stats['strat_vm_is_sharpe']:.2f} / {stats['strat_vm_oos_sharpe']:.2f}\n"
+        f"   Strategy, net:             {stats['strat_net_vm_is_sharpe']:.2f} / {stats['strat_net_vm_oos_sharpe']:.2f}\n"
+        f"   FF5+UMD tangent:           {stats['tan_is_sharpe']:.2f} / {stats['tan_oos_sharpe']:.2f}"
     )
-    ax.legend(loc="upper left", framealpha=0.93, fontsize=9)
-    ax.grid(True, alpha=0.25)
+    ax.text(0.022, 0.62, sharpe_text, transform=ax.transAxes,
+            fontsize=8.6, verticalalignment="top", horizontalalignment="left",
+            family="monospace",
+            bbox=dict(boxstyle="round,pad=0.35", facecolor="white",
+                      edgecolor="lightgray", alpha=0.92))
+
     ax.set_xlabel("Year")
-
-    # ---- 7. Stats panel ----
-    stats_table = (
-        f"Annualized Sharpe (HAC-corrected, Newey-West lag 12)\n"
-        f"                              IS         OOS\n"
-        f"Long-only benchmark:      {stats['bench_is_sharpe_hac']:>6.2f}    {stats['bench_oos_sharpe_hac']:>6.2f}\n"
-        f"Strategy vol-matched:     {stats['strat_vm_is_sharpe_hac']:>6.2f}    {stats['strat_vm_oos_sharpe_hac']:>6.2f}\n"
-        f"Strategy net 20 bp / mo:  {stats['strat_net_vm_is_sharpe_hac']:>6.2f}    {stats['strat_net_vm_oos_sharpe_hac']:>6.2f}\n"
-        f"\n"
-        f"Vol-match target: in-sample benchmark vol = {stats['bench_is_vol_ann_pct']:.1f}%/yr\n"
-        f"(both series on 180d cumulative return scale, monthly cadence,\n"
-        f"vol annualized by sqrt(12) -- inflated for overlapping cohorts)\n"
-        f"\n"
-        f"Terminal cumulative return (additive, vol-matched):\n"
-        f"  Strategy gross:   +{stats['terminal_strat_vm']:.0f}%\n"
-        f"  Strategy net:     +{stats['terminal_strat_net_vm']:.0f}%\n"
-        f"  Benchmark:        +{stats['terminal_bench']:.0f}%\n"
+    ax.set_ylabel(
+        f"Cumulative return (%, vol-matched to {stats['tan_is_vol_ann_pct']:.1f}% in-sample)"
     )
-    ax_stats.text(0.00, 1.00, stats_table, transform=ax_stats.transAxes,
-                  fontsize=8.4, verticalalignment="top", horizontalalignment="left",
-                  family="monospace")
+    ax.set_title("Cadence-variance long-short vs FF5+UMD tangent")
+    ax.legend(loc="upper left", framealpha=0.92, fontsize=9)
+    ax.grid(True, alpha=0.25)
 
-    narrative = (
-        "Strategy is the PIT-clean, live-implementable variant:\n"
-        " - Quintile rank uses TRAILING 30-day FF12 cohort with strict-less-\n"
-        "   than rdq filter (eliminates within-month look-ahead in the\n"
-        "   primary backtest specification).\n"
-        " - Forward window starts at rdq+8 (absorbs Compustat refresh delay\n"
-        "   plus the post-earnings-announcement-drift week).\n"
-        " - Composite is equal-weighted across 4 mirror-of-primary cells.\n"
-        "Benchmark is the universe long-only basket: buy each announcing\n"
-        "firm at rdq+8, hold 180d, equal-weighted across announcers.\n"
-        "Both series share the same cadence, horizon, and opportunity set.\n"
-        "Vol-matching uses in-sample benchmark vol only (no look-ahead).\n"
-        "\n"
-        "Note: this PIT-clean specification was not pre-registered. The\n"
-        "pre-registered headline (calendar-month grouping, rdq+1 forward\n"
-        "window) failed Bonferroni-12 out-of-sample; this variant clears it\n"
-        "in 3 of 4 mirror cells -- treated as a post-hoc finding."
-    )
-    ax_stats.text(0.55, 1.00, narrative, transform=ax_stats.transAxes,
-                  fontsize=8.0, verticalalignment="top", horizontalalignment="left")
-
-    fig.subplots_adjust(left=0.08, right=0.97, top=0.93, bottom=0.05)
-    out = FIG_DIR / "fig2_vs_universe_benchmark.png"
+    fig.tight_layout()
+    out = FIG_DIR / "fig2_vs_ff5umd_tangent.png"
     fig.savefig(out, dpi=300, bbox_inches="tight")
     plt.close(fig)
     print(f"wrote {out}")
 
-    out_json = ART / "fig2_vs_universe_benchmark_summary.json"
+    out_json = ART / "fig2_vs_ff5umd_tangent_summary.json"
     out_json.write_text(json.dumps(stats, indent=2, default=str))
     print(f"wrote {out_json}")
     return 0

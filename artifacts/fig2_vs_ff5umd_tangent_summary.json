@@ -1,0 +1,20 @@
+{
+  "tan_is_vol_ann_pct": 3.88,
+  "tan_is_sharpe": 1.05,
+  "tan_oos_sharpe": 0.99,
+  "strat_vm_is_sharpe": 1.31,
+  "strat_vm_oos_sharpe": 1.45,
+  "strat_net_vm_is_sharpe": 1.23,
+  "strat_net_vm_oos_sharpe": 1.38,
+  "terminal_strat_vm": 138,
+  "terminal_strat_net_vm": 130,
+  "terminal_tan": 120,
+  "tangent_weights": {
+    "Mkt-RF": 0.195,
+    "SMB": 0.218,
+    "HML": -0.126,
+    "RMW": 0.447,
+    "CMA": 0.269,
+    "MOM": -0.003
+  }
+}

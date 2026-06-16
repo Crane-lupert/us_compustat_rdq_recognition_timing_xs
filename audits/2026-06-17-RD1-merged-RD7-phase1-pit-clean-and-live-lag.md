@@ -121,10 +121,10 @@ The substantive read for the paper is: **the primary backtest specification was 
 
 `scripts/make_pnl_figure_vol_matched.py` produces a publication-quality figure that:
 
-1. Constructs the **PIT-clean composite** (equal-weighted across the 4 mirror-of-primary cells: A120-SW1-LH, A120-SW1-SH, A180-SW1-LH, A180-SW1-SL).
-2. Constructs the **universe long-only benchmark**: per calendar month, equal-weighted mean of `car_180_sw1` across all firms in the panel. This is "buy each announcing firm at rdq+8, hold 180 days, equal weights" — the natural practitioner benchmark for an event-anchored strategy (same cadence, same horizon, same opportunity set, same data source).
-3. **Vol-matches** the strategy to the benchmark's *in-sample* (1999–2016) realized annualized volatility — no out-of-sample look-ahead in the scaling factor.
-4. Plots cumulative additive return (in percentage points). The additive convention is appropriate for overlapping H-day cohort returns; multiplicative compounding would over-state because each monthly observation is a 180-day cumulative return, not a one-month return.
+1. Constructs the **composite strategy** (equal-weighted across the 4 mirror-of-primary cells from the live-implementable specification: A120-SW1-LH, A120-SW1-SH, A180-SW1-LH, A180-SW1-SL).
+2. Constructs the **FF5+UMD tangent benchmark**: the in-sample maximum-Sharpe combination of the six Fama-French five-factor portfolios (Mkt-RF, SMB, HML, RMW, CMA) and the Carhart momentum factor (UMD), computed via the closed-form Σ⁻¹μ. Both the strategy and the benchmark are long-short by construction, so the LS-vs-LS comparison is on the same footing.
+3. **Vol-matches** the strategy to the in-sample (1999–2016) realized annualized volatility of the tangent benchmark — no out-of-sample look-ahead in the scaling factor.
+4. Plots cumulative additive return (in percentage points), the convention appropriate for monthly observations drawn from overlapping H-day forward-return cohorts.
 
 ### §7.1 Headline numerics
 
@@ -132,27 +132,27 @@ HAC-corrected annualized Sharpe (Newey–West lag 12):
 
 | Series | In-sample (1999–2016) | Out-of-sample (2017–2024) |
 |---|---:|---:|
-| Long-only universe basket | 0.02 | 0.00 |
+| FF5+UMD tangent (in-sample max-Sharpe) | 1.05 | 0.99 |
 | Strategy vol-matched (gross) | **1.31** | **1.45** |
-| Strategy vol-matched (net of 20 bps/month) | **1.23** | **1.39** |
+| Strategy vol-matched (net of 20 bps/month) | **1.23** | **1.38** |
 
-Terminal cumulative additive return at vol-matched levels:
+Terminal cumulative additive return at vol-matched levels (in-sample vol of 3.9% per year):
 
 | Series | Terminal |
 |---|---:|
-| Strategy gross | +2058% |
-| Strategy net | +1946% |
-| Benchmark | +38% |
+| Strategy gross | +140% |
+| Strategy net | +132% |
+| FF5+UMD tangent | +119% |
 
-The benchmark's Sharpe is essentially zero because the equal-weighted universe basket of overlapping 180-day cohort returns averages out to near the risk-free rate over the long sample. **The strategy's HAC Sharpe is meaningfully positive both in-sample and out-of-sample, with the out-of-sample Sharpe** *exceeding* **the in-sample Sharpe** (in contrast to the primary specification's −19% degradation).
+**The strategy out-performs the FF5+UMD tangent benchmark on both in-sample and out-of-sample HAC-corrected Sharpe at matched vol**, both gross and net of 20 bps/month round-trip transaction cost. The out-of-sample Sharpe of 1.45 *exceeds* the in-sample Sharpe of 1.31 — the opposite of the primary specification's −19% degradation. (Caveat: the OOS read remains a post-hoc finding under a not-pre-registered specification — see §6.)
 
 ### §7.2 What this changes vs fig1
 
 [fig1_cumulative_pnl.png](../reports/figures/fig1_cumulative_pnl.png) plotted the **primary specification** (calendar-month grouping, rdq+1 forward window) vol-scaled to a fixed 10% target; HAC Sharpe IS 1.01 / OOS 0.82, −19% degradation.
 
-[fig2_vs_universe_benchmark.png](../reports/figures/fig2_vs_universe_benchmark.png) plots the **PIT-clean variant** (trailing 30-day cohort, rdq+8 forward window) vol-matched to the universe long-only benchmark; HAC Sharpe IS 1.31 / OOS 1.45, **+11% improvement out-of-sample**.
+[fig2_vs_ff5umd_tangent.png](../reports/figures/fig2_vs_ff5umd_tangent.png) plots the **PIT-clean live-implementable variant** vol-matched to the FF5+UMD tangent; HAC Sharpe IS 1.31 / OOS 1.45, +11% improvement out-of-sample. Strategy out-performs the factor tangent in both windows.
 
-Both figures remain in the artifact set. fig1 is the *pre-registered headline*; fig2 is the *post-hoc, live-implementable variant*. The paper should present both — fig1 as the headline result of the pre-registered test, fig2 as the §5.x figure that shows what a practitioner attempting to implement the signal live would actually achieve.
+Both figures remain in the artifact set. fig1 is the *pre-registered headline*; fig2 is the *post-hoc, live-implementable variant compared to the standard long-short benchmark*. The paper should present both — fig1 as the headline result of the pre-registered test, fig2 as the §5.x figure that shows what a practitioner attempting to implement the signal live would actually achieve relative to the factor-model benchmark.
 
 ## §8 Paper / README implications
 
@@ -178,8 +178,9 @@ The paper-practical disposition stays: the pre-registered headline failed Bonfer
 | [scripts/make_pnl_figure_vol_matched.py](../scripts/make_pnl_figure_vol_matched.py) | fig2 builder |
 | [artifacts/strategy_A_pit_clean.json](../artifacts/strategy_A_pit_clean.json) | Cell-level Bonferroni + IS/OOS split |
 | [artifacts/strategy_A_pit_clean_monthly.csv] (gitignored) | Monthly Q1−Q5 spread per cell |
-| [reports/figures/fig2_vs_universe_benchmark.png](../reports/figures/fig2_vs_universe_benchmark.png) | Vol-matched-to-benchmark figure |
-| [artifacts/fig2_vs_universe_benchmark_summary.json](../artifacts/fig2_vs_universe_benchmark_summary.json) | Machine-readable headline numerics |
+| [data/ff5_umd_monthly.jsonl](../data/ff5_umd_monthly.jsonl) | Fama-French 5-factor + UMD monthly returns, 1963–2026 |
+| [reports/figures/fig2_vs_ff5umd_tangent.png](../reports/figures/fig2_vs_ff5umd_tangent.png) | Vol-matched-to-FF5+UMD-tangent figure |
+| [artifacts/fig2_vs_ff5umd_tangent_summary.json](../artifacts/fig2_vs_ff5umd_tangent_summary.json) | Machine-readable headline numerics |
 
 ## §11 Commit pin
 
