@@ -1,0 +1,31 @@
+{
+  "target_vol_ann": 0.1,
+  "tc_bps_per_month": 20,
+  "is_window": "2000-05..2016-12",
+  "oos_window": "2017-01..2024-12",
+  "composite_gross": {
+    "is_sharpe_ann": 1.5309318411587953,
+    "oos_sharpe_ann": 1.3636709438423773,
+    "is_ann_return_pct": 46.13797797770926,
+    "oos_ann_return_pct": 44.202458041169336,
+    "is_max_dd_pct": -27.277611061107876,
+    "oos_max_dd_pct": -47.774570774627094
+  },
+  "composite_net20bps": {
+    "is_sharpe_ann": 1.4512960057835165,
+    "oos_sharpe_ann": 1.2896295803016107,
+    "is_ann_return_pct": 43.737977977709264,
+    "oos_ann_return_pct": 41.80245804116933
+  },
+  "best_cell_A180_SL_gross": {
+    "is_sharpe_ann": 1.0596773960596384,
+    "oos_sharpe_ann": 0.9357547292557853,
+    "is_ann_return_pct": 59.20807980373372,
+    "oos_ann_return_pct": 55.48647140800291
+  },
+  "terminal_capital_vol_scaled": {
+    "composite_gross": 35.79392753504531,
+    "composite_net": 29.47549170497102,
+    "best_cell": 11.250800719459738
+  }
+}
