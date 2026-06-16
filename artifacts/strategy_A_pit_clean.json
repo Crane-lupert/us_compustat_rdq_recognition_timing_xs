@@ -1,0 +1,208 @@
+{
+  "phase": 1,
+  "step": "pit_clean_augmentation",
+  "purpose": "Reconstruct signal under strict point-in-time rules: trailing 30-day FF12 cohort for quintile assignment + skip-week-1 forward window (rdq+8 to rdq+H) that absorbs Compustat refresh + PEAD week.",
+  "cohort_days": 30,
+  "pit_rules": [
+    "Quintile vs trailing 30-day FF12 cohort with strict-less-than rdq filter",
+    "Forward window starts at rdq+8 (absorbs Compustat refresh + PEAD)",
+    "Size bin uses rdq-day market cap (cshoq * prccq from prior close) -- PIT-clean by convention"
+  ],
+  "n_panel_rows": 620290,
+  "n_pit_q5_assigned": 619140,
+  "n_pit_q5_assigned_pct": 99.81,
+  "full_panel_bonferroni": {
+    "pass_count_of_8": 5,
+    "sign_correct_of_8": 8
+  },
+  "is_oos_per_cell": [
+    {
+      "cell": "A120-SW1-LH",
+      "is_mu": 0.025176005550662794,
+      "is_t": 3.543005741994885,
+      "is_n": 199,
+      "oos_mu": 0.026290906079843822,
+      "oos_t": 2.3765941969879405,
+      "oos_n": 95,
+      "is_passes": true,
+      "oos_passes": false
+    },
+    {
+      "cell": "A120-SW1-LL",
+      "is_mu": 0.017994897053914025,
+      "is_t": 1.4459306471180533,
+      "is_n": 198,
+      "oos_mu": 0.021313112499194292,
+      "oos_t": 2.0389809314351757,
+      "oos_n": 91,
+      "is_passes": false,
+      "oos_passes": false
+    },
+    {
+      "cell": "A120-SW1-SH",
+      "is_mu": 0.022965766163805964,
+      "is_t": 1.4579981215573607,
+      "is_n": 180,
+      "oos_mu": 0.047024731941208056,
+      "oos_t": 3.342146617351699,
+      "oos_n": 84,
+      "is_passes": false,
+      "oos_passes": true
+    },
+    {
+      "cell": "A120-SW1-SL",
+      "is_mu": 0.03851594069516336,
+      "is_t": 4.547532583355449,
+      "is_n": 199,
+      "oos_mu": 0.023251179084096362,
+      "oos_t": 1.659888577122297,
+      "oos_n": 96,
+      "is_passes": true,
+      "oos_passes": false
+    },
+    {
+      "cell": "A180-SW1-LH",
+      "is_mu": 0.03201174864169459,
+      "is_t": 2.7908001571259824,
+      "is_n": 199,
+      "oos_mu": 0.036167818387832264,
+      "oos_t": 2.862958201415247,
+      "oos_n": 95,
+      "is_passes": true,
+      "oos_passes": true
+    },
+    {
+      "cell": "A180-SW1-LL",
+      "is_mu": 0.03380589362548198,
+      "is_t": 2.136259593948207,
+      "is_n": 198,
+      "oos_mu": 0.03961740610304423,
+      "oos_t": 2.4814430728398595,
+      "oos_n": 91,
+      "is_passes": false,
+      "oos_passes": false
+    },
+    {
+      "cell": "A180-SW1-SH",
+      "is_mu": 0.03194456904840336,
+      "is_t": 1.593326531076771,
+      "is_n": 180,
+      "oos_mu": 0.04595700812190919,
+      "oos_t": 3.2065573024084197,
+      "oos_n": 85,
+      "is_passes": false,
+      "oos_passes": true
+    },
+    {
+      "cell": "A180-SW1-SL",
+      "is_mu": 0.051550143757997165,
+      "is_t": 4.753505187869995,
+      "is_n": 199,
+      "oos_mu": 0.05826618084512732,
+      "oos_t": 2.9786418641719905,
+      "oos_n": 96,
+      "is_passes": true,
+      "oos_passes": true
+    }
+  ],
+  "is_pass_count_of_8": 4,
+  "oos_pass_count_of_8": 4,
+  "cells_detail_full_panel": [
+    {
+      "horizon_d": 120,
+      "size": "L",
+      "ind_tilt": "H",
+      "cell": "A120-SW1-LH",
+      "car_col": "car_120_sw1",
+      "n_months": 297,
+      "mu_spread": 0.025218758046667126,
+      "t_stat": 4.273017071370891,
+      "sign_correct": true,
+      "passes_bonferroni": true
+    },
+    {
+      "horizon_d": 120,
+      "size": "L",
+      "ind_tilt": "L",
+      "cell": "A120-SW1-LL",
+      "car_col": "car_120_sw1",
+      "n_months": 293,
+      "mu_spread": 0.020789728690438054,
+      "t_stat": 2.2374616778145184,
+      "sign_correct": true,
+      "passes_bonferroni": false
+    },
+    {
+      "horizon_d": 120,
+      "size": "S",
+      "ind_tilt": "H",
+      "cell": "A120-SW1-SH",
+      "car_col": "car_120_sw1",
+      "n_months": 266,
+      "mu_spread": 0.029954765519172467,
+      "t_stat": 2.511113910335599,
+      "sign_correct": true,
+      "passes_bonferroni": false
+    },
+    {
+      "horizon_d": 120,
+      "size": "S",
+      "ind_tilt": "L",
+      "cell": "A120-SW1-SL",
+      "car_col": "car_120_sw1",
+      "n_months": 298,
+      "mu_spread": 0.034403103520299835,
+      "t_stat": 4.722665448306143,
+      "sign_correct": true,
+      "passes_bonferroni": true
+    },
+    {
+      "horizon_d": 180,
+      "size": "L",
+      "ind_tilt": "H",
+      "cell": "A180-SW1-LH",
+      "car_col": "car_180_sw1",
+      "n_months": 297,
+      "mu_spread": 0.033272719462471165,
+      "t_stat": 3.824317925803596,
+      "sign_correct": true,
+      "passes_bonferroni": true
+    },
+    {
+      "horizon_d": 180,
+      "size": "L",
+      "ind_tilt": "L",
+      "cell": "A180-SW1-LL",
+      "car_col": "car_180_sw1",
+      "n_months": 293,
+      "mu_spread": 0.0375819308616028,
+      "t_stat": 3.1024291549522096,
+      "sign_correct": true,
+      "passes_bonferroni": true
+    },
+    {
+      "horizon_d": 180,
+      "size": "S",
+      "ind_tilt": "H",
+      "cell": "A180-SW1-SH",
+      "car_col": "car_180_sw1",
+      "n_months": 267,
+      "mu_spread": 0.03569911843244398,
+      "t_stat": 2.4736299180077013,
+      "sign_correct": true,
+      "passes_bonferroni": false
+    },
+    {
+      "horizon_d": 180,
+      "size": "S",
+      "ind_tilt": "L",
+      "cell": "A180-SW1-SL",
+      "car_col": "car_180_sw1",
+      "n_months": 298,
+      "mu_spread": 0.05512514429436397,
+      "t_stat": 5.853367314652005,
+      "sign_correct": true,
+      "passes_bonferroni": true
+    }
+  ]
+}

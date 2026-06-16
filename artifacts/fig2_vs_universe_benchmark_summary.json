@@ -1,0 +1,16 @@
+{
+  "bench_is_vol_ann_pct": 57.93,
+  "bench_is_sharpe_naive": 0.039,
+  "bench_oos_sharpe_naive": 0.001,
+  "bench_is_sharpe_hac": 0.017,
+  "bench_oos_sharpe_hac": 0.001,
+  "strat_vm_is_sharpe_naive": 1.336,
+  "strat_vm_oos_sharpe_naive": 1.812,
+  "strat_vm_is_sharpe_hac": 1.311,
+  "strat_vm_oos_sharpe_hac": 1.453,
+  "strat_net_vm_is_sharpe_hac": 1.234,
+  "strat_net_vm_oos_sharpe_hac": 1.385,
+  "terminal_strat_vm": 2058.27,
+  "terminal_strat_net_vm": 1946.4,
+  "terminal_bench": 37.82
+}
