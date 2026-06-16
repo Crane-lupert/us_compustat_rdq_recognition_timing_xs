@@ -1,0 +1,247 @@
+{
+  "phase": 1,
+  "step": "deferred_robustness_extended_horizons",
+  "axes": [
+    "(a) 240d / 360d horizon advisories (Lock D \u00a77)",
+    "(c) Skip-week-1 (rdq+8 to rdq+H) -- PEAD-overlap clean (Lock D \u00a77)"
+  ],
+  "input_panel": "d:/vscode/us_compustat_rdq_recognition_timing_xs/artifacts/panel_with_returns_ext.parquet",
+  "n_panel_rows": 620290,
+  "horizon_runs": [
+    {
+      "label": "A240",
+      "car_col": "car_240",
+      "horizon_d": 240,
+      "axis": "horizon advisory",
+      "n_cells": 4,
+      "pass_count": 2,
+      "sign_correct": 4
+    },
+    {
+      "label": "A360",
+      "car_col": "car_360",
+      "horizon_d": 360,
+      "axis": "horizon advisory",
+      "n_cells": 4,
+      "pass_count": 3,
+      "sign_correct": 4
+    },
+    {
+      "label": "A120-SW1",
+      "car_col": "car_120_sw1",
+      "horizon_d": 120,
+      "axis": "skip-week-1 (rdq+8 to rdq+120)",
+      "n_cells": 4,
+      "pass_count": 2,
+      "sign_correct": 4
+    },
+    {
+      "label": "A180-SW1",
+      "car_col": "car_180_sw1",
+      "horizon_d": 180,
+      "axis": "skip-week-1 (rdq+8 to rdq+180)",
+      "n_cells": 4,
+      "pass_count": 2,
+      "sign_correct": 4
+    }
+  ],
+  "total_cells": 16,
+  "total_pass": 9,
+  "total_sign_correct": 16,
+  "threshold_t": 2.78,
+  "cells_csv": "d:/vscode/us_compustat_rdq_recognition_timing_xs/artifacts/strategy_A_extended_horizons.csv",
+  "cells_detail": [
+    {
+      "cell": "A240-LH",
+      "horizon_label": "A240",
+      "car_col": "car_240",
+      "size": "L",
+      "ind_tilt": "H",
+      "n_months": 298,
+      "mu_spread": 0.048176269534225324,
+      "t_stat": 3.717719836010431,
+      "sign_correct": true,
+      "passes_bonferroni": true
+    },
+    {
+      "cell": "A240-LL",
+      "horizon_label": "A240",
+      "car_col": "car_240",
+      "size": "L",
+      "ind_tilt": "L",
+      "n_months": 295,
+      "mu_spread": 0.05331717166643963,
+      "t_stat": 3.471724923967601,
+      "sign_correct": true,
+      "passes_bonferroni": true
+    },
+    {
+      "cell": "A240-SH",
+      "horizon_label": "A240",
+      "car_col": "car_240",
+      "size": "S",
+      "ind_tilt": "H",
+      "n_months": 282,
+      "mu_spread": 0.04204795744998869,
+      "t_stat": 2.270282972147225,
+      "sign_correct": true,
+      "passes_bonferroni": false
+    },
+    {
+      "cell": "A240-SL",
+      "horizon_label": "A240",
+      "car_col": "car_240",
+      "size": "S",
+      "ind_tilt": "L",
+      "n_months": 299,
+      "mu_spread": 0.04757837705151214,
+      "t_stat": 2.5708658807970544,
+      "sign_correct": true,
+      "passes_bonferroni": false
+    },
+    {
+      "cell": "A360-LH",
+      "horizon_label": "A360",
+      "car_col": "car_360",
+      "size": "L",
+      "ind_tilt": "H",
+      "n_months": 298,
+      "mu_spread": 0.06489201111843856,
+      "t_stat": 3.9124663533393025,
+      "sign_correct": true,
+      "passes_bonferroni": true
+    },
+    {
+      "cell": "A360-LL",
+      "horizon_label": "A360",
+      "car_col": "car_360",
+      "size": "L",
+      "ind_tilt": "L",
+      "n_months": 295,
+      "mu_spread": 0.07268173996475324,
+      "t_stat": 3.508575424742891,
+      "sign_correct": true,
+      "passes_bonferroni": true
+    },
+    {
+      "cell": "A360-SH",
+      "horizon_label": "A360",
+      "car_col": "car_360",
+      "size": "S",
+      "ind_tilt": "H",
+      "n_months": 283,
+      "mu_spread": 0.05025642868890691,
+      "t_stat": 2.20382952622093,
+      "sign_correct": true,
+      "passes_bonferroni": false
+    },
+    {
+      "cell": "A360-SL",
+      "horizon_label": "A360",
+      "car_col": "car_360",
+      "size": "S",
+      "ind_tilt": "L",
+      "n_months": 299,
+      "mu_spread": 0.06501877330946862,
+      "t_stat": 3.21022896370563,
+      "sign_correct": true,
+      "passes_bonferroni": true
+    },
+    {
+      "cell": "A120-SW1-LH",
+      "horizon_label": "A120-SW1",
+      "car_col": "car_120_sw1",
+      "size": "L",
+      "ind_tilt": "H",
+      "n_months": 298,
+      "mu_spread": 0.026693405652887893,
+      "t_stat": 3.4400697783233505,
+      "sign_correct": true,
+      "passes_bonferroni": true
+    },
+    {
+      "cell": "A120-SW1-LL",
+      "horizon_label": "A120-SW1",
+      "car_col": "car_120_sw1",
+      "size": "L",
+      "ind_tilt": "L",
+      "n_months": 295,
+      "mu_spread": 0.01770412706358334,
+      "t_stat": 2.003881642469919,
+      "sign_correct": true,
+      "passes_bonferroni": false
+    },
+    {
+      "cell": "A120-SW1-SH",
+      "horizon_label": "A120-SW1",
+      "car_col": "car_120_sw1",
+      "size": "S",
+      "ind_tilt": "H",
+      "n_months": 281,
+      "mu_spread": 0.032906284229518176,
+      "t_stat": 3.1856654933053523,
+      "sign_correct": true,
+      "passes_bonferroni": true
+    },
+    {
+      "cell": "A120-SW1-SL",
+      "horizon_label": "A120-SW1",
+      "car_col": "car_120_sw1",
+      "size": "S",
+      "ind_tilt": "L",
+      "n_months": 299,
+      "mu_spread": 0.021601500723150004,
+      "t_stat": 2.3527701396801244,
+      "sign_correct": true,
+      "passes_bonferroni": false
+    },
+    {
+      "cell": "A180-SW1-LH",
+      "horizon_label": "A180-SW1",
+      "car_col": "car_180_sw1",
+      "size": "L",
+      "ind_tilt": "H",
+      "n_months": 298,
+      "mu_spread": 0.03520987817704102,
+      "t_stat": 3.591346595759326,
+      "sign_correct": true,
+      "passes_bonferroni": true
+    },
+    {
+      "cell": "A180-SW1-LL",
+      "horizon_label": "A180-SW1",
+      "car_col": "car_180_sw1",
+      "size": "L",
+      "ind_tilt": "L",
+      "n_months": 295,
+      "mu_spread": 0.0315258398792586,
+      "t_stat": 2.6207650472192654,
+      "sign_correct": true,
+      "passes_bonferroni": false
+    },
+    {
+      "cell": "A180-SW1-SH",
+      "horizon_label": "A180-SW1",
+      "car_col": "car_180_sw1",
+      "size": "S",
+      "ind_tilt": "H",
+      "n_months": 281,
+      "mu_spread": 0.0333115038694762,
+      "t_stat": 2.39042089794983,
+      "sign_correct": true,
+      "passes_bonferroni": false
+    },
+    {
+      "cell": "A180-SW1-SL",
+      "horizon_label": "A180-SW1",
+      "car_col": "car_180_sw1",
+      "size": "S",
+      "ind_tilt": "L",
+      "n_months": 299,
+      "mu_spread": 0.04521622502206835,
+      "t_stat": 3.69295244146208,
+      "sign_correct": true,
+      "passes_bonferroni": true
+    }
+  ]
+}
