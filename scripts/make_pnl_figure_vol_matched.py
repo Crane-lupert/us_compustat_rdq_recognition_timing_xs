@@ -124,10 +124,26 @@ def main() -> int:
     strat_vm = composite * scale
     strat_net_vm = composite_net * scale
 
+    # ---- 3a. Residual alpha vs FF5+UMD: strategy - betahat * factors ----
+    # Regress vol-matched strategy (net) on FF5+UMD factors with intercept;
+    # the residual series alpha_t = strategy_t - betahat * factors_t is the
+    # part of the strategy return that the factor model does not explain.
+    # This is V5 make_fig1's "residual alpha trail" convention.
+    y_net = strat_net_vm.loc[is_mask].dropna().values
+    X_is = np.column_stack([np.ones(int(is_mask.sum())), ff_aligned.loc[is_mask].values])
+    # Lstsq on IS to get betas; apply to FULL series for OOS residual trail.
+    beta = np.linalg.lstsq(X_is, strat_net_vm.loc[is_mask].values, rcond=None)[0]
+    intercept = beta[0]
+    factor_betas = beta[1:]
+    # Factor-spanned monthly return (excluding intercept):
+    factor_spanned = pd.Series(ff_aligned.values @ factor_betas, index=common)
+    residual_alpha = strat_net_vm - factor_spanned  # = intercept + residual_t in IS
+
     # ---- 4. Cumulative additive return ----
     cg_strat_vm = 100.0 * strat_vm.fillna(0).cumsum()
     cg_strat_net_vm = 100.0 * strat_net_vm.fillna(0).cumsum()
     cg_tan = 100.0 * tangent.fillna(0).cumsum()
+    cg_alpha = 100.0 * residual_alpha.fillna(0).cumsum()
 
     # ---- 5. Sharpes ----
     stats = {
@@ -138,9 +154,15 @@ def main() -> int:
         "strat_vm_oos_sharpe": round(annualized_sharpe_hac(strat_vm[oos_mask]), 2),
         "strat_net_vm_is_sharpe": round(annualized_sharpe_hac(strat_net_vm[is_mask]), 2),
         "strat_net_vm_oos_sharpe": round(annualized_sharpe_hac(strat_net_vm[oos_mask]), 2),
+        "residual_alpha_is_sharpe": round(annualized_sharpe_hac(residual_alpha[is_mask]), 2),
+        "residual_alpha_oos_sharpe": round(annualized_sharpe_hac(residual_alpha[oos_mask]), 2),
+        "ff5umd_intercept_monthly_pct": round(float(intercept) * 100, 3),
+        "ff5umd_intercept_annualized_pct": round(float(intercept) * 12 * 100, 2),
+        "ff5umd_betas": {f: round(float(b), 3) for f, b in zip(FACTORS, factor_betas)},
         "terminal_strat_vm": round(float(cg_strat_vm.iloc[-1])),
         "terminal_strat_net_vm": round(float(cg_strat_net_vm.iloc[-1])),
         "terminal_tan": round(float(cg_tan.iloc[-1])),
+        "terminal_residual_alpha": round(float(cg_alpha.iloc[-1])),
         "tangent_weights": {f: round(float(w), 3) for f, w in zip(FACTORS, w_tan)},
     }
 
@@ -158,9 +180,12 @@ def main() -> int:
     ax.plot(cg_tan.index, cg_tan.values, color="C3", linewidth=1.5,
             linestyle="--",
             label="FF5+UMD tangent (in-sample max-Sharpe)")
+    ax.plot(cg_alpha.index, cg_alpha.values, color="C2", linewidth=1.5,
+            linestyle="-.",
+            label=r"Residual $\alpha$ (strategy net minus FF5+UMD factor span)")
 
-    ymax = float(max(cg_strat_vm.max(), cg_tan.max()))
-    ymin = float(min(cg_strat_vm.min(), cg_tan.min(), 0))
+    ymax = float(max(cg_strat_vm.max(), cg_tan.max(), cg_alpha.max()))
+    ymin = float(min(cg_strat_vm.min(), cg_tan.min(), cg_alpha.min(), 0))
     pad = (ymax - ymin) * 0.10
     ax.set_ylim(ymin - pad, ymax + pad)
 
@@ -177,7 +202,9 @@ def main() -> int:
         f"HAC-corrected Sharpe (IS / OOS):\n"
         f"   Strategy:                  {stats['strat_vm_is_sharpe']:.2f} / {stats['strat_vm_oos_sharpe']:.2f}\n"
         f"   Strategy, net:             {stats['strat_net_vm_is_sharpe']:.2f} / {stats['strat_net_vm_oos_sharpe']:.2f}\n"
-        f"   FF5+UMD tangent:           {stats['tan_is_sharpe']:.2f} / {stats['tan_oos_sharpe']:.2f}"
+        f"   FF5+UMD tangent:           {stats['tan_is_sharpe']:.2f} / {stats['tan_oos_sharpe']:.2f}\n"
+        f"   Residual alpha:            {stats['residual_alpha_is_sharpe']:.2f} / {stats['residual_alpha_oos_sharpe']:.2f}\n"
+        f"FF5+UMD intercept (IS net): {stats['ff5umd_intercept_annualized_pct']:.1f} % / yr"
     )
     ax.text(0.022, 0.62, sharpe_text, transform=ax.transAxes,
             fontsize=8.6, verticalalignment="top", horizontalalignment="left",

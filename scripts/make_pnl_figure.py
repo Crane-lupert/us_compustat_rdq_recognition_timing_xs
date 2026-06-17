@@ -108,7 +108,12 @@ def vol_scale(monthly: pd.Series, target_vol: float) -> pd.Series:
 
 
 def cumulative_growth(monthly: pd.Series) -> pd.Series:
-    return (1.0 + monthly.fillna(0)).cumprod()
+    """Additive cumulative return (in percentage points). Same convention as
+    V5 make_fig1 -- each monthly observation is already an H-day cumulative
+    log return (overlapping cohorts), so multiplicative cumprod over-states
+    the growth dramatically. Additive cumsum is the correct convention.
+    Sharpe and TC-break-even are unaffected by this choice."""
+    return 100.0 * monthly.fillna(0).cumsum()
 
 
 def main() -> int:
@@ -152,7 +157,6 @@ def main() -> int:
     ax.plot(best_growth.index, best_growth.values, color="C2", linewidth=1.5,
             linestyle="--",
             label="Best cell (180d horizon, small / low-tilt), gross")
-    ax.axhline(1.0, color="black", linewidth=0.6, alpha=0.4)
 
     # IS / OOS in-axes labels (positioned in upper third where lines are still low)
     ymax = float(max(cg_growth.max(), cn_growth.max(), best_growth.max()))
@@ -164,13 +168,13 @@ def main() -> int:
             ha="center", va="top", fontsize=10, color="C1", alpha=0.90,
             fontweight="bold")
 
-    ax.set_ylabel("Growth of $1 of capital  (vol-scaled to 10% annualized)")
+    ax.set_ylabel("Cumulative return (%, vol-scaled to 10% annualized)")
     ax.set_title(
         "Earnings-announcement cadence-variance long-short:\n"
-        "monthly capital growth, pre-registered out-of-sample test"
+        "pre-registered out-of-sample test"
     )
     ax.legend(loc="upper left", framealpha=0.93, fontsize=9)
-    ax.grid(True, alpha=0.25)
+    ax.grid(True, alpha=0.15, linewidth=0.5, linestyle="-")
     ax.set_xlabel("Year")
 
     # Summary box (lower-right) -- terminal capital + IS/OOS Sharpe per line.

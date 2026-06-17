@@ -6,9 +6,22 @@
   "strat_vm_oos_sharpe": 0.87,
   "strat_net_vm_is_sharpe": 1.01,
   "strat_net_vm_oos_sharpe": 0.82,
+  "residual_alpha_is_sharpe": 1.03,
+  "residual_alpha_oos_sharpe": 0.87,
+  "ff5umd_intercept_monthly_pct": 0.47,
+  "ff5umd_intercept_annualized_pct": 5.64,
+  "ff5umd_betas": {
+    "Mkt-RF": -0.003,
+    "SMB": -0.029,
+    "HML": 0.019,
+    "RMW": -0.006,
+    "CMA": 0.013,
+    "MOM": 0.018
+  },
   "terminal_strat_vm": 144,
   "terminal_strat_net_vm": 137,
   "terminal_tan": 120,
+  "terminal_residual_alpha": 137,
   "tangent_weights": {
     "Mkt-RF": 0.195,
     "SMB": 0.218,
