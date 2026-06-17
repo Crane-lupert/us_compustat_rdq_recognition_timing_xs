@@ -117,17 +117,17 @@ Per the meta-harness paper-writing checklist §7.6 ("Silently swapping post-hoc 
 
 The substantive read for the paper is: **the primary backtest specification was conservatively biased, not look-ahead-aggressive. Removing the within-month look-ahead** *strengthens* **the signal, indicating that the within-month look-ahead was effectively *adding* noise (presumably because firms with idiosyncratic later-month news drift correlated with quintile boundary placement).** The signal is more tradable than the primary specification suggested, but the pre-registered statistical bar miss is what we report as the headline.
 
-## §7 Vol-matched-to-benchmark figure (fig2)
+## §7 Vol-matched-to-benchmark figure
 
-`scripts/make_pnl_figure_vol_matched.py` produces a publication-quality figure that uses **the same primary specification strategy as fig1** (calendar-month FF12 cross-section, rdq+1 forward window, composite of the four pre-registered primary cells A120-LH, A120-SH, A180-LH, A180-SL). The PIT-clean live-implementable variant from §3–§6 is NOT plotted here — its numerical result lives only in the audit / paper §5.x text. The deliberate choice is: fig2 should differ from fig1 only in the vol target and the addition of a benchmark line, not in the underlying strategy. This makes the figures intuitively comparable.
+`scripts/make_pnl_figure_vol_matched.py` produces the single publication + LinkedIn figure for this project. It uses the pre-registered primary specification strategy (calendar-month FF12 cross-section, rdq+1 forward window, equal-weighted composite of the four pre-registered primary cells A120-LH, A120-SH, A180-LH, A180-SL). The PIT-clean live-implementable variant from §3–§6 is NOT plotted — its numerical result lives only in this audit and the paper §5.x text.
 
-The figure shows:
+The figure shows three lines:
 
-1. **Strategy** = same composite as fig1.
+1. **Strategy** = equal-weighted composite of the four primary cells, gross.
 2. **Strategy, net** = strategy minus 20 bps/month round-trip transaction cost.
-3. **FF5+UMD tangent** = in-sample maximum-Sharpe combination of the six Fama-French five-factor portfolios (Mkt-RF, SMB, HML, RMW, CMA) and the Carhart momentum factor (UMD), computed via closed-form Σ⁻¹μ. Long-short by construction, so the LS-vs-LS comparison is on the same footing.
+3. **FF5+UMD tangent** = in-sample maximum-Sharpe combination of the six Fama-French five-factor portfolios (Mkt-RF, SMB, HML, RMW, CMA) and the Carhart momentum factor (UMD), computed via the closed-form Σ⁻¹μ. Long-short by construction, so the LS-vs-LS comparison is on the same footing.
 
-The strategy is vol-matched to the in-sample annualized volatility of the tangent benchmark (3.9% / year), with the scaling factor calibrated on the in-sample window only.
+The strategy is vol-matched to the in-sample (1999–2016) annualized volatility of the tangent benchmark (3.9% / year), with the scaling factor calibrated on the in-sample window only — no out-of-sample look-ahead in the scaling.
 
 ### §7.1 Headline numerics
 
@@ -143,13 +143,9 @@ Under the pre-registered primary specification, the strategy **roughly ties the 
 
 ### §7.2 Where the PIT-clean improvement enters
 
-The §3–§6 PIT-clean live-implementable variant (trailing 30-day FF12 cohort + skip-week-1 forward window) raises the strategy's HAC Sharpe to **1.23 IS / 1.38 OOS net**, exceeding the FF5+UMD tangent on both windows. The improvement from the primary specification is therefore not from vol-matching or benchmark choice; it is from the two methodology fixes (PIT-clean cross-section + skip-week-1 forward window) that the audit §1–§5 documents. Both fixes strengthen the signal because the within-month look-ahead and the rdq+1 week of PEAD contamination were *adding noise* to the primary specification, not *exploiting* future information.
+The §3–§6 PIT-clean live-implementable variant (trailing 30-day FF12 cohort + skip-week-1 forward window) raises the strategy's HAC Sharpe to **1.23 IS / 1.38 OOS net**, exceeding the FF5+UMD tangent on both windows. The improvement from the primary specification is not from vol-matching or benchmark choice; it is from the two methodology fixes (PIT-clean cross-section + skip-week-1 forward window) that the audit §1–§5 documents. Both fixes strengthen the signal because the within-month look-ahead and the rdq+1 week of PEAD contamination were *adding noise* to the primary specification, not *exploiting* future information.
 
-For paper exposition, the disposition is:
-
-- **fig1 (cumulative growth at 10% vol target, no external benchmark)** is the headline figure for the pre-registered specification.
-- **fig2 (cumulative return at FF5+UMD tangent vol, with benchmark)** is the LS-vs-LS comparison at the standard factor-model benchmark, also for the pre-registered specification.
-- The PIT-clean live-implementable variant is **discussed in §5.x text** with the cell-level Bonferroni-12 table, not given its own figure.
+For paper exposition the disposition is: the figure shows the **pre-registered** specification on LS-vs-LS-at-matched-vol terms; the PIT-clean live-implementable variant is **reported only as text** in the §5.x robustness section with the cell-level Bonferroni-12 table.
 
 ## §8 Paper / README implications
 
@@ -172,7 +168,7 @@ The paper-practical disposition stays: the pre-registered headline failed Bonfer
 | Path | Contents |
 |---|---|
 | [scripts/phase1_pit_clean.py](../scripts/phase1_pit_clean.py) | PIT-clean signal construction |
-| [scripts/make_pnl_figure_vol_matched.py](../scripts/make_pnl_figure_vol_matched.py) | fig2 builder |
+| [scripts/make_pnl_figure_vol_matched.py](../scripts/make_pnl_figure_vol_matched.py) | Publication / LinkedIn figure builder |
 | [artifacts/strategy_A_pit_clean.json](../artifacts/strategy_A_pit_clean.json) | Cell-level Bonferroni + IS/OOS split |
 | [artifacts/strategy_A_pit_clean_monthly.csv] (gitignored) | Monthly Q1−Q5 spread per cell |
 | [data/ff5_umd_monthly.jsonl](../data/ff5_umd_monthly.jsonl) | Fama-French 5-factor + UMD monthly returns, 1963–2026 |
@@ -181,6 +177,6 @@ The paper-practical disposition stays: the pre-registered headline failed Bonfer
 
 ## §11 Commit pin
 
-Prior phase-1 augmentation chain: `d255e98` (tradability + readme_kr) → `a1a5f08` (fig1 + FF49) → `ca70658` (deferred robustness) → `b7bcf3f` (English README + paper draft v1).
+Prior phase-1 augmentation chain: `d255e98` (tradability + readme_kr) → `a1a5f08` (PnL figure + FF49) → `ca70658` (deferred robustness) → `b7bcf3f` (English README + paper draft v1).
 
 This audit: TBD by post-write commit.

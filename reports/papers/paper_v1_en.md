@@ -312,7 +312,7 @@ Across the forty cells tested, all but one are sign-correct (the one exception i
 
 ### 5.5 Headline figure
 
-Figure 1 [`reports/figures/fig1_cumulative_pnl.png`] plots cumulative growth of one dollar of capital, vol-scaled to 10% annualized target volatility, for the composite of the four primary cells (equal-weighted) both gross and net of 20 bps/month transaction cost, plus the best single cell (180-day horizon, small/low-tilt). In-sample 1999–2016 region shaded blue; pre-registered out-of-sample 2017–2024 region shaded orange. The HAC-corrected Sharpe is 1.01 in-sample / 0.82 out-of-sample for the composite net of TC.
+Figure 1 [`reports/figures/fig2_vs_ff5umd_tangent.png`] plots cumulative additive return for three series: the equal-weighted composite of the four pre-registered primary cells (gross), the same composite net of 20 bps/month round-trip transaction cost, and a long-short benchmark constructed as the in-sample maximum-Sharpe combination of the six Fama–French five-factor portfolios (Mkt-RF, SMB, HML, RMW, CMA) and the Carhart momentum factor (UMD). The strategy is vol-matched to the benchmark's in-sample annualized volatility (3.9% / year), with the scaling factor calibrated on the in-sample window only. In-sample 1999–2016 region shaded blue; pre-registered out-of-sample 2017–2024 region shaded orange. HAC-corrected annualized Sharpe (Newey–West lag 12) is 1.06 in-sample / 0.87 out-of-sample for the gross composite, 1.01 / 0.82 net of transaction cost, and 1.05 / 1.01 for the FF5+UMD tangent benchmark.
 
 ---
 

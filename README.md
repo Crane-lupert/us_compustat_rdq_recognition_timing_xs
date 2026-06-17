@@ -1,6 +1,6 @@
 # Earnings-Announcement Cadence-Variance Cross-Section
 
-**Status**: Phase 1 out-of-sample test closed 2026-06-16. Paper-practical outcome (sign-correct out-of-sample, below multiple-comparison-protected statistical threshold). **한국어 실무 보고**: [readme_kr.md](readme_kr.md). Paper outline: [reports/papers/RD1-strategy-A-paper-outline.md](reports/papers/RD1-strategy-A-paper-outline.md). Headline figure: [reports/figures/fig1_cumulative_pnl.png](reports/figures/fig1_cumulative_pnl.png).
+**Status**: Phase 1 out-of-sample test closed 2026-06-16. Paper-practical outcome (sign-correct out-of-sample, below multiple-comparison-protected statistical threshold). **한국어 실무 보고**: [readme_kr.md](readme_kr.md). Paper outline: [reports/papers/RD1-strategy-A-paper-outline.md](reports/papers/RD1-strategy-A-paper-outline.md). Headline figure: [reports/figures/fig2_vs_ff5umd_tangent.png](reports/figures/fig2_vs_ff5umd_tangent.png).
 
 ## What this is
 
@@ -59,7 +59,7 @@ scripts/
   phase1_tradability.py             # Sharpe / DD / TC-break-even / hit-rate per cell × partition
   phase1_robustness_ff49.py         # Fama-French 49 partition Bonferroni
   phase1_robustness_extended_horizons.py  # 240/360/skip-week-1 Bonferroni
-  make_pnl_figure.py                # publication + LinkedIn figure (vol-scaled, HAC-corrected)
+  make_pnl_figure_vol_matched.py    # publication + LinkedIn figure (vs FF5+UMD tangent, vol-matched)
 
 audits/
   2026-06-16-RD1-merged-RD7-phase1-prereg-lock-d.md           # ex-ante outcome rule
@@ -72,12 +72,16 @@ audits/
 artifacts/
   panel_*.parquet                   # constructed panels (gitignored; SHA in JSON manifests)
   strategy_A_*.{csv,json}           # cell-level statistics + tradability + robustness
-  fig1_cumulative_pnl_summary.json  # machine-readable headline-figure numerics
+  fig2_vs_ff5umd_tangent_summary.json  # machine-readable headline-figure numerics
   phase1_is_oos_split.json          # IS / OOS SHA pin manifest
+
+data/
+  ff5_umd_monthly.jsonl             # Ken French 5-factor + UMD monthly returns
 
 reports/
   papers/RD1-strategy-A-paper-outline.md   # paper outline (full draft pending)
-  figures/fig1_cumulative_pnl.png           # publication + LinkedIn figure
+  papers/paper_v1_en.md                     # full English paper draft v1
+  figures/fig2_vs_ff5umd_tangent.png        # publication + LinkedIn figure
 ```
 
 ## Setup
@@ -117,7 +121,7 @@ python scripts/phase1_robustness_ff49.py            # FF49 partition (5/12)
 python scripts/phase1_robustness_extended_horizons.py  # 240/360/skip-week-1 (9/16)
 
 # 6. Publication + LinkedIn figure
-python scripts/make_pnl_figure.py                   # reports/figures/fig1_cumulative_pnl.png
+python scripts/make_pnl_figure_vol_matched.py       # reports/figures/fig2_vs_ff5umd_tangent.png
 ```
 
 ## Pre-registration discipline

@@ -1,6 +1,6 @@
 # 실적 발표 cadence 변동성으로 주식 cross-section alpha 만들기 (한국어 실무 보고)
 
-> Project RD1-merged-RD7 (`us_compustat_rdq_recognition_timing_xs`) 의 한국어 distill 보고. 영문 paper outline: [reports/papers/RD1-strategy-A-paper-outline.md](reports/papers/RD1-strategy-A-paper-outline.md). Phase 1 close audit: [audits/2026-06-16-RD1-merged-RD7-phase1-close.md](audits/2026-06-16-RD1-merged-RD7-phase1-close.md).
+> Project RD1-merged-RD7 (`us_compustat_rdq_recognition_timing_xs`) 의 한국어 distill 보고. 영문 paper outline: [reports/papers/RD1-strategy-A-paper-outline.md](reports/papers/RD1-strategy-A-paper-outline.md). Phase 1 close audit: [audits/2026-06-16-RD1-merged-RD7-phase1-close.md](audits/2026-06-16-RD1-merged-RD7-phase1-close.md). Headline figure (LinkedIn + paper): [reports/figures/fig2_vs_ff5umd_tangent.png](reports/figures/fig2_vs_ff5umd_tangent.png).
 >
 > **이 문서의 audience**: 회계/재무 background 있고 머신러닝 background 없어도 이해 가능하도록 작성. 모든 숫자는 [artifacts/](artifacts/) 의 JSON 에서 직접 검증 가능.
 
