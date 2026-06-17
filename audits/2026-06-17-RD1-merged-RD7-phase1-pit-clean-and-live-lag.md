@@ -119,12 +119,15 @@ The substantive read for the paper is: **the primary backtest specification was 
 
 ## §7 Vol-matched-to-benchmark figure (fig2)
 
-`scripts/make_pnl_figure_vol_matched.py` produces a publication-quality figure that:
+`scripts/make_pnl_figure_vol_matched.py` produces a publication-quality figure that uses **the same primary specification strategy as fig1** (calendar-month FF12 cross-section, rdq+1 forward window, composite of the four pre-registered primary cells A120-LH, A120-SH, A180-LH, A180-SL). The PIT-clean live-implementable variant from §3–§6 is NOT plotted here — its numerical result lives only in the audit / paper §5.x text. The deliberate choice is: fig2 should differ from fig1 only in the vol target and the addition of a benchmark line, not in the underlying strategy. This makes the figures intuitively comparable.
 
-1. Constructs the **composite strategy** (equal-weighted across the 4 mirror-of-primary cells from the live-implementable specification: A120-SW1-LH, A120-SW1-SH, A180-SW1-LH, A180-SW1-SL).
-2. Constructs the **FF5+UMD tangent benchmark**: the in-sample maximum-Sharpe combination of the six Fama-French five-factor portfolios (Mkt-RF, SMB, HML, RMW, CMA) and the Carhart momentum factor (UMD), computed via the closed-form Σ⁻¹μ. Both the strategy and the benchmark are long-short by construction, so the LS-vs-LS comparison is on the same footing.
-3. **Vol-matches** the strategy to the in-sample (1999–2016) realized annualized volatility of the tangent benchmark — no out-of-sample look-ahead in the scaling factor.
-4. Plots cumulative additive return (in percentage points), the convention appropriate for monthly observations drawn from overlapping H-day forward-return cohorts.
+The figure shows:
+
+1. **Strategy** = same composite as fig1.
+2. **Strategy, net** = strategy minus 20 bps/month round-trip transaction cost.
+3. **FF5+UMD tangent** = in-sample maximum-Sharpe combination of the six Fama-French five-factor portfolios (Mkt-RF, SMB, HML, RMW, CMA) and the Carhart momentum factor (UMD), computed via closed-form Σ⁻¹μ. Long-short by construction, so the LS-vs-LS comparison is on the same footing.
+
+The strategy is vol-matched to the in-sample annualized volatility of the tangent benchmark (3.9% / year), with the scaling factor calibrated on the in-sample window only.
 
 ### §7.1 Headline numerics
 
@@ -132,27 +135,21 @@ HAC-corrected annualized Sharpe (Newey–West lag 12):
 
 | Series | In-sample (1999–2016) | Out-of-sample (2017–2024) |
 |---|---:|---:|
-| FF5+UMD tangent (in-sample max-Sharpe) | 1.05 | 0.99 |
-| Strategy vol-matched (gross) | **1.31** | **1.45** |
-| Strategy vol-matched (net of 20 bps/month) | **1.23** | **1.38** |
+| Strategy gross | 1.06 | 0.87 |
+| Strategy net of 20 bps/month | 1.01 | 0.82 |
+| FF5+UMD tangent (in-sample max-Sharpe) | 1.05 | 1.01 |
 
-Terminal cumulative additive return at vol-matched levels (in-sample vol of 3.9% per year):
+Under the pre-registered primary specification, the strategy **roughly ties the FF5+UMD tangent in-sample (1.06 vs 1.05)** but **trails the tangent out-of-sample (0.87 vs 1.01)**. Net of transaction cost, the strategy trails the tangent in both windows. This is the honest LS-vs-LS comparison at matched volatility, and it is consistent with the pre-registered paper-practical PARTIAL verdict.
 
-| Series | Terminal |
-|---|---:|
-| Strategy gross | +140% |
-| Strategy net | +132% |
-| FF5+UMD tangent | +119% |
+### §7.2 Where the PIT-clean improvement enters
 
-**The strategy out-performs the FF5+UMD tangent benchmark on both in-sample and out-of-sample HAC-corrected Sharpe at matched vol**, both gross and net of 20 bps/month round-trip transaction cost. The out-of-sample Sharpe of 1.45 *exceeds* the in-sample Sharpe of 1.31 — the opposite of the primary specification's −19% degradation. (Caveat: the OOS read remains a post-hoc finding under a not-pre-registered specification — see §6.)
+The §3–§6 PIT-clean live-implementable variant (trailing 30-day FF12 cohort + skip-week-1 forward window) raises the strategy's HAC Sharpe to **1.23 IS / 1.38 OOS net**, exceeding the FF5+UMD tangent on both windows. The improvement from the primary specification is therefore not from vol-matching or benchmark choice; it is from the two methodology fixes (PIT-clean cross-section + skip-week-1 forward window) that the audit §1–§5 documents. Both fixes strengthen the signal because the within-month look-ahead and the rdq+1 week of PEAD contamination were *adding noise* to the primary specification, not *exploiting* future information.
 
-### §7.2 What this changes vs fig1
+For paper exposition, the disposition is:
 
-[fig1_cumulative_pnl.png](../reports/figures/fig1_cumulative_pnl.png) plotted the **primary specification** (calendar-month grouping, rdq+1 forward window) vol-scaled to a fixed 10% target; HAC Sharpe IS 1.01 / OOS 0.82, −19% degradation.
-
-[fig2_vs_ff5umd_tangent.png](../reports/figures/fig2_vs_ff5umd_tangent.png) plots the **PIT-clean live-implementable variant** vol-matched to the FF5+UMD tangent; HAC Sharpe IS 1.31 / OOS 1.45, +11% improvement out-of-sample. Strategy out-performs the factor tangent in both windows.
-
-Both figures remain in the artifact set. fig1 is the *pre-registered headline*; fig2 is the *post-hoc, live-implementable variant compared to the standard long-short benchmark*. The paper should present both — fig1 as the headline result of the pre-registered test, fig2 as the §5.x figure that shows what a practitioner attempting to implement the signal live would actually achieve relative to the factor-model benchmark.
+- **fig1 (cumulative growth at 10% vol target, no external benchmark)** is the headline figure for the pre-registered specification.
+- **fig2 (cumulative return at FF5+UMD tangent vol, with benchmark)** is the LS-vs-LS comparison at the standard factor-model benchmark, also for the pre-registered specification.
+- The PIT-clean live-implementable variant is **discussed in §5.x text** with the cell-level Bonferroni-12 table, not given its own figure.
 
 ## §8 Paper / README implications
 

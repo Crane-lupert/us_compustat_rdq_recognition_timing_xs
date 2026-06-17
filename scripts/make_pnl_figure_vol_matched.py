@@ -1,27 +1,21 @@
 """Vol-matched-to-LS-benchmark PnL figure (fig2).
 
-The cadence-variance strategy is a long-short portfolio. The natural benchmark
-is therefore an LS benchmark, not a long-only basket. The convention in the
-asset-pricing literature is to use the Fama-French 5-factor model plus Carhart
-momentum (UMD) as the LS benchmark, computed as the in-sample maximum-Sharpe
-tangent combination of the six factor portfolios. This is V5's make_fig1
-convention.
+Same strategy as fig1 (composite of the 4 pre-registered primary cells in the
+primary specification: calendar-month FF12 cross-section, rdq+1 forward window).
+The only differences from fig1 are:
+  (1) the vol target -- here, the in-sample annualized vol of the FF5+UMD
+      tangent benchmark, rather than fig1's 10% fixed target;
+  (2) the comparator -- here, the FF5+UMD tangent (a long-short factor-model
+      benchmark on the same vol footing), rather than fig1's strategy-only view.
+
+Both strategy and benchmark are long-short by construction.
 
 Inputs:
-  artifacts/strategy_A_pit_clean_monthly.csv  -- monthly Q1-Q5 spread per cell
-  data/ff5_umd_monthly.jsonl                  -- FF5 + UMD monthly factor returns (% per month)
+  artifacts/strategy_A_monthly_returns.csv  -- monthly Q1-Q5 spread per primary cell
+  data/ff5_umd_monthly.jsonl                -- FF5 + UMD monthly returns (% per month)
 
 Output:
   reports/figures/fig2_vs_ff5umd_tangent.png
-
-The figure:
-  - Strategy = composite (equal-weighted across 4 mirror-of-primary cells)
-  - Strategy net = composite minus 20 bps/month round-trip TC
-  - FF5+UMD tangent = in-sample max-Sharpe portfolio of (Mkt-RF, SMB, HML, RMW, CMA, MOM)
-  - Vol-match: strategy scaled so its in-sample annualized vol matches the
-    in-sample tangent vol (no out-of-sample look-ahead in the scaling factor)
-
-Compact layout: single panel, minimal legend, inline IS/OOS Sharpe text only.
 """
 from __future__ import annotations
 
@@ -48,7 +42,7 @@ IS_END = pd.Timestamp("2016-12-31")
 OOS_START = pd.Timestamp("2017-01-01")
 OOS_END = pd.Timestamp("2024-12-31")
 TC_PER_MONTH = 20 / 10_000  # 20 bps round-trip
-PRIMARY_MIRROR = ["A120-SW1-LH", "A120-SW1-SH", "A180-SW1-LH", "A180-SW1-SL"]
+PRIMARY_CELLS = ["A120-LH", "A120-SH", "A180-LH", "A180-SL"]
 FACTORS = ["Mkt-RF", "SMB", "HML", "RMW", "CMA", "MOM"]
 
 plt.rcParams.update({
@@ -100,11 +94,13 @@ def tangent_weights(returns: pd.DataFrame) -> np.ndarray:
 
 
 def main() -> int:
-    # ---- 1. Strategy: PIT-clean composite ----
-    strat_monthly = pd.read_csv(ART / "strategy_A_pit_clean_monthly.csv",
+    # ---- 1. Strategy: primary specification composite (same as fig1) ----
+    strat_monthly = pd.read_csv(ART / "strategy_A_monthly_returns.csv",
                                 index_col="month", parse_dates=True)
     strat_monthly = strat_monthly[strat_monthly.index <= OOS_END]
-    composite = strat_monthly[PRIMARY_MIRROR].mean(axis=1, skipna=True)
+    # Drop any trailing all-NaN rows so cumsum does not extend with flat fills.
+    strat_monthly = strat_monthly.dropna(how="all")
+    composite = strat_monthly[PRIMARY_CELLS].mean(axis=1, skipna=True).dropna()
     composite_net = composite - TC_PER_MONTH
 
     # ---- 2. FF5+UMD factors and IS-optimal tangent ----
@@ -162,7 +158,6 @@ def main() -> int:
     ax.plot(cg_tan.index, cg_tan.values, color="C3", linewidth=1.5,
             linestyle="--",
             label="FF5+UMD tangent (in-sample max-Sharpe)")
-    ax.axhline(0.0, color="black", linewidth=0.6, alpha=0.4)
 
     ymax = float(max(cg_strat_vm.max(), cg_tan.max()))
     ymin = float(min(cg_strat_vm.min(), cg_tan.min(), 0))
@@ -196,7 +191,7 @@ def main() -> int:
     )
     ax.set_title("Cadence-variance long-short vs FF5+UMD tangent")
     ax.legend(loc="upper left", framealpha=0.92, fontsize=9)
-    ax.grid(True, alpha=0.25)
+    ax.grid(True, alpha=0.15, linewidth=0.5, linestyle="-")
 
     fig.tight_layout()
     out = FIG_DIR / "fig2_vs_ff5umd_tangent.png"
