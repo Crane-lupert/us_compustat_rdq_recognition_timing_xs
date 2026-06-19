@@ -122,9 +122,20 @@ def main() -> int:
     strat_vm = composite * scale
     strat_net_vm = composite_net * scale
 
+    # ---- 3a. Strategy net of size-differentiated borrow (Scenario S1) ----
+    # Same composite as above, but with the realistic short-side borrow drag
+    # added on top of the 20 bps/month flat round-trip. See Section 5.4.5 of
+    # the paper for the borrow-fee schedule. Uses the same IS vol scaling
+    # factor so the line is directly comparable.
+    borrow_monthly = pd.read_csv(ART / "strategy_A_borrow_overlay_monthly.csv",
+                                 index_col="month", parse_dates=True)
+    composite_net_borrow = borrow_monthly["S1"].reindex(common)
+    strat_net_borrow_vm = composite_net_borrow * scale
+
     # ---- 4. Cumulative additive return ----
     cg_strat_vm = 100.0 * strat_vm.fillna(0).cumsum()
     cg_strat_net_vm = 100.0 * strat_net_vm.fillna(0).cumsum()
+    cg_strat_net_borrow_vm = 100.0 * strat_net_borrow_vm.fillna(0).cumsum()
     cg_tan = 100.0 * tangent.fillna(0).cumsum()
 
     # ---- 5. Sharpes ----
@@ -136,6 +147,8 @@ def main() -> int:
         "strat_vm_oos_sharpe": round(annualized_sharpe_hac(strat_vm[oos_mask]), 2),
         "strat_net_vm_is_sharpe": round(annualized_sharpe_hac(strat_net_vm[is_mask]), 2),
         "strat_net_vm_oos_sharpe": round(annualized_sharpe_hac(strat_net_vm[oos_mask]), 2),
+        "strat_net_borrow_is_sharpe": round(annualized_sharpe_hac(strat_net_borrow_vm[is_mask]), 2),
+        "strat_net_borrow_oos_sharpe": round(annualized_sharpe_hac(strat_net_borrow_vm[oos_mask]), 2),
         "terminal_strat_vm": round(float(cg_strat_vm.iloc[-1])),
         "terminal_strat_net_vm": round(float(cg_strat_net_vm.iloc[-1])),
         "terminal_tan": round(float(cg_tan.iloc[-1])),
@@ -153,12 +166,15 @@ def main() -> int:
     ax.plot(cg_strat_net_vm.index, cg_strat_net_vm.values, color="C0",
             linewidth=1.3, linestyle=":",
             label="Strategy, net of 20 bps/month")
+    ax.plot(cg_strat_net_borrow_vm.index, cg_strat_net_borrow_vm.values,
+            color="C2", linewidth=1.4, linestyle="-.",
+            label="Strategy, net of size-differentiated borrow")
     ax.plot(cg_tan.index, cg_tan.values, color="C3", linewidth=1.5,
             linestyle="--",
             label="FF5+UMD tangent (in-sample max-Sharpe)")
 
-    ymax = float(max(cg_strat_vm.max(), cg_tan.max()))
-    ymin = float(min(cg_strat_vm.min(), cg_tan.min(), 0))
+    ymax = float(max(cg_strat_vm.max(), cg_tan.max(), cg_strat_net_borrow_vm.max()))
+    ymin = float(min(cg_strat_vm.min(), cg_tan.min(), cg_strat_net_borrow_vm.min(), 0))
     pad = (ymax - ymin) * 0.10
     ax.set_ylim(ymin - pad, ymax + pad)
 
@@ -173,9 +189,10 @@ def main() -> int:
     # Inline compact Sharpe annotation (3 lines, near top-left under legend)
     sharpe_text = (
         f"HAC-corrected Sharpe (IS / OOS):\n"
-        f"   Strategy:                {stats['strat_vm_is_sharpe']:.2f} / {stats['strat_vm_oos_sharpe']:.2f}\n"
-        f"   Strategy, net:           {stats['strat_net_vm_is_sharpe']:.2f} / {stats['strat_net_vm_oos_sharpe']:.2f}\n"
-        f"   FF5+UMD tangent:         {stats['tan_is_sharpe']:.2f} / {stats['tan_oos_sharpe']:.2f}"
+        f"   Strategy:                            {stats['strat_vm_is_sharpe']:.2f} / {stats['strat_vm_oos_sharpe']:.2f}\n"
+        f"   Strategy, net of 20 bps/mo:          {stats['strat_net_vm_is_sharpe']:.2f} / {stats['strat_net_vm_oos_sharpe']:.2f}\n"
+        f"   Strategy, net of borrow:             {stats['strat_net_borrow_is_sharpe']:.2f} / {stats['strat_net_borrow_oos_sharpe']:.2f}\n"
+        f"   FF5+UMD tangent:                     {stats['tan_is_sharpe']:.2f} / {stats['tan_oos_sharpe']:.2f}"
     )
     ax.text(0.022, 0.62, sharpe_text, transform=ax.transAxes,
             fontsize=8.6, verticalalignment="top", horizontalalignment="left",

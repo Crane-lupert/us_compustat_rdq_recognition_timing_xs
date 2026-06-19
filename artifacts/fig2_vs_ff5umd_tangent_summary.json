@@ -6,6 +6,8 @@
   "strat_vm_oos_sharpe": 0.87,
   "strat_net_vm_is_sharpe": 1.01,
   "strat_net_vm_oos_sharpe": 0.82,
+  "strat_net_borrow_is_sharpe": 0.78,
+  "strat_net_borrow_oos_sharpe": 0.68,
   "terminal_strat_vm": 144,
   "terminal_strat_net_vm": 137,
   "terminal_tan": 120,
