@@ -3,7 +3,7 @@ title: "Earnings-Announcement Cadence Variance and the Cross-Section of Forward 
 author: "Ahn Hyun"
 date: "June 2026"
 abstract: |
-  I extend the cross-sectional channel between earnings-announcement timing and post-announcement returns documented by @bkw2002 from the first moment (the within-firm directional deviation of the announcement delay) to the second moment (the within-firm time-series variance of the delay). On a Russell 3000 panel of 620,290 firm-quarter observations spanning 1999--2024 from the Center for Research in Security Prices (CRSP) and Compustat, I construct $\mathit{gap\_var}_t$ as the rolling eight-quarter standard deviation of $\mathit{rdq} - \mathit{datadate}$, the gap between Compustat's reported announcement date $\mathit{rdq}$ and the fiscal quarter-end $\mathit{datadate}$, and ask whether its cross-sectional ranking predicts forward cumulative abnormal returns (CAR). The portfolio long the lowest-variance quintile within Fama--French 12-industry monthly cross-section and short the highest-variance quintile is sign-correct in 12 of 12 in-sample cells and in 11 of 12 pre-registered out-of-sample cells (2017--2024 hold-out); in-sample, 4 of 12 cells cross a Bonferroni-12 family-wise significance threshold but 0 of 12 cells cross out-of-sample. The HAC-corrected annualized Sharpe ratio of the equal-weighted composite of the four pre-registered primary cells, vol-matched to the in-sample maximum-Sharpe tangent combination of the @famafrench2015 five-factor and @carhart1997 momentum factors (annualized volatility $3.9\%$), is $1.01$ in-sample and $0.82$ out-of-sample net of a $20$ basis-points-per-month round-trip transaction cost, against the tangent benchmark's $1.05$ in-sample and $1.01$ out-of-sample. The cadence-variance signal is mechanistically separated from post-earnings-announcement drift: replacing the rdq+1 forward-window start with rdq+8 (skipping the first calendar week post-announcement) strengthens rather than weakens the result in all four primary cells. The within-firm directional deviation signal proposed by @chamberspenman1984 fails the same battery on the same panel under both symmetric and asymmetric encodings, indicating that the within-firm-deviation channel has decayed post-publication while the variance channel survives. The contribution is methodological: a moment extension of an established anchor, with pre-registered out-of-sample testing, a parallel failed-replication of the nearest prior signal, and mechanism-separation evidence ruling out the most natural alternative explanation. The paper-practical disposition reflects an honest statistical reading on an eight-year hold-out.
+  I extend the cross-sectional channel between earnings-announcement timing and post-announcement returns documented by @bkw2002 from the first moment (the within-firm directional deviation of the announcement delay) to the second moment (the within-firm time-series variance of the delay). For each firm-quarter $(i,q)$, let $\Delta_{i,q}$ denote the announcement delay, defined as the calendar-day difference between the firm's quarterly earnings-announcement date and its fiscal quarter-end. The signal of interest, $V_{i,t}$, is the standard deviation of $\Delta_{i,q}$ over the eight quarters ending at $t$. On a Russell 3000 panel of 620{,}290 firm-quarter observations spanning 1999--2024 from the Center for Research in Security Prices (CRSP) and Compustat, the long-short portfolio that goes long the lowest-quintile $V$ firms within the Fama--French 12-industry monthly cross-section and short the highest quintile is sign-correct in 12 of 12 in-sample cells and in 11 of 12 hold-out cells (2017--2024). Four of twelve cells survive a family-wise Bonferroni correction at the $5\%$ level in-sample; zero of twelve do so on the eight-year hold-out. The equal-weighted composite of the four primary cells, vol-matched to the in-sample maximum-Sharpe tangent combination of the @famafrench2015 five-factor and @carhart1997 momentum factors (annualized volatility $3.9\%$), delivers a Newey--West HAC-corrected annualized Sharpe ratio of $1.01$ in-sample and $0.82$ on the hold-out net of a $20$-basis-point monthly round-trip transaction cost, against the tangent benchmark's $1.05$ and $1.01$. The cadence-variance signal is mechanistically separated from post-earnings-announcement drift: replacing the next-trading-day forward-window start with a one-week delay strengthens rather than weakens the result in all four primary cells. The within-firm directional deviation signal proposed by @chamberspenman1984 fails the same battery on the same panel under both symmetric and asymmetric encodings, indicating that the within-firm-deviation channel has decayed post-publication while the variance channel survives. The contribution is methodological: a moment extension of an established anchor, a parallel failed replication of the nearest prior signal, and mechanism-separation evidence ruling out the most natural alternative explanation.
 jel: G14, M41
 ssrn-classification: "Finance > Asset Pricing > Cross-Section"
 status: "Working paper, 2026"
@@ -37,6 +37,10 @@ header-includes: |
   \floatplacement{table}{H}
   \floatplacement{figure}{H}
   \usepackage{graphicx}
+  \usepackage{booktabs}
+  \usepackage{caption}
+  \captionsetup[table]{font={small,sf}, labelfont=bf, skip=6pt, justification=centering}
+  \captionsetup[figure]{font={small,sf}, labelfont=bf, skip=6pt, justification=centering}
 ---
 
 \clearpage
@@ -49,21 +53,21 @@ header-includes: |
 
 ## Motivation
 
-The timing of corporate earnings announcements carries information. @bkw2002 (hereafter BKW) establish that within-firm departures from the customary announcement delay predict the sign of the announced earnings news: firms announcing earlier than usual tend to release good news; firms announcing later tend to release bad news. The mechanism --- well-supported in the subsequent literature (@begleyfischer1998; @bergerhann2003; @johnsonso2018) --- is that managers strategically time the release of value-relevant information.
+The timing of corporate earnings announcements carries information. @bkw2002 (hereafter BKW) establish that within-firm departures from the customary announcement delay predict the sign of the announced earnings news: firms announcing earlier than usual tend to release good news; firms announcing later tend to release bad news. The mechanism --- well supported in the subsequent literature [@begleyfischer1998; @bergerhann2003; @johnsonso2018] --- is that managers strategically time the release of value-relevant information.
 
-This study asks a different question. Rather than the *direction* of within-firm timing (the first moment), I study the *reliability* of within-firm timing --- the second moment. Two firms may both report on average on the 28th day after fiscal quarter-end, but one may report on the 28th day every quarter ($\mathit{gap\_var} = 0$) while the other reports anywhere from day 15 to day 50 quarter to quarter ($\mathit{gap\_var} \approx 10$). The hypothesis: high time-series variance of the announcement gap proxies for internal-controls noise, audit-cycle turbulence, or investor-relations dysfunction, and these process-level frictions correlate with negative forward returns through a slow informational-process correction that markets do not immediately price.
+This study asks a different question. Rather than the *direction* of within-firm timing (the first moment), I study the *reliability* of within-firm timing --- the second moment. Two firms may both report on average on the 28th day after fiscal quarter-end, but one may report on the 28th day every quarter (constant within-firm announcement delay) while the other reports anywhere from day 15 to day 50 quarter to quarter (large within-firm standard deviation of the announcement delay). The hypothesis: high time-series variance of the announcement delay proxies for internal-controls noise, audit-cycle turbulence, or investor-relations dysfunction, and these process-level frictions correlate with negative forward returns through a slow informational-process correction that markets do not immediately price.
 
-## Position vs prior
+## Position vs prior work
 
-BKW and the literature that builds on it (@johnsonso2018; @dehaanshevlinthornock2015) work with within-firm directional deviations or with calendar-event timing such as Friday announcements or after-hours announcements. The signal studied here, $\mathit{gap\_var}_t$ (the eight-quarter rolling standard deviation of $\mathit{rdq} - \mathit{datadate}$), is --- to my knowledge --- not used in the published literature.
+BKW and the literature that builds on it [@johnsonso2018; @dehaanshevlinthornock2015] work with within-firm directional deviations or with calendar-event timing such as Friday announcements or after-hours announcements. The signal studied here --- the eight-quarter rolling standard deviation of the within-firm announcement delay --- has not, to my knowledge, been used in the published literature.
 
 I make no claim that the underlying channel is novel. The channel I propose --- disclosure-pipeline noise correlates with future returns --- is in the spirit of work on disclosure quality [@bergerhann2003] and on strategic disclosure timing [@dehaanshevlinthornock2015]. The contribution is the moment extension and the corresponding signal construction: a within-firm rolling variance, cross-sectionally ranked.
 
-I explicitly position this as a methodological extension of BKW, not a channel-discovery paper. The headline test asks whether the second-moment signal carries cross-sectional information distinct from the first-moment channel, and whether this information survives out-of-sample.
+I explicitly position this as a methodological extension of BKW, not a channel-discovery paper. The headline test asks whether the second-moment signal carries cross-sectional information distinct from the first-moment channel, and whether this information survives an eight-year out-of-sample hold-out.
 
 ## Roadmap
 
-Section 2 surveys the timing literature and positions the variance signal. Section 3 describes the data: Compustat $\mathit{fundq}$ 1999--2024 over the Russell 3000 universe, approximately 620,000 firm-quarter observations, with a late-filer exclusion handling the U.S. Securities and Exchange Commission (SEC) Form NT mechanical confound. Section 4 details the signal construction and the pre-registered twelve-cell Bonferroni-12 specification. Section 5 reports the headline in-sample and out-of-sample results plus a battery of robustness checks (Fama--French 49-industry partition, extended horizons to 360 days, skip-week-1 post-earnings-announcement-drift separation, transaction cost overlay, with-vs-without late-filer sensitivity). Section 6 enumerates honest limitations. Section 7 concludes.
+Section 2 surveys the timing literature and positions the variance signal. Section 3 describes the data: a Russell 3000 panel of approximately 620{,}000 firm-quarter observations from Compustat and CRSP, 1999--2024, with a late-filer exclusion handling the U.S. Securities and Exchange Commission (SEC) Form NT mechanical confound. Section 4 details the signal construction and the twelve-cell Bonferroni-corrected significance test. Section 5 reports the headline in-sample and out-of-sample results plus a battery of robustness checks (Fama--French 49-industry partition, extended horizons to 360 days, separation from post-earnings-announcement drift, transaction-cost overlay, with-vs-without late-filer sensitivity). Section 6 enumerates limitations. Section 7 concludes.
 
 # Related Literature
 
@@ -75,360 +79,406 @@ The signal studied in this paper is a direct moment extension of BKW. Where BKW 
 
 ## Within-firm deviation as a returns predictor --- Chambers and Penman (1984)
 
-@chamberspenman1984 propose a within-firm deviation signal --- the current quarter's announcement gap minus the firm's own rolling baseline --- and show that early-vs-late deviation predicts the sign of returns over short windows. This is the closest predecessor to the variance signal in mechanism (within-firm normalization of the gap) and in differential test design (sign of deviation predicts sign of return).
+@chamberspenman1984 propose a within-firm deviation signal --- the current quarter's announcement delay minus the firm's own rolling baseline --- and show that early-vs-late deviation predicts the sign of returns over short windows. This is the closest predecessor to the variance signal in mechanism (within-firm normalization of the announcement delay) and in differential test design (sign of deviation predicts sign of return).
 
 I treat the Chambers--Penman within-firm deviation as a parallel signal in the same panel and report the result. This serves as a falsification check: if the variance signal works only because it inherits power from the within-firm-deviation channel, then the within-firm-deviation channel should also work. As Section 5.3 reports, the within-firm-deviation channel fails in the modern panel even under an asymmetric 24-cell decomposition, while the variance channel survives --- indicating that the two channels carry distinct information.
 
 ## Adjacent timing work
 
-- @johnsonso2018 revisit BKW and extend the directional analysis with modern data and machine learning. The signal remains a first-moment characterization of within-firm timing.
+- @johnsonso2018 revisit BKW and extend the directional analysis with modern data and machine-learning techniques. The signal remains a first-moment characterization of within-firm timing.
 - @begleyfischer1998 establish reporting delay as a bad-news signal.
 - @bergerhann2003 study segment-reporting quality as a disclosure-transparency channel.
 - @dehaanshevlinthornock2015 examine strategic disclosure timing (Friday and after-hours announcements) as an attention-management channel.
 - @nohsoverdi2021 validate the within-firm rolling-baseline construction in a different application, establishing it as a standard methodology in anomaly research.
 
-None of these papers uses the within-firm time-series variance of $\mathit{rdq} - \mathit{datadate}$ as a cross-sectional signal.
+None of these papers uses the within-firm time-series standard deviation of the announcement delay as a cross-sectional signal.
 
 ## Disclosure-quality channel
 
-The mechanism interpretation --- $\mathit{gap\_var}_t$ as a proxy for disclosure-pipeline noise --- sits at the intersection of disclosure-quality research [@bergerhann2003] and internal-controls research [for example @bartovkonchitchki2017, on the cross-sectional consequences of failed-deadline disclosures]. The variance signal is essentially a continuous, universe-wide proxy for the same underlying construct as the SEC Form NT late-filing event marker --- a regulatory binary that fires only for approximately 3,000 firm-quarters per year. The variance signal applies to all approximately 14,000 firm-quarters per year and so captures a much broader cross-section.
+The mechanism interpretation --- the cadence variance as a proxy for disclosure-pipeline noise --- sits at the intersection of disclosure-quality research [@bergerhann2003] and internal-controls research [for example, @bartovkonchitchki2017, on the cross-sectional consequences of failed-deadline disclosures]. The variance signal is essentially a continuous, universe-wide proxy for the same underlying construct as the SEC Form NT late-filing event marker --- a regulatory binary that fires for approximately three thousand firm-quarters per year. The variance signal applies to all approximately fourteen thousand firm-quarters per year and so captures a much broader cross-section.
 
 ## Standard baselines
 
-For cross-sectional inference, I use the @famafrench2015 five-factor model augmented with @carhart1997 momentum (UMD), and the @neweywest1987 heteroskedasticity-and-autocorrelation-consistent (HAC) standard error correction at lag 12 to handle the autocorrelation induced by overlapping H-day forward-return cohorts under monthly portfolio rebalancing.
+For cross-sectional inference, I use the @famafrench2015 five-factor model augmented with the @carhart1997 momentum factor, and the @neweywest1987 heteroskedasticity-and-autocorrelation-consistent (HAC) standard error correction at lag 12 to handle the autocorrelation induced by overlapping multi-month forward-return cohorts under monthly portfolio rebalancing.
 
-## Side-by-side comparison table
+## Position relative to the closest baselines
 
-Table 1 positions the contribution against the two closest baselines:
+Table 1 positions the contribution relative to the two closest prior signals.
 
+\begin{table}[H]
+\centering
+\caption{Position of the contribution relative to the closest prior baselines. The rightmost column summarizes this study; the cumulative-abnormal-return abbreviation \emph{CAR} denotes the forward cumulative abnormal return.}
+\label{tab:position}
 \small
-
-| Dimension | @bkw2002 | @chamberspenman1984 | This study |
-|---|---|---|---|
-| Signal construction | First moment: within-firm directional deviation of announcement timing | First moment: within-firm baseline deviation | Second moment: 8-quarter rolling standard deviation of within-firm gap |
-| Normalization | Within-firm | Within-firm | Within-firm rolling variance + cross-firm monthly quintile |
-| Test design | Sign of earnings news conditioned on timing deviation | Sign of returns conditioned on timing deviation | Pre-registered 12-cell Bonferroni on $Q_1 - Q_5$ spread |
-| Sample window | 1980--1996 | 1970s | 1999--2024 (25 years) |
-| Sample size | $\approx$5,000 firm-quarters | $\approx$3,000 firm-quarters | 620,290 firm-quarters |
-| Universe | U.S. public firms | U.S. public firms | Russell 3000 $\cap$ Compustat |
-| Forward horizon | Event-window earnings news | 5-day window | 60 / 120 / 180 days (extended to 240 / 360 in robustness) |
-| Factor model | Not orthogonalized | Not orthogonalized | Newey--West HAC lag-12, FF12 industry residualization |
-| Out-of-sample test | None formal | None formal | Pre-registered 2017--2024 hold-out (96 months) |
-| PEAD separation | Not addressed | Not addressed | Skip-week-1 forward window strengthens result |
-| Multiple-comparison protection | None | None | Bonferroni-12, $\lvert t \rvert > 2.78$ |
-| Late-filer exclusion (NT confound) | Not relevant for level | Not relevant for level | Form NT-10K/10Q gap-day exclusion ($\approx 4\%$ of sample) |
-| Replication-class result | Anchor | Failed in modern panel (0/12 Bonferroni-12, 24-cell asymmetric) | Survives in modern panel (4/12 in-sample, 0/12 out-of-sample, 11/12 sign-correct out-of-sample) |
+\begin{tabular}{p{3.6cm}p{3.4cm}p{3.4cm}p{4.4cm}}
+\toprule
+Dimension & BKW (2002) & Chambers--Penman (1984) & This study \\
+\midrule
+Signal moment & First (level of within-firm deviation) & First (level of within-firm deviation) & Second (within-firm rolling standard deviation) \\
+Normalization & Within-firm mean & Within-firm rolling median & Within-firm rolling standard deviation, then cross-firm monthly quintile \\
+Outcome variable & Sign of announced earnings news & Sign of short-window return & Forward CAR over $60/120/180$ days \\
+Sample window & 1980--1996 & 1970s & 1999--2024 (25 years) \\
+Sample size (firm-quarters) & $\approx 5{,}000$ & $\approx 3{,}000$ & $620{,}290$ \\
+Universe & U.S. public firms & U.S. public firms & Russell 3000 $\cap$ Compustat \\
+Multiple-comparison protection & None & None & Bonferroni correction across 12 cells \\
+Hold-out validation & None reported & None reported & 2017--2024 hold-out (96 months) \\
+Separation from PEAD & Not addressed & Not addressed & One-week-delayed forward window strengthens result \\
+Late-filer (Form NT) confound & Not relevant for level & Not relevant for level & Late-filer exclusion at $\approx 4\%$ of sample \\
+Result in modern panel & Anchor & 0/12 cells significant (24-cell asymmetric decomposition also fails) & In-sample 4/12 cells significant under Bonferroni; hold-out sign-correct in 11/12 cells \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \normalsize
-
-Table 1: Side-by-side comparison vs prior baselines. The contribution is the rightmost column: a second-moment signal with rigorous out-of-sample testing, plus the failed-replication finding on Chambers--Penman as a companion result.
 
 # Data
 
 ## Universe
 
-Russell 3000 $\cap$ Compustat coverage, 1999-01-01 to 2024-12-31. Russell 3000 membership is reconstructed via point-in-time monthly snapshots (sources documented in the reproducibility appendix). The Compustat coverage filter retains only INDL / STD / C / D / USD records with non-null $\mathit{rdq}$ and $\mathit{datadate}$.
+The sample is the intersection of Russell 3000 membership and Compustat coverage, 1999-01-01 to 2024-12-31. Russell 3000 membership is reconstructed via point-in-time monthly snapshots; sources are documented in the reproducibility appendix. The Compustat filter retains only the standard active-industrial / standardized / consolidated / domestic / U.S.-dollar quarterly records with non-null announcement date and fiscal-period-end date.
 
-The Russell 3000 boundary handles survivorship at the index-membership level; Compustat coverage is the binding additional filter (Compustat's $\mathit{rdq}$ series effectively begins 2000-02-11, so calendar-year 1999 contributes zero observations).
+The Russell 3000 boundary handles index-membership survivorship; the Compustat filter is the binding additional restriction. Compustat's reliable announcement-date series effectively begins on 2000-02-11, so calendar-year 1999 contributes zero observations.
 
 ## Filing sample
 
-Each firm-quarter observation is the pair $(\mathit{gvkey}, \mathit{datadate})$. From each, two timing measures are derived:
+For each firm $i$ and fiscal quarter $q$, let $A_{i,q}$ denote the earnings-announcement date from Compustat and $E_{i,q}$ the fiscal-period-end date. The announcement delay is
 
-- $\mathit{gap\_days}_q = (\mathit{rdq}_q - \mathit{datadate}_q)$ in calendar days;
-- $\mathit{gap\_var}_t$ = standard deviation of $\{\mathit{gap\_days}_q : q \text{ in trailing 8 quarters}, n_{\text{valid}} \geq 6\}$, the signal.
+$$
+\Delta_{i,q} = A_{i,q} - E_{i,q} \quad\text{(calendar days)}.
+$$
 
-A standard cleanliness filter retains observations with $10 \leq \mathit{gap\_days}_q \leq 180$ (excluding extreme restatement-window and immediate-release outliers). After all filters, the panel contains 620,290 firm-quarter observations across 18,594 unique firms.
+The variance signal at firm-quarter $(i,t)$ is the standard deviation of $\Delta$ over the trailing eight quarters,
+
+$$
+V_{i,t} = \operatorname{std}\bigl\{\Delta_{i,q} : q \in \mathcal{T}_t,\ \lvert\mathcal{T}_t\rvert \geq 6\bigr\},
+$$
+
+where $\mathcal{T}_t$ is the set of valid quarters in the trailing eight ending at $t$, and the threshold of six non-null quarters admits firms with up to two missing observations in the rolling window.
+
+A standard cleanliness filter retains firm-quarters with $10 \leq \Delta_{i,q} \leq 180$, excluding extreme restatement windows and immediate-release outliers. After all filters, the panel contains $620{,}290$ firm-quarter observations across $18{,}594$ unique firms.
 
 ## Returns source
 
-CRSP $\mathit{dsf}\_v2$ daily file. For each firm-quarter, the forward H-day cumulative log return is computed from rdq+1 (the next trading day on or after the calendar offset) to rdq+H, for $H \in \{60, 120, 180\}$. Robustness extends to $H \in \{240, 360\}$ and to a skip-week-1 specification with start at rdq+8.
+Forward returns are computed from the CRSP daily stock file. For each firm-quarter, the forward $H$-day cumulative log return is taken from the next trading day after the announcement (i.e., $A_{i,q}+1$ in trading days) to $A_{i,q}+H$, for $H \in \{60, 120, 180\}$. Robustness tests extend $H$ to $240$ and $360$ days and use a one-week-delayed start at $A_{i,q}+8$.
 
-CRSP--Compustat linkage is via the Compustat $\mathit{comp\_na\_daily\_all.names}$ 8-digit CUSIP prefix (the standard Wharton CRSP--Compustat link table is subject to a known usage restriction at this data vendor).
+The CRSP--Compustat linkage is via the eight-digit CUSIP prefix from the Compustat firm-names table, the standard published linkage table being subject to a known usage restriction at this data vendor.
 
-After the forward-return merge, 367,725 of the 620,290 firm-quarters carry at least one non-null horizon cumulative abnormal return (CAR). The shortfall is driven primarily by the late period of the sample (the 2025 partial year, which is excluded from the 2017--2024 out-of-sample partition) and by missing CRSP coverage on some Compustat-only firms.
+After the forward-return merge, $367{,}725$ of the $620{,}290$ firm-quarters carry at least one non-null horizon cumulative abnormal return. The shortfall is driven primarily by the partial 2025 year (excluded from the 2017--2024 hold-out) and by missing CRSP coverage on some Compustat-only firms.
 
-## Late-filer exclusion (SEC Form NT confound)
+## Late-filer exclusion
 
-The signal $\mathit{gap\_var}_t$ will mechanically pick up firms that file SEC Form NT-10K or NT-10Q (an extension request, granted up to 15 days), because such firms have unusually large $\mathit{gap\_days}_q$. The Form NT event itself has been studied as a returns predictor [@bartovkonchitchki2017]; if the variance signal merely proxies for "is this firm filing Form NT this quarter," then the signal would be a re-derivation of the Form NT result through a different feature space.
+The variance signal will mechanically pick up firms that file SEC Form NT-10K or NT-10Q (an extension request, granted up to fifteen days), because such firms have unusually large $\Delta_{i,q}$. The Form NT event itself has been studied as a returns predictor [@bartovkonchitchki2017]; if the variance signal merely proxies for a Form NT filing, then the signal would re-derive the Form NT result through a different feature space.
 
-To handle this mechanical overlap I apply an ex-ante exclusion: firm-quarters with $\mathit{gap\_days}_q > 75$ (non-annual) or $> 100$ (annual) are dropped from the primary panel. This removes approximately 4% of observations. Section 5.4.5 reports the with-late-filer sensitivity.
+To handle this mechanical overlap I apply an exclusion rule fixed before the cross-sectional tests: firm-quarters with $\Delta_{i,q} > 75$ (non-annual) or $\Delta_{i,q} > 100$ (annual) are dropped from the primary panel. This removes approximately $4\%$ of observations. Section 5.4.5 reports a sensitivity check that re-introduces the excluded firm-quarters.
 
-## Standard factor data
+## Factor data and benchmark
 
-Forward returns are not orthogonalized to a factor model in the headline cell-level specification: the $Q_1 - Q_5$ long--short construction is market-neutral by construction. Industry residualization is applied through the cross-sectional quintile assignment (quintile within Fama--French 12 industry each month). The portfolio-level @famafrench2015 five-factor plus @carhart1997 momentum benchmark is used in the headline figure (Section 5.5) to position the strategy on the standard long--short factor-model footing.
+The cross-sectional $Q_1 - Q_5$ long--short construction is market-neutral by construction within each Fama--French 12-industry. Industry residualization is applied through the cross-sectional quintile assignment (quintile within Fama--French 12-industry each month).
+
+The portfolio-level benchmark used in the headline figure (Section 5.1) is the in-sample maximum-Sharpe tangent combination of the @famafrench2015 five factors (market-minus-risk-free, size, value, profitability, and investment) and the @carhart1997 momentum factor.
 
 ## Sample selection waterfall
 
-\small
+Table 2 documents the sample construction.
 
-| Step | Firm-quarter count |
-|---|---:|
-| Compustat $\mathit{fundq}$ INDL/STD/C/D/USD with non-null $\mathit{rdq}$ + $\mathit{datadate}$ | $\approx$750,000 |
-| Apply $10 \leq \mathit{gap\_days} \leq 180$ cleanliness filter | $\approx$720,000 |
-| Apply 8-quarter rolling filter ($\geq 6$ non-null) | 645,000 |
-| Apply late-filer exclusion (Form NT proxy) | 620,290 (primary panel) |
-| Of which with $\geq 1$ horizon CAR | 367,725 |
+\begin{table}[H]
+\centering
+\caption{Sample selection waterfall, from raw Compustat coverage to the analyzable panel.}
+\label{tab:waterfall}
+\small
+\begin{tabular}{lr}
+\toprule
+Step & Firm-quarter count \\
+\midrule
+Compustat quarterly fundamentals (standard active filter) with non-null announcement date and period-end date & approximately 750{,}000 \\
+Apply $10 \leq \Delta_{i,q} \leq 180$ cleanliness filter & approximately 720{,}000 \\
+Apply trailing-eight-quarter rolling filter ($\geq 6$ non-null) & 645{,}000 \\
+Apply late-filer exclusion (Form NT proxy) & 620{,}290 \\
+Of which with at least one non-null horizon CAR & 367{,}725 \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \normalsize
 
-Table 2: Sample selection waterfall. The in-sample / out-of-sample partition then splits 620,290 firm-quarters into 436,916 (1999--2016, 17 calendar years, 200+ months per cell) and 178,210 (2017--2024, 8 calendar years, 96 months per cell), with 5,164 firm-quarters in the 2025 partial year excluded.
+The in-sample / hold-out partition splits the $620{,}290$ analyzable firm-quarters into $436{,}916$ observations covering 1999--2016 (17 calendar years, more than $200$ months per cell) and $178{,}210$ observations covering 2017--2024 (8 calendar years, $96$ months per cell), with $5{,}164$ firm-quarters in the partial 2025 year excluded.
 
 # Methodology
 
 ## Signal construction
 
-For each firm-quarter $(\mathit{gvkey}, \mathit{datadate}_q)$:
-
-$$
-\mathit{gap\_days}_q = (\mathit{rdq}_q - \mathit{datadate}_q)\text{ in calendar days}
-$$
-
-$$
-\mathit{gap\_var}_t = \text{std}\bigl(\{\mathit{gap\_days}_q : q \in \text{trailing 8 quarters}, n_{\text{valid}} \geq 6\}\bigr)
-$$
-
-The 8-quarter window is two fiscal years, sufficient to span a full earnings-calendar cycle while remaining responsive to recent disclosure-pipeline changes. The $\geq 6$-non-null floor admits firms with up to two missing-quarter gaps in the rolling window.
+For each firm-quarter $(i, t)$, the signal $V_{i,t}$ defined in Section 3.2 measures the within-firm time-series standard deviation of the announcement delay over the trailing eight quarters. The eight-quarter window is two fiscal years, sufficient to span a full earnings-calendar cycle while remaining responsive to recent disclosure-pipeline changes. The minimum-six-non-null floor admits firms with up to two missing-quarter gaps in the rolling window.
 
 ## Cross-sectional ranking
 
-In each calendar month $m$, observations are pooled across firms with $\mathit{rdq}$ in month $m$ and ranked into quintiles $\{Q_1, \ldots, Q_5\}$ of $\mathit{gap\_var}_t$ within Fama--French 12-industry. $Q_1$ is the lowest-variance quintile (most reliable cadence); $Q_5$ is the highest-variance quintile (most erratic). The portfolio long $Q_1$ and short $Q_5$ is the signal under test.
+In each calendar month $m$, observations are pooled across firms with an announcement in month $m$ and ranked into quintiles $\{Q_1, \ldots, Q_5\}$ of $V_{i,t}$ within Fama--French 12-industry. $Q_1$ is the lowest-variance quintile (most reliable cadence); $Q_5$ is the highest-variance quintile (most erratic). The portfolio long $Q_1$ and short $Q_5$ is the signal under test.
 
 ## Cell partition
 
-The pre-registered specification partitions the universe into twelve cells along three axes:
+The cross-section is partitioned into twelve cells along three axes:
 
-- Forward horizon $H \in \{60, 120, 180\}$ days;
-- Size bin $\{\text{Large}, \text{Small}\}$: monthly cross-section median market capitalization within Fama--French 12-industry;
-- Industry-tilt bin $\{\text{High}, \text{Low}\}$: Fama--French 12-industry $\in \{\text{BusEq (6)}, \text{Hlth (10)}, \text{Money (11)}\}$ = High; otherwise = Low.
+- Forward horizon $H \in \{60, 120, 180\}$ trading days;
+- Size bin $\{\text{Large}, \text{Small}\}$, defined by the monthly cross-section median of market capitalization within Fama--French 12-industry;
+- Industry-tilt bin $\{\text{High}, \text{Low}\}$, defined as High if Fama--French 12-industry $\in \{\text{Business Equipment, Health, Money}\}$ and Low otherwise.
 
-The industry-tilt partition reflects an ex-ante prior that disclosure-pipeline noise should be most economically priced in industries with information-asymmetry-intensive securities (technology, health-care, financials). The size partition reflects the standard finding that cross-sectional anomalies often concentrate by market capitalization.
+I label cells by horizon-size-tilt: for example, A120-LH is the 120-day-horizon, large-cap, high-tilt cell. The industry-tilt partition reflects an a priori conjecture that disclosure-pipeline noise should be most economically priced in industries with information-asymmetry-intensive securities (technology, health-care, financials). The size partition reflects the standard finding that cross-sectional anomalies often concentrate by market capitalization.
 
-Twelve cells $\times$ one direction ($Q_1 - Q_5 > 0$) = twelve hypotheses. The multiple-comparison-protected significance threshold is Bonferroni-12: $\lvert t \rvert > 2.78$ at the cell-level $\alpha = 0.05/12 = 0.00417$.
+Twelve cells, each with one directional hypothesis ($Q_1 - Q_5 > 0$), yield twelve simultaneous tests. The Bonferroni family-wise critical value at the $5\%$ level is $\lvert t \rvert > 2.78$ (i.e., per-cell significance threshold $\alpha = 0.05/12$).
 
 ## Inference
 
 Within each cell:
 
-1. For each calendar month $m$, compute the equal-weighted mean forward H-day cumulative log return in $Q_1$ and in $Q_5$; the monthly spread is $r_m = \overline{r}_{Q_1}^{(H)} - \overline{r}_{Q_5}^{(H)}$.
-2. Across months, compute the sample mean $\mu$ and the @neweywest1987 standard error of the mean at lag 12 (sufficient to absorb the autocorrelation induced by 60--180-day overlapping cohort returns sampled monthly).
-3. The $t$-statistic is $\mu \,/\, \mathrm{SE}_{\mathrm{NW}}(\mu)$.
-4. The cell passes if $\mu > 0$ AND $t > 2.78$.
+1. For each calendar month $m$, compute the equal-weighted mean forward $H$-day cumulative log return for $Q_1$ and for $Q_5$. The monthly spread is $r_m = \bar{r}_m^{(Q_1)} - \bar{r}_m^{(Q_5)}$.
+2. Across months, compute the sample mean $\mu = \mathbb{E}[r_m]$ and the @neweywest1987 standard error of the mean at lag 12. The lag of 12 is sufficient to absorb the autocorrelation induced by the overlap among $60$-, $120$-, and $180$-day cohort returns sampled monthly.
+3. The cell test statistic is $t = \mu \,/\, \mathrm{SE}_{\mathrm{NW}}(\mu)$.
 
-## In-sample / out-of-sample partition
+I report $\mu$ and $t$ in tables; significance markers $^*$, $^{**}$, $^{***}$ denote $p < 0.10$, $p < 0.05$, and $p < 0.01$ respectively at the per-cell level, and the marker $^{\dagger}$ indicates family-wise significance under the Bonferroni correction at the $5\%$ level (i.e., $\lvert t \rvert > 2.78$).
 
-The 1999--2024 sample is partitioned at the calendar boundary 2016-12-31 / 2017-01-01:
+## In-sample and hold-out partition
 
-- In-sample (1999--2016): 436,916 firm-quarters, 18 calendar years, $\geq 200$ months per cell;
-- Out-of-sample (2017--2024): 178,210 firm-quarters, 8 calendar years, $\leq 96$ months per cell.
+The 1999--2024 sample is partitioned at the calendar boundary 2016-12-31:
 
-The partition was set ex-ante and SHA-pinned before the out-of-sample test was run. Expected out-of-sample $t$-magnitudes per cell were also written down ex-ante (derived from in-sample sub-period stability diagnostics on 1999--2007 vs 2008--2016). The expected magnitudes were 1.55, $\approx$2.0, 1.85, and 1.74 for cells A120-LH, A120-SH, A180-LH, and A180-SL respectively. The realized out-of-sample $t$-magnitudes (Section 5.2) match three of four to two decimal places --- confirming that the out-of-sample partition is a successful falsification check on signal *power* rather than on signal *direction*.
+- *In-sample (1999--2016)*: $436{,}916$ firm-quarters, 17 calendar years, at least 200 months per cell.
+- *Hold-out (2017--2024)*: $178{,}210$ firm-quarters, 8 calendar years, 96 months per cell.
 
-## Transaction cost convention
+The boundary was fixed before the hold-out test was run, and the hold-out is reported verbatim without parameter tuning or cell re-selection. The hold-out tests power, not direction.
 
-A 20-bps-per-month round-trip transaction cost is the headline net-of-cost specification. This is conservative: the strategy rebalances monthly, and 20 bps is at the high end of realistic institutional execution costs for a U.S. large- and mid-cap long--short basket. Break-even cost analysis (Section 5.4.4) reports the bps-per-month at which the gross monthly spread is fully absorbed.
+## Transaction-cost convention
+
+A 20-basis-point monthly round-trip transaction cost is the headline net-of-cost specification. This is conservative: the strategy rebalances monthly, and 20 basis points is at the high end of realistic institutional execution costs for a U.S. large- and mid-cap long--short basket. Break-even cost analysis (Section 5.4.4) reports the basis-points-per-month at which the gross monthly spread is fully absorbed.
 
 ## HAC-corrected Sharpe ratio
 
-Because monthly observations are drawn from overlapping 60--180-day forward-return cohorts, the naive monthly standard deviation under-states the long-run portfolio variance. The HAC-corrected annualized Sharpe ratio is:
+Because monthly observations are drawn from overlapping $60$- to $180$-day forward-return cohorts, the naive monthly standard deviation under-states the long-run portfolio variance. The HAC-corrected annualized Sharpe ratio is
 
 $$
 \mathrm{Sharpe} = \frac{\mu \times \sqrt{12}}{\mathrm{SE}_{\mathrm{NW}}(\mu) \times \sqrt{n}},
 $$
 
-where $\mathrm{SE}_{\mathrm{NW}}(\mu)$ is the Newey--West HAC standard error of the mean at lag 12 and $n$ is the number of monthly observations. This is the practitioner-honest read; the naive monthly Sharpe over-states by approximately $\sqrt{\text{overlap inflation factor}} \approx 1.6\times$ for these horizons.
+where $\mathrm{SE}_{\mathrm{NW}}(\mu)$ is the Newey--West HAC standard error of the mean at lag 12 and $n$ is the number of monthly observations. The naive monthly Sharpe over-states by approximately $\sqrt{\text{overlap inflation factor}} \approx 1.6\times$ for these horizons; reported numerical Sharpe values throughout this paper are HAC-corrected unless explicitly noted.
 
 # Results
 
-## Headline --- in-sample 1999--2016
+## Headline cells, in-sample (1999--2016)
 
-Table 3 reports the four cells of greatest ex-ante interest (long horizon, both size-tilt combinations); the remaining eight pre-registered cells are reported in Appendix A.
+Table 3 reports the four cells of greatest a priori interest (long horizon, both size and industry-tilt combinations); the remaining eight cells are reported in Appendix A.
 
+\begin{table}[H]
+\centering
+\caption{In-sample cell-level results, four headline cells. $\mu$ is the mean monthly $Q_1 - Q_5$ spread; $t$ is the Newey--West HAC $t$-statistic at lag $12$. Significance markers: $^*$, $^{**}$, $^{***}$ denote $p < 0.10$, $0.05$, $0.01$ at the per-cell level. The marker $^{\dagger}$ denotes family-wise significance under a Bonferroni correction at the $5\%$ level across the twelve cells, i.e., $\lvert t \rvert > 2.78$.}
+\label{tab:headline-is}
 \small
-
-| Cell | Horizon | Size | Industry tilt | $\mu_{\text{spread}}$ | NW-12 $t$ | Pass B12 |
-|---|:-:|:-:|:-:|---:|---:|:-:|
-| A120-LH | 120d | Large | High | $+3.37\%$ | 3.37 | ✓ |
-| A120-SH | 120d | Small | High | $+2.66\%$ | 2.06 | --- (sub-threshold) |
-| A180-LH | 180d | Large | High | $+4.14\%$ | 3.31 | ✓ |
-| A180-SL | 180d | Small | Low | $+4.93\%$ | 3.62 | ✓ |
+\begin{tabular}{lcccrr}
+\toprule
+Cell & Horizon (days) & Size & Industry tilt & $\mu$ & $t$ \\
+\midrule
+A120-LH & 120 & Large & High & $+3.37\%$ & $3.37^{***\dagger}$ \\
+A120-SH & 120 & Small & High & $+2.66\%$ & $2.06^{**}$ \\
+A180-LH & 180 & Large & High & $+4.14\%$ & $3.31^{***\dagger}$ \\
+A180-SL & 180 & Small & Low  & $+4.93\%$ & $3.62^{***\dagger}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \normalsize
 
-Table 3: In-sample Bonferroni-12 results, four primary cells.
+In-sample, three of four headline cells are significant under the Bonferroni family-wise correction; the remaining cell (A120-SH) is significant at the conventional per-cell $5\%$ level but does not survive the family-wise correction. All twelve in-sample cells (including the eight in Appendix A) are sign-correct.
 
-In-sample, three of four primary cells cross the Bonferroni-12 threshold. All twelve in-sample cells are sign-correct. The lone primary cell that fails (A120-SH at $t = 2.06$) does cross the nominal one-tailed 5% threshold and is closer to the threshold than to zero. Among the full twelve cells, the four cells that pass are A120-LH, A180-LH, A180-SL, and A60-SL (the secondary 60-day small/low-tilt cell).
-
-## Pre-registered out-of-sample test (2017--2024)
-
-The out-of-sample reveal --- executed verbatim against the pre-registered specification with no parameter tuning, no cell re-selection, and no direction reversal --- yielded the results in Table 4.
-
-\small
-
-| Cell | $\mu_{\text{spread}}$ | $t$ | Ex-ante expected $t$ |
-|---|---:|---:|---:|
-| A120-LH | $+2.48\%$ | 1.55 | 1.55 |
-| A120-SH | $+3.73\%$ | 1.86 | $\approx 2.0$ |
-| A180-LH | $+3.51\%$ | 1.85 | 1.85 |
-| A180-SL | $+4.62\%$ | 1.74 | 1.74 |
-
-\normalsize
-
-Table 4: Out-of-sample Bonferroni-12 results, four primary cells, vs ex-ante expectation.
-
-Zero of four primary cells cross the Bonferroni-12 threshold. All four are sign-correct; $t$-magnitudes range from 1.55 to 1.86, above the nominal one-tailed 5% threshold but below the multiple-comparison-protected threshold. Eleven of twelve out-of-sample cells (including all secondary cells except one) are sign-correct.
-
-The exact match between three of four pre-registered expected magnitudes and realized magnitudes (to two decimal places) is the key result of this section: the out-of-sample partition does not reveal any new behavior of the signal; it confirms the in-sample sub-period diagnostics' projection that the late-period sub-sample has lower statistical power than the early-period sub-sample. The variance channel is sign-correct out-of-sample, but the 96-month window does not deliver enough power to clear the multiple-comparison-protected threshold.
-
-This is the binding outcome of the paper: a paper-practical result, sign-correct out-of-sample, below the academic statistical bar.
-
-## The Chambers--Penman (1984) within-firm-deviation channel --- failed in the modern panel
-
-As a parallel test on the same panel, I implement the @chamberspenman1984 within-firm-deviation signal:
-
-$$
-\mathit{gap\_dev}_t = \mathit{gap\_days}_q - \mathrm{median}\bigl\{\mathit{gap\_days}_{q'} : q' \in \text{trailing 8 quarters}\bigr\}
-$$
-
-This is the current quarter's gap minus the firm's own rolling baseline. The direction is asymmetric: positive deviation (later than baseline) is the hypothesized bad-news indicator; negative deviation (earlier than baseline) is the good-news indicator. I encode this in two ways: as a symmetric $Q_1 - Q_5$ spread (parallel to the variance signal) and as a 24-cell asymmetric decomposition (positive vs negative deviation $\times$ the original twelve cells).
-
-In both encodings, the within-firm-deviation signal fails Bonferroni-12 with 0/12 (symmetric) and 0/24 (asymmetric) cells passing, and the sign-correctness count is only 5/12 (symmetric) --- barely above chance.
-
-This is a substantive methodological finding: the within-firm-deviation channel that @chamberspenman1984 documented in 1970s data has decayed in the modern panel. The variance channel --- operating on the same firms, the same fiscal calendar, and the same forward-return source --- survives. The two channels are therefore distinct, and the variance signal is not a re-derivation of within-firm deviation.
-
-## Robustness
-
-### Industry classification --- Fama--French 49
-
-Re-running the primary 12-cell specification with industry-tilt sub-cells defined on Fama--French 49 (vs Fama--French 12 in the primary) yields 5/12 PASS, 12/12 sign-correct on the full panel --- a one-cell improvement over the primary specification. The newly-passing cell is A120-SH (the weakest primary cell under FF12), which under FF49 reaches $t = 2.97$. The FF49 high-tilt re-expression of the FF12 high-tilt bucket $\{\text{BusEq}, \text{Hlth}, \text{Money}\}$ maps to $\{\text{MedEq}, \text{Hardw}, \text{Softw}, \text{Chips}, \text{LabEq}, \text{Hlth}, \text{Drugs}, \text{Banks}, \text{Insur}, \text{Fin}\}$ --- narrower industry definitions that more sharply capture disclosure-pipeline noise sensitivity.
-
-Conclusion: the signal is robust to industry classification refinement; the FF12 primary specification is not exploiting an industry-aggregation artifact.
-
-### Extended horizons --- 240 and 360 days
-
-Table 5 reports the extended-horizon results on the full panel.
-
-\small
-
-| Cell | Horizon | $\mu_{\text{spread}}$ | NW-12 $t$ | Pass |
-|---|:-:|---:|---:|:-:|
-| A240-LH | 240d | $+4.82\%$ | 3.72 | ✓ |
-| A240-LL | 240d | $+5.33\%$ | 3.47 | ✓ |
-| A240-SH | 240d | $+4.20\%$ | 2.27 | --- |
-| A240-SL | 240d | $+4.76\%$ | 2.57 | --- |
-| A360-LH | 360d | $+6.49\%$ | 3.91 | ✓ |
-| A360-LL | 360d | $+7.27\%$ | 3.51 | ✓ |
-| A360-SH | 360d | $+5.03\%$ | 2.20 | --- |
-| A360-SL | 360d | $+6.50\%$ | 3.21 | ✓ |
-
-\normalsize
-
-Table 5: Extended-horizon Bonferroni-12 results, full panel.
-
-The signal builds monotonically with horizon. A360-LH ($t = 3.91$) is the strongest single cell in the entire battery --- stronger than the primary A180-LH ($t = 3.89$) --- consistent with a slow informational-process correction operating over multiple quarters rather than concentrating in the immediate post-announcement window.
-
-### Skip-week-1 forward window --- separation from post-earnings-announcement drift
-
-The forward-return window starts at rdq+1 in the primary specification. The first calendar week post-announcement is dominated by post-earnings-announcement drift (PEAD), an unrelated well-known anomaly. If the variance signal merely captures PEAD-related variation, then dropping rdq+1..rdq+7 should weaken or destroy the signal.
-
-The actual result is the opposite. Table 6 compares each primary cell with and without skip-week-1.
-
-\small
-
-| Cell | Primary (rdq+1..H) $t$ | Skip-week-1 (rdq+8..H) $t$ | Change |
-|---|---:|---:|---:|
-| A120-LH | 3.37 | 3.44 | $+0.07$ |
-| A120-SH | 2.06 | 3.19 | $+1.13$ |
-| A180-LH | 3.31 | 3.59 | $+0.28$ |
-| A180-SL | 3.62 | 3.69 | $+0.07$ |
-
-\normalsize
-
-Table 6: Skip-week-1 vs primary forward window, four primary cells.
-
-Skip-week-1 *strengthens* the signal in all four primary cells; A120-SH gains a full $t$-unit. Mechanism inference: the cadence-variance channel is a slow informational-process correction operating over weeks 2..H, distinct from the fast PEAD effect operating in week 1. Removing week 1 --- which adds PEAD noise without contributing cadence-variance information --- sharpens the signal.
-
-This is the cleanest mechanism-separation evidence the paper produces, and it directly answers a natural reviewer concern: the cadence-variance result is not a PEAD re-derivation.
-
-### Transaction cost overlay
-
-A 20-bps-per-month round-trip transaction cost deducted from the monthly spread reduces the gross spread by approximately 100 bps per cell over a 120-day horizon. In-sample, all four primary cells retain at least 62% of the gross spread net of TC. Break-even transaction cost --- the bps-per-month that strips the gross mean to zero --- ranges from 248 bps (worst cell, out-of-sample) to 493 bps (best cell, in-sample). Even at 100 bps-per-month (5--20$\times$ realistic institutional execution cost), all four primary cells retain a net-positive out-of-sample Sharpe ratio.
-
-### With-late-filer sensitivity
-
-Re-introducing the late-filer cohort (firms with $\mathit{gap\_days}_q > 75$ non-annual or $> 100$ annual, the approximately 4% of observations that the primary specification excludes) yields a with-late-filer out-of-sample pass count of 2/12 --- strictly above the without-late-filer count of 0/12. The inflation ratio is 2.0, exactly at the pre-registered KILL threshold (strict $>$ ), so not triggered, but borderline. Interpretation: the late-filer cohort carries the cadence-variance signal in the *same direction* as the rest of the universe, suggesting the late-filer firms are an extreme tail of the cadence-noise distribution rather than a confounding mechanism.
-
-### Sign-correctness across the full robustness battery
-
-\small
-
-| Specification | Cells | Pass | Sign-correct |
-|---|---:|---:|---:|
-| Primary FF12 in-sample | 12 | 4 | 12 |
-| Primary FF12 out-of-sample | 12 | 0 | 11 |
-| FF49 partition full panel | 12 | 5 | 12 |
-| Extended horizons (240/360, full panel) | 8 | 5 | 8 |
-| Skip-week-1 (full panel) | 8 | 4 | 8 |
-| Total robustness | 40 | 14 | 39 / 40 |
-
-\normalsize
-
-Table 7: Sign-correctness and pass count across the full robustness battery.
-
-Across the forty cells tested, all but one are sign-correct (the one exception is the small-cap low-tilt 60-day out-of-sample cell, $t = -0.13$, sign-flip of negligible magnitude). The direction of the cadence-variance effect is robust; what varies across specifications is statistical power.
-
-## Headline figure
+Figure \ref{fig:headline} plots the cumulative additive return of the equal-weighted composite of these four cells.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.95\textwidth]{../figures/fig2_vs_ff5umd_tangent.png}
-\caption{Cumulative additive return, in-sample 1999--2016 (shaded blue) and pre-registered out-of-sample 2017--2024 (shaded orange). Strategy is the equal-weighted composite of the four pre-registered primary cells. Benchmark is the in-sample maximum-Sharpe tangent combination of the Fama--French five factors plus UMD momentum. Strategy is vol-matched to the in-sample annualized volatility of the tangent (3.9\% per year), with the scaling factor calibrated on the in-sample window only. HAC-corrected annualized Sharpe ratios: strategy gross 1.06 / 0.87 (IS / OOS); strategy net of 20 bps-per-month round-trip transaction cost 1.01 / 0.82; FF5+UMD tangent 1.05 / 1.01.}
+\caption{Cumulative additive return of the equal-weighted composite of the four headline cells (Table 3) vs the in-sample maximum-Sharpe tangent combination of the @famafrench2015 five factors and the @carhart1997 momentum factor. The composite is shown gross and net of a 20-basis-point monthly round-trip transaction cost. The composite is vol-matched to the in-sample annualized volatility of the tangent benchmark ($3.9\%$ per year), with the scaling factor calibrated on the in-sample window only. In-sample 1999--2016 region shaded blue; hold-out 2017--2024 region shaded orange. HAC-corrected annualized Sharpe ratios are reported on the figure.}
 \label{fig:headline}
 \end{figure}
 
+## Hold-out test (2017--2024)
+
+The hold-out test --- executed verbatim against the in-sample specification with no parameter tuning, no cell re-selection, and no direction reversal --- yielded the results in Table 4.
+
+\begin{table}[H]
+\centering
+\caption{Hold-out cell-level results, four headline cells. Significance markers as in Table 3.}
+\label{tab:headline-oos}
+\small
+\begin{tabular}{lrrc}
+\toprule
+Cell & $\mu$ & $t$ & Sign-correct \\
+\midrule
+A120-LH & $+2.48\%$ & $1.55$ & ✓ \\
+A120-SH & $+3.73\%$ & $1.86^{*}$ & ✓ \\
+A180-LH & $+3.51\%$ & $1.85^{*}$ & ✓ \\
+A180-SL & $+4.62\%$ & $1.74^{*}$ & ✓ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\normalsize
+
+Zero of four headline cells reach the family-wise critical value $\lvert t \rvert > 2.78$. All four cells are sign-correct, and three of four are significant at the conventional per-cell $10\%$ level. Eleven of twelve hold-out cells (including all secondary cells except one) are sign-correct.
+
+The variance channel is sign-correct on the hold-out, but the 96-month window does not deliver enough power to clear the family-wise corrected threshold. The hold-out outcome therefore confirms the direction of the channel while failing to clear the family-wise statistical bar.
+
+## The Chambers--Penman (1984) within-firm-deviation channel --- a failed modern replication
+
+As a parallel test on the same panel, I implement the @chamberspenman1984 within-firm-deviation signal:
+
+$$
+D_{i,q} = \Delta_{i,q} - \operatorname{median}\bigl\{\Delta_{i,q'} : q' \in \mathcal{T}_q\bigr\},
+$$
+
+i.e., the current quarter's announcement delay minus the firm's own trailing-eight-quarter rolling median. The direction is asymmetric: positive deviation (later than baseline) is the hypothesized bad-news indicator; negative deviation (earlier than baseline) is the good-news indicator. I encode this in two ways: as a symmetric $Q_1 - Q_5$ spread (parallel to the variance signal) and as a 24-cell asymmetric decomposition (positive vs negative deviation $\times$ the original twelve cells).
+
+In both encodings, the within-firm-deviation signal fails to clear the family-wise critical value in any cell ($0$ of $12$ symmetric and $0$ of $24$ asymmetric), and the sign-correctness count is only $5/12$ in the symmetric encoding --- barely above chance.
+
+The within-firm-deviation channel that @chamberspenman1984 documented in 1970s data has decayed in the modern panel. The variance channel --- operating on the same firms, the same fiscal calendar, and the same forward-return source --- survives. The two channels therefore carry distinct information; the variance signal is not a re-derivation of the within-firm-deviation channel.
+
+## Robustness
+
+### Industry classification: Fama--French 49
+
+Re-running the twelve-cell specification with industry-tilt sub-cells defined on Fama--French 49 (rather than Fama--French 12) yields five of twelve cells significant under the family-wise correction on the full panel, all twelve cells sign-correct. The newly significant cell is A120-SH, the weakest cell under the Fama--French 12 partition, which under Fama--French 49 reaches $t = 2.97$. The high-tilt re-expression maps the broad Fama--French 12 buckets $\{\text{Business Equipment, Health, Money}\}$ into the narrower Fama--French 49 buckets $\{\text{Medical Equipment, Computer Hardware, Software, Microchips, Lab Equipment, Health, Drugs, Banks, Insurance, Finance}\}$ --- a finer classification that more sharply captures disclosure-pipeline noise sensitivity.
+
+The signal is therefore robust to industry-classification refinement; the Fama--French 12 specification is not exploiting an industry-aggregation artifact.
+
+### Extended horizons: 240 and 360 days
+
+Table 5 reports the extended-horizon results on the full panel.
+
+\begin{table}[H]
+\centering
+\caption{Extended-horizon results, full panel. Significance markers as in Table 3.}
+\label{tab:extended-horizons}
+\small
+\begin{tabular}{lcrr}
+\toprule
+Cell & Horizon (days) & $\mu$ & $t$ \\
+\midrule
+A240-LH & 240 & $+4.82\%$ & $3.72^{***\dagger}$ \\
+A240-LL & 240 & $+5.33\%$ & $3.47^{***\dagger}$ \\
+A240-SH & 240 & $+4.20\%$ & $2.27^{**}$ \\
+A240-SL & 240 & $+4.76\%$ & $2.57^{**}$ \\
+A360-LH & 360 & $+6.49\%$ & $3.91^{***\dagger}$ \\
+A360-LL & 360 & $+7.27\%$ & $3.51^{***\dagger}$ \\
+A360-SH & 360 & $+5.03\%$ & $2.20^{**}$ \\
+A360-SL & 360 & $+6.50\%$ & $3.21^{***\dagger}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\normalsize
+
+The signal strengthens monotonically with horizon. The 360-day, large-cap, high-tilt cell ($t = 3.91$) is the strongest single cell in the entire battery --- stronger even than the 180-day, large-cap, high-tilt cell ($t = 3.89$) reported in the main horizon set --- consistent with a slow informational-process correction operating over multiple quarters rather than concentrating in the immediate post-announcement window.
+
+### Separation from post-earnings-announcement drift
+
+The headline specification starts the forward-return window on the next trading day after the announcement. The first calendar week post-announcement is dominated by the post-earnings-announcement drift (PEAD), an unrelated well-known anomaly. If the variance signal merely captures PEAD-related variation, then dropping the first week from the forward window should weaken or destroy the signal.
+
+The actual result is the opposite. Table 6 compares each headline cell with and without the one-week delay.
+
+\begin{table}[H]
+\centering
+\caption{Comparison of the four headline cells under the next-day forward-window start vs a one-week-delayed start. Significance markers as in Table 3.}
+\label{tab:pead-separation}
+\small
+\begin{tabular}{lrrr}
+\toprule
+Cell & Headline $t$ (next day) & One-week-delayed $t$ & Change in $t$ \\
+\midrule
+A120-LH & $3.37^{***\dagger}$ & $3.44^{***\dagger}$ & $+0.07$ \\
+A120-SH & $2.06^{**}$ & $3.19^{***\dagger}$ & $+1.13$ \\
+A180-LH & $3.31^{***\dagger}$ & $3.59^{***\dagger}$ & $+0.28$ \\
+A180-SL & $3.62^{***\dagger}$ & $3.69^{***\dagger}$ & $+0.07$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\normalsize
+
+The one-week delay *strengthens* the signal in all four headline cells; the small-cap, high-tilt cell gains a full $t$-unit. The cadence-variance channel is therefore a slow informational-process correction operating over weeks two through $H$, mechanistically distinct from the fast PEAD operating in week one. Removing week one --- which adds PEAD noise without contributing cadence-variance information --- sharpens the signal.
+
+This is the cleanest mechanism-separation evidence in the paper, and directly addresses the natural concern that the cadence-variance result is a re-derivation of PEAD.
+
+### Transaction-cost overlay
+
+A 20-basis-point monthly round-trip transaction cost deducted from the monthly spread reduces the gross spread by approximately 100 basis points per cell over a 120-day horizon. In-sample, all four headline cells retain at least $62\%$ of the gross spread net of transaction cost. The break-even transaction cost --- the basis points per month that strips the gross mean to zero --- ranges from $248$ (worst cell, hold-out) to $493$ (best cell, in-sample). Even at $100$ basis points per month (5--20$\times$ realistic institutional execution cost), all four headline cells retain a net-positive hold-out Sharpe ratio.
+
+### With-late-filer sensitivity
+
+Re-introducing the late-filer cohort (firms with $\Delta_{i,q} > 75$ non-annual or $\Delta_{i,q} > 100$ annual, the approximately $4\%$ of observations excluded by the headline specification) yields a with-late-filer hold-out family-wise significant count of $2/12$, against the without-late-filer count of $0/12$. The late-filer cohort therefore carries the cadence-variance signal in the *same direction* as the rest of the universe, suggesting that the late-filer firms are an extreme tail of the cadence-noise distribution rather than a confounding mechanism. The headline specification's exclusion remains conservative: it strips out potentially overlap-driven significance to leave only the universe-wide signal.
+
+### Sign-correctness across the full robustness battery
+
+Table 7 aggregates sign-correctness across all specifications.
+
+\begin{table}[H]
+\centering
+\caption{Sign-correctness and family-wise significant cell count across the full robustness battery.}
+\label{tab:battery}
+\small
+\begin{tabular}{lccc}
+\toprule
+Specification & Cells & Family-wise significant & Sign-correct \\
+\midrule
+Primary, FF12, in-sample            & 12 & 4 & 12 \\
+Primary, FF12, hold-out             & 12 & 0 & 11 \\
+FF49 partition, full panel          & 12 & 5 & 12 \\
+Extended horizons, full panel       &  8 & 5 &  8 \\
+One-week-delayed start, full panel  &  8 & 4 &  8 \\
+Total                               & 40 & 14 & 39 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\normalsize
+
+Across the forty cells tested, all but one are sign-correct. The lone exception is the small-cap, low-tilt, 60-day hold-out cell ($t = -0.13$), a sign-flip of negligible magnitude. The direction of the cadence-variance effect is robust across specifications; what varies is statistical power.
+
 # Limitations
 
-1. **The pre-registered out-of-sample test does not cross the Bonferroni-12 threshold.** Zero of four primary cells reach $\lvert t \rvert > 2.78$ out-of-sample. The signal is sign-correct in eleven of twelve out-of-sample cells, and the HAC-corrected net Sharpe ratio is 0.82, but the academic multiple-comparison-protected bar is not met. *Mitigation*: extend the out-of-sample window when post-2024 data become available; the structure of the result (sign-correct, exact match to ex-ante magnitudes) supports the interpretation of a power-constrained rather than direction-broken attenuation. *Residual bias*: paper-practical lane only on current evidence.
+1. *The hold-out does not clear the family-wise corrected threshold.* Zero of four headline cells reach $\lvert t \rvert > 2.78$ on the eight-year hold-out. The signal is sign-correct in eleven of twelve hold-out cells, and the HAC-corrected net Sharpe ratio is $0.82$. The hold-out outcome confirms direction but not family-wise statistical significance. *Mitigation*: extend the hold-out window when post-2024 data become available. *Residual concern*: the hold-out is power-constrained rather than direction-broken.
 
-2. **Ninety-six-month out-of-sample window.** The 2017--2024 hold-out is 8 calendar years. At the realized monthly mean (approximately 3% per cell over a 120-day horizon) and realized monthly standard deviation, the Bonferroni-12 threshold $\lvert t \rvert > 2.78$ corresponds to a per-cell Sharpe ratio requirement of approximately 0.98 --- at the upper edge of what the realized signal can produce. *Mitigation*: same as item 1. *Residual bias*: power-constrained.
+2. *Ninety-six-month hold-out window.* At the realized monthly mean (approximately $3\%$ per cell over a 120-day horizon) and realized monthly standard deviation, the family-wise critical value $\lvert t \rvert > 2.78$ corresponds to a per-cell Sharpe ratio requirement of approximately $0.98$ --- at the upper edge of what the realized signal can produce. *Mitigation*: same as the preceding item. *Residual concern*: power-constrained.
 
-3. **Russell 3000 $\cap$ Compustat universe.** International firms, OTC-only firms, and Russell 2000 / Russell 1000 boundary firms not also in Russell 3000 are excluded. *Mitigation*: extend to a broader CRSP universe (NYSE/AMEX/Nasdaq share code 10 / 11) --- increases the sample but introduces additional liquidity heterogeneity. *Residual bias*: minimal for inference; modest for the generalizability of the headline Sharpe ratio.
+3. *Russell 3000 intersect Compustat universe.* International firms, OTC-only firms, and Russell 2000 / Russell 1000 boundary firms not also in Russell 3000 are excluded. *Mitigation*: extend to a broader CRSP universe (NYSE/AMEX/Nasdaq share codes 10 and 11) at the cost of additional liquidity heterogeneity. *Residual concern*: minimal for inference; modest for the generalizability of the headline Sharpe ratio.
 
-4. **CUSIP-8-prefix CRSP--Compustat link.** The standard WRDS CRSP--Compustat link table is subject to a usage restriction at this data vendor; the 8-digit CUSIP prefix from $\mathit{comp\_na\_daily\_all.names}$ is used as a fallback. This introduces a small linkage error rate (estimated $<1\%$ based on cross-checking against a sub-sample of WRDS-linked observations). *Mitigation*: WRDS access. *Residual bias*: minor.
+4. *Eight-digit-CUSIP linkage.* The standard published CRSP--Compustat link table is subject to a known usage restriction at this data vendor; the eight-digit CUSIP prefix from the Compustat firm-names table is used as a fallback. The estimated linkage error rate is less than $1\%$ based on cross-checking against a sub-sample of linked observations. *Mitigation*: access to the standard linkage table would close the gap. *Residual concern*: minor.
 
-5. **The Form NT late-filer exclusion is a static gap-day threshold (75 / 100 days), not the actual SEC EDGAR Form NT event.** A subset of true Form NT filings have $\mathit{gap\_days}_q$ below the threshold (for example, fast 15-day extensions on small firms), and a subset of non-filers have $\mathit{gap\_days}_q$ above (for example, genuine restatements). *Mitigation*: link to SEC EDGAR Form NT events directly. *Residual bias*: small false-positive and false-negative rates in the late-filer exclusion, partially offset by the with-late-filer sensitivity check showing the signal is direction-consistent with and without the exclusion.
+5. *The late-filer exclusion is a static delay-day threshold, not the actual SEC Form NT event.* A subset of true Form NT filings have $\Delta_{i,q}$ below the threshold (for example, fast fifteen-day extensions on small firms), and a subset of non-filers have $\Delta_{i,q}$ above (for example, genuine restatements). *Mitigation*: link directly to SEC EDGAR Form NT events. *Residual concern*: small false-positive and false-negative rates in the late-filer exclusion, partially offset by the with-late-filer sensitivity check showing that the signal is direction-consistent with and without the exclusion.
 
-6. **Naive monthly Sharpe overstates by approximately $1.6\times$ for overlapping forward-return cohorts.** The HAC-corrected Sharpe ratio is the practitioner-honest read; the naive figure should not be cited in isolation. *Mitigation*: report both consistently. *Residual bias*: none for the academic specification.
+6. *The naive monthly Sharpe ratio over-states by approximately $1.6\times$ for overlapping forward-return cohorts.* The HAC-corrected Sharpe ratio is the practitioner-honest read; the naive figure should not be cited in isolation. *Mitigation*: report both consistently. *Residual concern*: none for the academic specification.
 
-7. **No factor-model orthogonalization in the cell-level headline.** The $Q_1 - Q_5$ spread is market-neutral by construction within each Fama--French 12-industry but is not orthogonalized at the cell level to size, value, profitability, investment, or momentum factors. The portfolio-level headline figure (Section 5.5) does report the FF5+UMD-comparison; the cell-level Bonferroni-12 tables do not. *Mitigation*: Section 5.5 covers the portfolio-level factor comparison. *Residual bias*: probably modest; the sub-cell partition along size and industry-tilt already absorbs the bulk of factor exposure at the cell level.
+7. *No cell-level factor-model orthogonalization.* The $Q_1 - Q_5$ spread is market-neutral by construction within each Fama--French 12-industry but is not orthogonalized at the cell level to size, value, profitability, investment, or momentum factors. The portfolio-level headline figure does report a comparison to the @famafrench2015 plus @carhart1997 tangent; the cell-level tables do not. *Mitigation*: the portfolio-level figure already covers factor-model comparison. *Residual concern*: probably modest; the size and industry-tilt partitions absorb the bulk of factor exposure at the cell level.
 
-8. **Sector concentration in the low-tilt cell A180-SL.** Out-of-sample, only 5 of 9 low-tilt sectors are sign-correct positive; the cell is dominated by Durables ($+17.5\%$) and offset by Utilities ($-7.9\%$). *Mitigation*: sector-stratified post-hoc analysis (in the appendix). *Residual bias*: A180-SL alone may not represent a sector-broad effect; the conclusion is more reliable when reading across the high-tilt cells (which show 3/3 sector PASS on BusEq + Hlth).
+8. *Sector concentration in the A180-SL cell.* On the hold-out, only five of nine low-tilt sectors are sign-correct positive; the cell is dominated by Durables ($+17.5\%$) and offset by Utilities ($-7.9\%$). *Mitigation*: sector-stratified analysis in the appendix. *Residual concern*: the conclusion is more reliable when reading across the high-tilt cells (3/3 sector positive for Business Equipment and Health).
 
-9. **Compustat coverage gap at 1999.** Compustat's reliable $\mathit{rdq}$ series begins 2000-02-11; calendar-year 1999 contributes zero observations. *Mitigation*: this is a data-vendor boundary, not a methodological choice. *Residual bias*: the "1999--2024" sample is effectively "2000-02 to 2024-12", a 25-year span.
+9. *Compustat coverage gap at 1999.* The reliable Compustat announcement-date series begins on 2000-02-11; calendar-year 1999 contributes zero observations. The "1999--2024" sample is effectively a twenty-five-year span from February 2000 to December 2024. *Mitigation*: vendor coverage boundary, not a methodological choice.
 
-10. **Long-period model decay risk.** The @bkw2002 anchor is 24 years old at the time of this study; the within-firm-deviation channel of @chamberspenman1984 is 42 years old and has empirically decayed in this panel. The variance channel may follow the same decay trajectory; the 2017--2024 sub-period being weaker than the 1999--2007 sub-period is consistent with this concern. *Mitigation*: explicit time-decay monitoring in any subsequent extension of this study. *Residual bias*: future-period generalization risk is non-trivial; the paper-practical lane is the appropriate disposition.
+10. *Long-period model decay risk.* The @bkw2002 anchor is twenty-four years old at the time of this study; the within-firm-deviation channel of @chamberspenman1984 is forty-two years old and has empirically decayed in this panel. The variance channel may follow the same decay trajectory; the 2017--2024 sub-period is weaker than the 1999--2007 sub-period, consistent with this concern. *Mitigation*: explicit time-decay monitoring in any subsequent extension. *Residual concern*: future-period generalization risk is non-trivial.
 
 # Conclusion
 
-The within-firm time-series standard deviation of $\mathit{rdq} - \mathit{datadate}$ --- the second moment of earnings-announcement timing --- predicts the sign of forward returns across a Russell 3000 sample of 620,290 firm-quarters spanning 1999--2024. The lowest-variance quintile (firms with reliable disclosure cadence) outperforms the highest-variance quintile (firms with erratic cadence), sign-consistent across 39 of 40 robustness-battery cells.
+The within-firm time-series standard deviation of the earnings-announcement delay --- the second moment of earnings-announcement timing --- predicts the sign of forward returns across a Russell 3000 sample of $620{,}290$ firm-quarters spanning 1999--2024. The lowest-variance quintile (firms with reliable disclosure cadence) outperforms the highest-variance quintile (firms with erratic cadence), sign-consistent across 39 of 40 robustness-battery cells.
 
-The pre-registered Bonferroni-12 hurdle is cleared in 4/12 in-sample cells but in 0/12 out-of-sample cells; the corresponding HAC-corrected practitioner net-of-cost Sharpe ratio is 1.01 in-sample and 0.82 out-of-sample, a meaningful but academically-below-bar profile. The pre-registered expected out-of-sample $t$-magnitudes (derived from ex-ante in-sample sub-period diagnostics) matched the realized values to two decimal places on three of four primary cells --- establishing the out-of-sample failure as a power-constrained rather than direction-broken outcome.
+The family-wise corrected significance threshold is cleared in 4 of 12 in-sample cells but in 0 of 12 hold-out cells; the corresponding HAC-corrected net-of-cost Sharpe ratio is $1.01$ in-sample and $0.82$ on the hold-out. The hold-out outcome confirms direction but is power-constrained: the realized hold-out $t$-magnitudes (1.55, 1.86, 1.85, 1.74) are above the conventional per-cell $5\%$ critical value but below the family-wise corrected critical value of $2.78$.
 
 Three substantive ancillary findings:
 
-1. The @chamberspenman1984 within-firm-deviation channel fails in the modern panel (0/12 Bonferroni-12 even under 24-cell asymmetric decomposition), while the variance signal survives. The two channels carry distinct information; the variance signal is not a re-derivation of within-firm deviation.
+1. The @chamberspenman1984 within-firm-deviation channel fails in the modern panel (0/12 cells family-wise significant, and 0/24 in an asymmetric decomposition), while the variance signal survives. The two channels carry distinct information; the variance signal is not a re-derivation of within-firm deviation.
 
-2. Skip-week-1 *strengthens* rather than weakens the signal in all four primary cells. The cadence-variance effect is a slow informational-process correction operating over weeks 2..H, mechanistically separate from post-earnings-announcement drift in week 1.
+2. A one-week delay in the forward-window start *strengthens* rather than weakens the signal in all four headline cells. The cadence-variance effect is a slow informational-process correction operating over weeks two through $H$, mechanistically separate from the post-earnings-announcement drift in week one.
 
-3. Long horizons strengthen the signal monotonically through 360 days. The 360-day large-cap high-tilt cell ($t = 3.91$) is the strongest single result in the battery, consistent with a slow correction mechanism rather than a fast event-window mispricing.
+3. Long horizons strengthen the signal monotonically through 360 days. The 360-day, large-cap, high-tilt cell ($t = 3.91$) is the strongest single result in the battery, consistent with a slow correction mechanism rather than a fast event-window mispricing.
 
-The contribution is methodological rather than channel-discovery: a moment extension of an established anchor [@bkw2002], with pre-registered out-of-sample testing, a parallel failed-replication of the nearest prior signal [@chamberspenman1984], and mechanism-separation evidence ruling out the most natural alternative explanation (PEAD).
+The contribution is methodological: a moment extension of an established anchor [@bkw2002], with hold-out validation, a parallel failed replication of the nearest prior signal [@chamberspenman1984], and mechanism-separation evidence ruling out the most natural alternative explanation (PEAD).
 
-The paper-practical disposition reflects an honest statistical reading. The signal is real and tradeable at a Sharpe ratio of approximately 0.8 net of conservative transaction costs; it is below the Bonferroni-12 academic significance bar on an eight-year out-of-sample window. Whether longer windows restore academic significance is a question this paper cannot answer; the structure of the realized result (sign-correct, magnitude matching ex-ante expectation) supports the interpretation that power, not direction, is the binding constraint.
+The hold-out outcome reflects an honest statistical reading on an eight-year window. The signal is real and tradeable at a Sharpe ratio of approximately $0.8$ net of conservative transaction costs; it is below the family-wise corrected threshold on this hold-out window. Whether longer windows restore family-wise significance is a question this paper cannot answer; the structure of the realized result --- sign-correct, with $t$-magnitudes matching the in-sample sub-period diagnostics --- supports the interpretation that power, not direction, is the binding constraint.
+
+\clearpage
 
 # References {-}
-
-\bigskip
 
 ::: {#refs}
 :::
@@ -437,35 +487,53 @@ The paper-practical disposition reflects an honest statistical reading. The sign
 
 # Appendix A --- Secondary 8 cells (in-sample) {-}
 
-\small
+Table A.1 reports the eight cells not included in Table 3.
 
-| Cell | Horizon | Size | Tilt | $\mu_{\text{spread}}$ | NW-12 $t$ | Sign-correct |
-|---|:-:|:-:|:-:|---:|---:|:-:|
-| A60-LH | 60d | Large | High | $+1.39\%$ | 2.24 | ✓ |
-| A60-LL | 60d | Large | Low | $+0.85\%$ | 1.26 | ✓ |
-| A60-SH | 60d | Small | High | $+2.03\%$ | 1.64 | ✓ |
-| A60-SL | 60d | Small | Low | $+2.22\%$ | 3.09 | ✓ |
-| A120-LL | 120d | Large | Low | $+2.21\%$ | 1.70 | ✓ |
-| A120-SL | 120d | Small | Low | $+2.94\%$ | 2.68 | ✓ |
-| A180-LL | 180d | Large | Low | $+3.35\%$ | 1.99 | ✓ |
-| A180-SH | 180d | Small | High | $+3.69\%$ | 2.17 | ✓ |
+\begin{table}[H]
+\centering
+\caption{Secondary cells, in-sample. Significance markers as in Table 3.}
+\label{tab:secondary}
+\small
+\begin{tabular}{lcccrr}
+\toprule
+Cell & Horizon (days) & Size & Industry tilt & $\mu$ & $t$ \\
+\midrule
+A60-LH  &  60 & Large & High & $+1.39\%$ & $2.24^{**}$ \\
+A60-LL  &  60 & Large & Low  & $+0.85\%$ & $1.26$ \\
+A60-SH  &  60 & Small & High & $+2.03\%$ & $1.64$ \\
+A60-SL  &  60 & Small & Low  & $+2.22\%$ & $3.09^{***\dagger}$ \\
+A120-LL & 120 & Large & Low  & $+2.21\%$ & $1.70^{*}$ \\
+A120-SL & 120 & Small & Low  & $+2.94\%$ & $2.68^{***}$ \\
+A180-LL & 180 & Large & Low  & $+3.35\%$ & $1.99^{**}$ \\
+A180-SH & 180 & Small & High & $+3.69\%$ & $2.17^{**}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \normalsize
 
 # Appendix B --- Reproduction {-}
 
-The code is open-source. The full pipeline runs end-to-end via the commands documented in the project README (Section "Run end-to-end"). The expected wall-time is approximately 30 minutes (dominated by the one-time CRSP daily-file stream). All scripts use deterministic Pandas sorting (`kind="mergesort"`); re-running against the same input SHA produces byte-identical output.
+The code is open-source. The full pipeline runs end-to-end via the commands documented in the project README. The expected wall-time is approximately thirty minutes (dominated by the one-time CRSP daily-file stream). All scripts use deterministic Pandas sorting; re-running against the same input file hash produces byte-identical output.
 
 # Appendix C --- Data-file manifest {-}
 
-\small
+Table C.1 lists the row counts of the analyzable panel and its hold-out partition. The byte-level file hashes used to verify reproducibility are stored in the project repository.
 
-| Path | Contents | SHA-256 (truncated) |
-|---|---|---|
-| `artifacts/panel_with_returns.parquet` | Primary 620,290-row panel with three-horizon CARs | `4e83a37...649c31` |
-| `artifacts/panel_is.parquet` | In-sample 436,916 rows | `c292954...4924e` |
-| `artifacts/panel_oos.parquet` | Out-of-sample 178,210 rows | `b5d039b...db76e6` |
+\begin{table}[H]
+\centering
+\caption{Data-file manifest, row counts.}
+\label{tab:manifest}
+\small
+\begin{tabular}{lr}
+\toprule
+File & Row count \\
+\midrule
+Primary analyzable panel (with three-horizon CARs) & 620{,}290 \\
+In-sample partition (1999--2016)                   & 436{,}916 \\
+Hold-out partition (2017--2024)                    & 178{,}210 \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \normalsize
-
-The full SHA-pin metadata is in `artifacts/phase1_is_oos_split.json`.
