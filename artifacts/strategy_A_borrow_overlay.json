@@ -1,0 +1,101 @@
+{
+  "borrow_schedule_bps_per_year": [
+    {
+      "mcap_lo_millions": 10000.0,
+      "mcap_hi_millions": null,
+      "bps_per_year": 25.0
+    },
+    {
+      "mcap_lo_millions": 2000.0,
+      "mcap_hi_millions": 10000.0,
+      "bps_per_year": 50.0
+    },
+    {
+      "mcap_lo_millions": 300.0,
+      "mcap_hi_millions": 2000.0,
+      "bps_per_year": 200.0
+    },
+    {
+      "mcap_lo_millions": 100.0,
+      "mcap_hi_millions": 300.0,
+      "bps_per_year": 800.0
+    },
+    {
+      "mcap_lo_millions": 0.0,
+      "mcap_hi_millions": 100.0,
+      "bps_per_year": 2000.0
+    }
+  ],
+  "flat_tc_bps_per_month": 20,
+  "scenarios": {
+    "S0": "Baseline (20 bps/mo flat, no borrow differentiation)",
+    "S1": "S0 + size-differentiated borrow on short leg",
+    "S2": "S1 + drop short names with price < $5",
+    "S3": "S2 + drop short names with market cap < $100M",
+    "S4": "Mid+large only (mcap >= $2B), price >= $5, with size borrow"
+  },
+  "composite_summary": [
+    {
+      "scenario": "S0",
+      "sharpe_hac_is": 1.023003043666253,
+      "sharpe_hac_oos": 0.8411857456863667,
+      "ann_mu_pct_is": 45.456498848240464,
+      "ann_mu_pct_oos": 42.561018542338296
+    },
+    {
+      "scenario": "S1",
+      "sharpe_hac_is": 0.795570163317986,
+      "sharpe_hac_oos": 0.6830667214702207,
+      "ann_mu_pct_is": 34.88252733403651,
+      "ann_mu_pct_oos": 34.79288423355459
+    },
+    {
+      "scenario": "S2",
+      "sharpe_hac_is": 0.1259629985999461,
+      "sharpe_hac_oos": 0.4172094268458711,
+      "ann_mu_pct_is": 4.577008507139447,
+      "ann_mu_pct_oos": 23.705253098534207
+    },
+    {
+      "scenario": "S3",
+      "sharpe_hac_is": 0.21441907134117846,
+      "sharpe_hac_oos": 0.6700103973949701,
+      "ann_mu_pct_is": 9.48685457988573,
+      "ann_mu_pct_oos": 35.39571537168449
+    },
+    {
+      "scenario": "S4",
+      "sharpe_hac_is": 0.5893696832488284,
+      "sharpe_hac_oos": 0.3037622042835361,
+      "ann_mu_pct_is": 36.5418956493786,
+      "ann_mu_pct_oos": 11.282278708257445
+    }
+  ],
+  "tier_distribution_full_panel": [
+    {
+      "borrow_bps_yr": 25.0,
+      "count": 53202,
+      "pct": 8.58
+    },
+    {
+      "borrow_bps_yr": 50.0,
+      "count": 87419,
+      "pct": 14.09
+    },
+    {
+      "borrow_bps_yr": 200.0,
+      "count": 151413,
+      "pct": 24.41
+    },
+    {
+      "borrow_bps_yr": 800.0,
+      "count": 87236,
+      "pct": 14.06
+    },
+    {
+      "borrow_bps_yr": 2000.0,
+      "count": 241020,
+      "pct": 38.86
+    }
+  ]
+}
