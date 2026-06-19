@@ -186,7 +186,7 @@ Table 2 documents the sample construction.
 \caption{Sample selection waterfall, from raw Compustat coverage to the analyzable panel.}
 \label{tab:waterfall}
 \small
-\begin{tabular}{lr}
+\begin{tabular}{p{11cm}r}
 \toprule
 Step & Firm-quarter count \\
 \midrule
@@ -218,8 +218,8 @@ In each calendar month $m$, observations are pooled across firms with an announc
 The cross-section is partitioned into twelve cells along three axes:
 
 - Forward horizon $H \in \{60, 120, 180\}$ trading days;
-- Size bin $\{\text{Large}, \text{Small}\}$, defined by the monthly cross-section median of market capitalization within Fama--French 12-industry;
-- Industry-tilt bin $\{\text{High}, \text{Low}\}$, defined as High if Fama--French 12-industry $\in \{\text{Business Equipment, Health, Money}\}$ and Low otherwise.
+- Size bin (Large vs Small), defined by the monthly cross-section median of market capitalization within the firm's Fama--French 12-industry;
+- Industry-tilt bin (High vs Low), defined as High if the firm's Fama--French 12-industry is one of Business Equipment, Health, or Money, and Low otherwise.
 
 I label cells by horizon-size-tilt: for example, A120-LH is the 120-day-horizon, large-cap, high-tilt cell. The industry-tilt partition reflects an a priori conjecture that disclosure-pipeline noise should be most economically priced in industries with information-asymmetry-intensive securities (technology, health-care, financials). The size partition reflects the standard finding that cross-sectional anomalies often concentrate by market capitalization.
 
@@ -339,7 +339,7 @@ The within-firm-deviation channel that @chamberspenman1984 documented in 1970s d
 
 ### Industry classification: Fama--French 49
 
-Re-running the twelve-cell specification with industry-tilt sub-cells defined on Fama--French 49 (rather than Fama--French 12) yields five of twelve cells significant under the family-wise correction on the full panel, all twelve cells sign-correct. The newly significant cell is A120-SH, the weakest cell under the Fama--French 12 partition, which under Fama--French 49 reaches $t = 2.97$. The high-tilt re-expression maps the broad Fama--French 12 buckets $\{\text{Business Equipment, Health, Money}\}$ into the narrower Fama--French 49 buckets $\{\text{Medical Equipment, Computer Hardware, Software, Microchips, Lab Equipment, Health, Drugs, Banks, Insurance, Finance}\}$ --- a finer classification that more sharply captures disclosure-pipeline noise sensitivity.
+Re-running the twelve-cell specification with industry-tilt sub-cells defined on Fama--French 49 (rather than Fama--French 12) yields five of twelve cells significant under the family-wise correction on the full panel, with all twelve cells sign-correct. The newly significant cell is A120-SH, the weakest cell under the Fama--French 12 partition, which under Fama--French 49 reaches $t = 2.97$. The high-tilt re-expression maps the three broad Fama--French 12 buckets (Business Equipment, Health, and Money) into ten narrower Fama--French 49 buckets: Medical Equipment, Computer Hardware, Software, Microchips, Lab Equipment, Health, Drugs, Banks, Insurance, and Finance. The finer classification more sharply captures disclosure-pipeline noise sensitivity.
 
 The signal is therefore robust to industry-classification refinement; the Fama--French 12 specification is not exploiting an industry-aggregation artifact.
 
