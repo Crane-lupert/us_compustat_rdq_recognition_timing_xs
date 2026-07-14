@@ -1,6 +1,6 @@
 # Earnings-Announcement Cadence-Variance Cross-Section
 
-**Status**: Phase 1 out-of-sample test closed 2026-06-16. Paper-practical outcome (sign-correct out-of-sample, below multiple-comparison-protected statistical threshold). **한국어 실무 보고**: [readme_kr.md](readme_kr.md). Paper outline: [reports/papers/RD1-strategy-A-paper-outline.md](reports/papers/RD1-strategy-A-paper-outline.md). Headline figure: [reports/figures/fig2_vs_ff5umd_tangent.png](reports/figures/fig2_vs_ff5umd_tangent.png).
+**Status**: Phase 1 out-of-sample test closed 2026-06-16. Paper-practical outcome (sign-correct out-of-sample, below multiple-comparison-protected statistical threshold). **SSRN preprint LIVE 2026-07-15**: <https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7095738> (Ahn, Hyun. "Earnings-Announcement Cadence Variance and the Cross-Section of Forward Returns", working paper, June 2026). **한국어 실무 보고**: [readme_kr.md](readme_kr.md). Full paper: [reports/papers/paper_v1_en.md](reports/papers/paper_v1_en.md) / [reports/papers/paper_v1_en.pdf](reports/papers/paper_v1_en.pdf). Headline figure: [reports/figures/fig2_vs_ff5umd_tangent.png](reports/figures/fig2_vs_ff5umd_tangent.png).
 
 ## What this is
 

@@ -1,8 +1,8 @@
 # us_compustat_rdq_recognition_timing_xs
 
 **ID**: RD1-merged-RD7
-**Status**: **Phase 1 CLOSED — paper-practical PARTIAL** (K2 fired Day 4 OOS reveal; LAYER A LOCK denied)
-**Date**: 2026-06-16
+**Status**: **Phase 1 CLOSED — paper-practical PARTIAL** (K2 fired Day 4 OOS reveal; LAYER A LOCK denied). **SSRN preprint LIVE 2026-07-15**: [abstract_id=7095738](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7095738)
+**Date**: 2026-06-16 (launch) / 2026-07-15 (SSRN preprint registered)
 **Iter**: 22 (user-origin "WRDS fundamental data × market participant recognition timing")
 **Project type (Gate G)**: methodology/discovery — `reports/papers/` lane
 
