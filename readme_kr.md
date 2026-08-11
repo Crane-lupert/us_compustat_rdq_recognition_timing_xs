@@ -2,7 +2,7 @@
 
 > Project RD1-merged-RD7 (`us_compustat_rdq_recognition_timing_xs`) 의 한국어 distill 보고. 영문 paper outline: [reports/papers/RD1-strategy-A-paper-outline.md](reports/papers/RD1-strategy-A-paper-outline.md). Phase 1 close audit: [audits/2026-06-16-RD1-merged-RD7-phase1-close.md](audits/2026-06-16-RD1-merged-RD7-phase1-close.md). Headline figure (LinkedIn + paper): [reports/figures/fig2_vs_ff5umd_tangent.png](reports/figures/fig2_vs_ff5umd_tangent.png).
 >
-> **SSRN preprint LIVE (2026-07-15)**: <https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7095738> — Ahn, Hyun. "Earnings-Announcement Cadence Variance and the Cross-Section of Forward Returns", working paper, June 2026 (JEL G14, M41). Full English paper: [reports/papers/paper_v1_en.pdf](reports/papers/paper_v1_en.pdf).
+> **SSRN preprint LIVE (2026-07-15)**: <https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6965838> — Ahn, Hyun. "Earnings-Announcement Cadence Variance and the Cross-Section of Forward Returns", working paper, June 2026 (JEL G14, M41). Full English paper: [reports/papers/paper_v1_en.pdf](reports/papers/paper_v1_en.pdf).
 >
 > **이 문서의 audience**: 회계/재무 background 있고 머신러닝 background 없어도 이해 가능하도록 작성. 모든 숫자는 [artifacts/](artifacts/) 의 JSON 에서 직접 검증 가능.
 
