@@ -161,3 +161,12 @@ Open-source, reproducible, ex-ante-rule-locked. The out-of-sample test was seale
 ---
 
 **Contact**: fawkes4700@gmail.com
+
+## License
+
+Source code in this repository is released under the [MIT License](LICENSE).
+
+The working-paper text and its figures are **not** covered by that licence: they
+remain (c) 2026 Hyun Ahn, all rights reserved. Third-party data are governed by
+their original providers' terms and are not redistributed here. See
+[NOTICE](NOTICE) for the full scope statement.
