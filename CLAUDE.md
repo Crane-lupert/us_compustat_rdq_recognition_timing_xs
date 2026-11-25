@@ -1,7 +1,13 @@
 # us_compustat_rdq_recognition_timing_xs
 
 **ID**: RD1-merged-RD7
-**Status**: **Phase 1 CLOSED — paper-practical PARTIAL** (K2 fired Day 4 OOS reveal; LAYER A LOCK denied). **SSRN preprint LIVE 2026-07-15**: [abstract_id=6965838](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6965838)
+**Status (2026-11-25)**: 📄 **v2 논문으로 대체됨.** 이 저장소의 현재 주장은 `reports/papers/paper_v2_en.md` 다 (기대 발표일을 넘긴 침묵 → 발표 때까지 부진. 하루 지연에서는 발표일이 불규칙하던 기업에서만, 2004–2025). 아래 본문은 2026년 6월 판 (발표 간격 변동성 롱숏) 의 기록이고 현재 목표가 아니다. 그 판의 결과는 단순수익률·달력 시간 포트폴리오·비용을 적용하면 유지되지 않았다 (논문 부록 B).
+**v2 작업 규칙**:
+1. 새 검정은 결과를 계산하기 전에 사양 문서를 `docs/v2/` 에 먼저 commit 한다 (기존 사양: `PHASE3_SPEC.md` – `PHASE7_SEARCH_PROTOCOL.md`, `CANDIDATES.md`).
+2. 논문의 수치는 `reports/papers/v2/make_tables.py` 의 출력과 `docs/v2/logs/` 의 로그에서만 옮기고, 고친 뒤 `python reports/papers/v2/check_numbers.py` 가 "not found in the sources: 0" 을 내는지 확인한다.
+3. 홀수 해 (확인 구간) 와 2025년 자료로 새 조건을 고르지 않는다. 새 탐색에는 새 확인 표본 (2026년 이후 자료) 이 있어야 한다 (`docs/v2/PHASE7_SEARCH_PROTOCOL.md` §3).
+4. CRSP·Compustat 원자료와 사건 단위 표는 commit 하지 않는다. 작업 폴더와 덤프 위치는 환경 변수 `RDQ_V2_WORK`·`WRDS_DUMP_DIR` 로 준다 (`scripts/v2/README.md`).
+**이전 Status (2026-06-16)**: Phase 1 CLOSED — paper-practical PARTIAL (K2 fired Day 4 OOS reveal; LAYER A LOCK denied). SSRN [abstract_id=6965838](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6965838) 는 v2 로 교체 중이다. v2 반영 기록: `D:/vscode/meta-harness/audits/2026-11-25-rdq-v2-repo-apply.md`.
 **Date**: 2026-06-16 (launch) / 2026-07-15 (SSRN preprint registered)
 **Iter**: 22 (user-origin "WRDS fundamental data × market participant recognition timing")
 **Project type (Gate G)**: methodology/discovery — `reports/papers/` lane
