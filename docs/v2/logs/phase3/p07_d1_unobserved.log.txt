@@ -1,0 +1,13 @@
+Phase-0 panel rdq range: 2000-02-11 - 2025-04-10
+extended-panel events with datadate >= 2025-01-01 (signal, NT filter, FF12): 23133  rdq range: 2025-02-12 - 2026-05-01
+  H                     level  events  cohort_months first_month last_month  fully_unobserved_months  fully_unobserved_events
+ 60                    signal   12967             10     2025-02    2025-11                        7                    11267
+ 60        linked_valid_entry    9759             10     2025-02    2025-11                        7                     8343
+ 60 russell_proxy_valid_entry    6647             10     2025-02    2025-11                        7                     5535
+120                    signal   11004              8     2025-02    2025-09                        5                     9304
+120        linked_valid_entry    8168              8     2025-02    2025-09                        5                     6752
+120 russell_proxy_valid_entry    5433              8     2025-02    2025-09                        5                     4321
+180                    signal    5754              6     2025-02    2025-07                        3                     4054
+180        linked_valid_entry    4330              6     2025-02    2025-07                        3                     2914
+180 russell_proxy_valid_entry    2877              6     2025-02    2025-07                        3                     1765
+max closed-window unobserved cohort months: 10 -> out-of-sample test NOT possible (< 12 months); counts only

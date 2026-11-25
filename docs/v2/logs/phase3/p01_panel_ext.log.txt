@@ -1,0 +1,7 @@
+fundq INDL/STD/C/D/USD rows: 1882379  max datadate: 2026-04-30  max rdq: 2026-05-01
+extended panel rows: 643423  in_phase0: 620290  beyond: 23133
+phase-0 rows identical to panel_rebuild: True  max|gap_var_t diff|: 0.0
+look-ahead rows (trailing window holds a later rdq): phase0 136 (0.022%)
+dev_cp available: phase0 616891 (99.5%)  quantiles: {0.01: -53.0, 0.1: -7.0, 0.5: -1.0, 0.9: 6.0, 0.99: 27.0}
+corr(dev_cp, gap_dev_t) phase0: 0.145
+wrote $RDQ_V2_WORK\RDQ_cadence\phase3\out\panel_ext.parquet

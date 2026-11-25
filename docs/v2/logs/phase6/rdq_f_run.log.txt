@@ -1,0 +1,12 @@
+[sample] events 2363: insiders bought 640, only sold 966, neither 757; by half 1179 / 1184
+[RDQ-F primary] holding-period abnormal return on insider direction D (+1 bought, 0 none, -1 only sold); expected sign positive; pass needs |t| >= 2.64, both halves positive, later half |t| >= 1.96
+   2015-2024                                      n  2363 months 114 | D +0.439pp (t +1.18) | log cap +0.281 (t +1.90)
+   2015-2019                                      n  1179 months  54 | D +0.320pp (t +0.77) | log cap +0.364 (t +1.82)
+   2020-2024                                      n  1184 months  60 | D +0.541pp (t +0.89) | log cap +0.212 (t +0.97)
+[RDQ-F side reports]
+   mean abnormal return by group: {-1: (np.float64(-0.612), 966), 0: (np.float64(-1.7), 757), 1: (np.float64(0.127), 640)} | all events -0.761% over 6.9 days
+   bought vs the rest                             n  2363 months 114 | BUY +1.393pp (t +2.01) | log cap +0.267 (t +1.88)
+   only sold vs the rest                          n  2363 months 114 | SELL -0.011pp (t -0.02) | log cap +0.235 (t +1.55)
+   D without the size control                     n  2363 months 114 | D +0.300pp (t +0.86)
+   D, size rank 1001-3000                         n  1611 months 114 | D +0.619pp (t +1.09) | log cap +0.880 (t +2.57)
+   D, size rank 1-1000                            n   752 months 104 | D +0.315pp (t +0.86) | log cap -0.055 (t -0.17)

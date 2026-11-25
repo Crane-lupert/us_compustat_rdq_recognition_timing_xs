@@ -1,0 +1,25 @@
+fundq rows 2,110,658; valid announcement records (rdq > datadate) 1,374,434; erroneous rdq <= datadate treated as missing: 818
+prior-year source records P: 927,387; eligible gap 1-120: 902,460; schedule check fails among eligible: 3,247 (fyr change 3,247)
+eligible slots after (gvkey, E) de-duplication: 901,986 (948 rows were in duplicated groups)
+any-E (gvkey, E) pairs: 926,530
+
+[R1 entry E+1 main] slots 841,381, announced_window 569,877, announced_slot_early_only 12,595, not_announced 258,909, not_ann_sched_fail 1,446, linked 169,839, shared_permno_dropped 1,393, in_universe 68,803, trading_on_entry 61,348, price_ge_5 54,440, overlap_dropped 59, events 54,381
+   events by current-year Compustat row: has row 53,954 (with valid rdq 53,807), no row 427; exit reasons {'announce': 53207, '40d': 903, 'delist': 271}; never announced afterwards 424
+   entry years: {2000: 2276, 2001: 2451, 2002: 1999, 2003: 2656, 2004: 2895, 2005: 3267, 2006: 2650, 2007: 2567, 2008: 2181, 2009: 2095, 2010: 1712, 2011: 1678, 2012: 1812, 2013: 2130, 2014: 1985, 2015: 1972, 2016: 2137, 2017: 2120, 2018: 2013, 2019: 1847, 2020: 2656, 2021: 1976, 2022: 1470, 2023: 1598, 2024: 2238}
+
+[R1 entry E+5 main] slots 841,387, announced_window 695,494, announced_slot_early_only 12,436, not_announced 133,457, not_ann_sched_fail 1,273, linked 78,868, shared_permno_dropped 1,055, in_universe 20,713, trading_on_entry 13,258, price_ge_5 10,865, overlap_dropped 56, events 10,809
+   events by current-year Compustat row: has row 10,475 (with valid rdq 10,334), no row 334; exit reasons {'announce': 9809, '40d': 848, 'delist': 152}; never announced afterwards 330
+   entry years: {2000: 603, 2001: 597, 2002: 508, 2003: 663, 2004: 594, 2005: 988, 2006: 741, 2007: 665, 2008: 409, 2009: 380, 2010: 299, 2011: 255, 2012: 274, 2013: 330, 2014: 334, 2015: 326, 2016: 304, 2017: 353, 2018: 368, 2019: 292, 2020: 507, 2021: 336, 2022: 199, 2023: 226, 2024: 258}
+
+[R1 entry E+10 main] slots 841,461, announced_window 729,716, announced_slot_early_only 11,932, not_announced 99,813, not_ann_sched_fail 1,159, linked 56,892, shared_permno_dropped 991, in_universe 12,224, trading_on_entry 4,762, price_ge_5 3,625, overlap_dropped 51, events 3,574
+   events by current-year Compustat row: has row 3,310 (with valid rdq 3,172), no row 264; exit reasons {'announce': 2710, '40d': 798, 'delist': 66}; never announced afterwards 260
+   entry years: {2000: 243, 2001: 205, 2002: 158, 2003: 227, 2004: 217, 2005: 363, 2006: 317, 2007: 264, 2008: 134, 2009: 99, 2010: 69, 2011: 69, 2012: 70, 2013: 97, 2014: 84, 2015: 91, 2016: 95, 2017: 101, 2018: 107, 2019: 91, 2020: 140, 2021: 158, 2022: 45, 2023: 63, 2024: 67}
+
+[R1 entry E+5 literal] slots 841,387, announced_window 695,494, announced_slot_early_only 12,436, not_announced 133,457, not_ann_sched_fail 1,273, linked 86,155, shared_permno_dropped 1,098, in_universe 23,293, trading_on_entry 15,824, price_ge_5 13,186, overlap_dropped 123, events 13,063
+   events by current-year Compustat row: has row 12,734 (with valid rdq 12,593), no row 329; exit reasons {'announce': 11792, '40d': 1108, 'delist': 163}; never announced afterwards 343
+   entry years: {2000: 643, 2001: 742, 2002: 591, 2003: 751, 2004: 681, 2005: 1116, 2006: 859, 2007: 792, 2008: 552, 2009: 442, 2010: 341, 2011: 307, 2012: 338, 2013: 390, 2014: 440, 2015: 442, 2016: 417, 2017: 424, 2018: 463, 2019: 401, 2020: 596, 2021: 444, 2022: 337, 2023: 259, 2024: 295}
+
+[R3 base] current_records_gap_1_180 1,360,501, same_day_dups 5,488, announcements_entry_2000_2024 845,751, linked 562,061, shared_permno_dropped 2,672, in_universe 272,055, trading_on_entry 271,516
+   groups (before per-permno overlap rule): {'MID': 226981, 'EARLY': 22265, 'LATE': 16035, 'noE': 6235}
+   dev_td quantiles (has_E): {0.01: -20.0, 0.05: -6.0, 0.1: -4.0, 0.25: -2.0, 0.5: -1.0, 0.75: 1.0, 0.9: 4.0, 0.95: 5.0, 0.99: 12.0}
+wrote r1_events_o{1,5,10}.parquet, r1_events_o5_literal.parquet (EXPLORATORY), r3_events_base.parquet

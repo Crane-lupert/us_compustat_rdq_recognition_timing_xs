@@ -1,0 +1,45 @@
+panel_post_nt_excl 620290 ['gvkey', 'datadate', 'rdq', 'fyearq', 'fqtr', 'gap_days', 'atq', 'cshoq', 'prccq', 'gap_var_t', 'gap_dev_t', 'n_valid_q', 'cusip8', 'sic', 'ff12', 'conm']
+   cusip8 null: 0  rdq range: 2000-02-11 00:00:00 2025-04-10 00:00:00  datadate range: 1999-12-31 00:00:00 2024-12-31 00:00:00
+panel_with_returns 620290 ['gvkey', 'datadate', 'rdq', 'fyearq', 'fqtr', 'gap_days', 'atq', 'cshoq', 'prccq', 'gap_var_t', 'gap_dev_t', 'n_valid_q', 'cusip8', 'sic', 'ff12', 'conm', 'car_60', 'car_120', 'car_180']
+   any car non-null: 371847 {'car_60': 366747, 'car_120': 369416, 'car_180': 371847}
+   cusip8 null: 0  rdq range: 2000-02-11 00:00:00 2025-04-10 00:00:00  datadate range: 1999-12-31 00:00:00 2024-12-31 00:00:00
+panel_with_returns_full 639604 ['gvkey', 'datadate', 'rdq', 'fyearq', 'fqtr', 'gap_days', 'atq', 'cshoq', 'prccq', 'gap_var_t', 'gap_dev_t', 'n_valid_q', 'cusip8', 'sic', 'ff12', 'conm', 'car_60', 'car_120', 'car_180']
+   any car non-null: 375608 {'car_60': 370292, 'car_120': 373069, 'car_180': 375608}
+   cusip8 null: 0  rdq range: 2000-02-11 00:00:00 2025-06-25 00:00:00  datadate range: 1999-12-31 00:00:00 2024-12-31 00:00:00
+panel_with_returns_ext 620290 ['gvkey', 'datadate', 'rdq', 'fyearq', 'fqtr', 'gap_days', 'atq', 'cshoq', 'prccq', 'gap_var_t', 'gap_dev_t', 'n_valid_q', 'cusip8', 'sic', 'ff12', 'conm', 'car_60', 'car_120', 'car_180', 'car_240', 'car_360', 'car_120_sw1', 'car_180_sw1']
+   any car non-null: 379167 {'car_60': 366747, 'car_120': 369416, 'car_180': 371847, 'car_240': 374417, 'car_360': 379167, 'car_120_sw1': 368942, 'car_180_sw1': 371374}
+   cusip8 null: 0  rdq range: 2000-02-11 00:00:00 2025-04-10 00:00:00  datadate range: 1999-12-31 00:00:00 2024-12-31 00:00:00
+panel_is 436916 ['gvkey', 'datadate', 'rdq', 'fyearq', 'fqtr', 'gap_days', 'atq', 'cshoq', 'prccq', 'gap_var_t', 'gap_dev_t', 'n_valid_q', 'cusip8', 'sic', 'ff12', 'conm', 'car_60', 'car_120', 'car_180']
+   any car non-null: 245198 {'car_60': 242020, 'car_120': 243731, 'car_180': 245198}
+   cusip8 null: 0  rdq range: 2000-02-11 00:00:00 2016-12-30 00:00:00  datadate range: 1999-12-31 00:00:00 2016-11-30 00:00:00
+panel_oos 178210 ['gvkey', 'datadate', 'rdq', 'fyearq', 'fqtr', 'gap_days', 'atq', 'cshoq', 'prccq', 'gap_var_t', 'gap_dev_t', 'n_valid_q', 'cusip8', 'sic', 'ff12', 'conm', 'car_60', 'car_120', 'car_180']
+   any car non-null: 122527 {'car_60': 120717, 'car_120': 121619, 'car_180': 122527}
+   cusip8 null: 0  rdq range: 2017-01-03 00:00:00 2024-12-31 00:00:00  datadate range: 2016-09-30 00:00:00 2024-11-30 00:00:00
+          n  with_ret   frac
+yr                          
+2000  13522      8292  0.613
+2001  32171     17260  0.537
+2002  32047     16637  0.519
+2003  30449     15939  0.523
+2004  29135     15390  0.528
+2005  28231     15347  0.544
+2006  27300     15192  0.556
+2007  26518     14845  0.560
+2008  25968     14563  0.561
+2009  25170     14206  0.564
+2010  24371     13777  0.565
+2011  23871     13488  0.565
+2012  23573     13366  0.567
+2013  23492     13375  0.569
+2014  23749     13578  0.572
+2015  23991     14174  0.591
+2016  23358     14302  0.612
+2017  22601     14154  0.626
+2018  22059     14081  0.638
+2019  21797     14320  0.657
+2020  21184     14596  0.689
+2021  21694     14922  0.688
+2022  22872     15827  0.692
+2023  23405     16740  0.715
+2024  22598     16979  0.751
+2025   5164      4066  0.787

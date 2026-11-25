@@ -1,0 +1,10 @@
+(A) non-null: {'car_60': 366747, 'car_120': 369416, 'car_180': 371847}  any: 371847
+(B) panel rows / with permno via hdrcusip: [(620290, 489854)]
+(B) non-null: {'pcar_60': 446123, 'pcar_120': 447087, 'pcar_180': 447965}  any: 447965
+H=60: repo nonnull 366747  mine 366747  both 366747  max|diff| 4.35e-07  mismatch-null 0
+   gap_var_t max|diff| 0.00e+00
+H=120: repo nonnull 369416  mine 369416  both 369416  max|diff| 4.61e-07  mismatch-null 0
+   gap_var_t max|diff| 0.00e+00
+H=180: repo nonnull 371847  mine 371847  both 371847  max|diff| 4.61e-07  mismatch-null 0
+   gap_var_t max|diff| 0.00e+00
+wrote panel_ret.parquet 620290

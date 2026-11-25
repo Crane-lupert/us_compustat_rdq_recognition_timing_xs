@@ -1,0 +1,7 @@
+gvkeys with valid rdq >= 1998: 26306  in phase-3 link: 13083  to try: 13223
+new links: rule A 2734 (gvkeys with >1 candidate 0), rule B 74 (>1 candidate 1)
+link4 gvkeys: 15891  permnos: 15546  shared permnos: 340  gvkey rows on them: 685  (phase-3 shared permnos: 517 rows)
+shared_assign rows: 2308940  permno-days with no assignable gvkey: 0
+R3000-proxy members linked, share by June year (phase-3 link / phase-4 link):
+   {1999: (0.797, 0.913), 2000: (0.885, 0.909), 2004: (0.931, 0.934), 2009: (0.944, 0.946), 2014: (0.953, 0.954), 2019: (0.957, 0.96), 2024: (0.936, 0.956)}
+   overall 1999-2024: 0.9328 / 0.9417

@@ -1,0 +1,4 @@
+fundq_ext: [(1269448, datetime.date(1999, 1, 31), datetime.date(2026, 4, 30), datetime.date(2026, 5, 1))]
+company: [(57397,)]
+shortint columns: ['gvkey', 'iid', 'shortint', 'shortintadj', 'datadate', 'splitadjdate']
+shortint: [(5133140, '2006-07-', '2026-04-')]

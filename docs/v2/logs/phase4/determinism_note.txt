@@ -1,0 +1,5 @@
+Full rerun (bash run_phase4.sh, 2m57s, 2026-11-21 ~01:40Z) after the first pass: out/r1_event_table.parquet byte-identical
+(sha256 in hashes_before/after_full_rerun.txt). out/results.csv, out/summary_primary.csv and out/daily_r2.parquet differ only by
+floating-point summation order of DuckDB parallel aggregates. Check (s04_r2.py run twice; copies of run A kept in tmp/):
+results_r2.csv max abs diff 1.07e-14, max rel diff 1.24e-13 over 717 values; daily_r2.parquet integer count columns identical,
+max abs diff 3.05e-05 on cap-weighted sums of order 1e8 (~1e-13 relative). No reported digit changes.

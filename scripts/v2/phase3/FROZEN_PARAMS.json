@@ -1,0 +1,132 @@
+{
+  "frozen_at_utc": "2026-11-20T13:15:00Z",
+  "frozen_before": "Written before any phase-3 return, delisting-outcome or announcement-return computation. Before this point phase 3 ran only: Step 0 re-runs of phase-1/2 scripts s05/s06/s08 (outputs identical to the phase-1/2 logs), p01_panel_ext.py (signal panel, no returns), p02_link_universe.py (link, membership, entry dates, no returns), and data-definition checks (link candidate counts, legacy-vs-CIZ delisting code mapping, dsf_v2 delisting-row content).",
+  "spec_source": "RDQ_cadence/PHASE3_SPEC.md (fixed 2026-11-20) + PHASE3_PROTOCOL.md + PROTOCOL.md",
+
+  "lock_c_quotes": {
+    "file": "audits/2026-06-16-RD1-merged-RD7-lock-c.md",
+    "signal": "Signal | `gap_var_t = std({gap_q : q in trailing 8Q, ≥6 valid})`",
+    "direction": "Direction prior | high-variance → NEG forward CAR (erratic disclosure cadence → information-asymmetry penalty)",
+    "cross_section": "Cross-section | monthly XS quintile within FF12 sector",
+    "portfolio": "Portfolio | Long Q1 (low-var) − Short Q5 (high-var)",
+    "sign": "Pre-registered sign | spread Q1 − Q5 > 0",
+    "cells": "3 horizons × 4 sub-cells = 12 cells. Threshold |t| > 2.78 + sign-correct. (60d/120d/180d × Size-large/small × IndTilt-high/low; A60-LH ... A180-SL)",
+    "verdict_rule": "Verdict per sub-gate (e): PASS ≥3/12 / BORDERLINE 2/12 / KILL <2/12.",
+    "size_tilt_code": "repo scripts/strategy_A_bonferroni.py assign_subcells: 'size large/small: monthly XS median of mcap_mil within FF12', 'ind_tilt high/low: per-FF12 bucket membership (fixed mapping)', INDUSTRY_TILT_HIGH = {6, 10, 11}  # BusEq, Hlth, Money",
+    "lock_d_primary": "Lock D §1 (commit dbc303b): primary cells A120-LH, A120-SH, A180-LH, A180-SL; 'Phase 1 PASS criterion (primary): ≥2/4 cells confirm |t_OOS| > 2.78 with sign-correct on the OOS hold-out partition.'"
+  },
+
+  "signal": {
+    "definition": "repo definition, rebuilt from comp_na_daily_all.fundq in p01 (identical to repo panel_post_nt_excl, 620,290 rows, max|diff| 0)",
+    "already_announced_only": "rows whose trailing 8-row window contains a quarter with rdq later than the current rdq are dropped (136 rows = 0.022% of the panel; 7 inside the Russell proxy universe). Reason: spec says 'already announced quarters only'.",
+    "panel_rows_used": "in_phase0 (datadate <= 2024-12-31) and rdq <= 2024-12-31 for every main/auxiliary/confirmation analysis except D1"
+  },
+
+  "link": {
+    "rule_A": "Compustat names CUSIP[:8] == CRSP dsenames ncusip; accepted only if that permno's ncusip record(s) overlap the gvkey's event span [min rdq, max rdq]",
+    "rule_B": "gvkeys without A: Compustat namesd (security-level, any iid) CUSIP[:8] == ncusip with the same overlap rule; several candidates -> largest overlap days, then lowest permno",
+    "carry": "permno is CRSP's permanent security id: the link holds for all of the gvkey's events while the permno trades (removes the D8 post-hoc CUSIP selection)",
+    "shared_permno": "permno linked to >1 gvkey (256 permnos, all rule A): each date of that permno is assigned to the gvkey whose CUSIP record covers the date; if none covers it, to the gvkey whose CUSIP record is nearest in time (ties -> later record). Events of a gvkey on dates assigned to another gvkey are dropped.",
+    "one_event_per_security_month": "within (permno, rdq month) keep one event: latest datadate (most recent quarter); applied after the shared-permno rule"
+  },
+
+  "entry_exit": {
+    "entry": "d0 = first CRSP trading day >= rdq+1 (calendar) with non-null dlyret and dlydelflg='N'; position enters at the close of d0; valid iff d0 <= rdq+10 calendar days (otherwise the event is not tradable near the announcement and is dropped)",
+    "window": "returns accrue on CRSP days d with d0 < d <= rdq+H calendar days (repo window: second trading day after the announcement through rdq+H)",
+    "exit": "close of the last CRSP day in the window (or the delisting row if the security delists inside the window)",
+    "skip_week": "D4 one-week-delayed start: d0_sw = first trading day >= rdq+8, valid iff d0_sw <= rdq+17; window d0_sw < d <= rdq+H (repo build_forward_returns_extended.py rdq+8 start)",
+    "returns": "dsf_v2 dlyret (simple, CIZ). Delisting rows (dlydelflg='Y') carry CRSP's delisting return (checked: equal to stkdelists.delret in 14,960/15,686 rows, the other 726 are missing in both) and are included when dated inside the window. Missing delisting returns are NOT imputed. Days with null dlyret are skipped (CIZ returns after a gap span from the previous valid price)."
+  },
+
+  "universe_main": {
+    "name": "Russell 3000 proxy (labelled as a proxy, not Russell membership)",
+    "rule": "last CRSP trading day of June, year Y (1999..2024): securities with a dsenames record valid that day, shrcd in (10,11), exchcd in (1,2,3), dsf_v2 dlycap > 0; rank by dlycap (security level, ties by permno); top 3,000 = members for events with rdq in [Jul 1 Y, Jun 30 Y+1]",
+    "sorting_universe": "member events with linked permno, signal, FF12 (after the duplicate rules) form the quintile / size-median universe; trading positions additionally need a valid entry"
+  },
+  "universe_B1": {
+    "rule": "all CRSP common stocks at the event: linked permno with a dsenames record valid on rdq, shrcd in (10,11), exchcd in (1,2,3); quintiles and size medians re-formed inside this universe"
+  },
+
+  "cells": {
+    "quintile": "repo convention: within (rdq calendar month, FF12): sort by signal (mergesort), rank(method='first'), qcut 5; groups < 5 -> no quintile",
+    "size": "Compustat cshoq*prccq vs (rdq month, FF12) median inside the universe; NaN mcap -> 'S' (repo behaviour; 0.057% of the main universe)",
+    "tilt": "FF12 in {6,10,11} -> H",
+    "ff49_block_D4": "repo phase1_robustness_ff49.py: same quintiles and size bins; tilt H iff FF49 in {12,35,36,37,38,11,13,45,46,48}",
+    "within_month_breakpoints": "kept as in Lock C (breakpoints use all same-month announcers, including later ones in the month); flagged in E2, no variant run"
+  },
+
+  "calendar_time": {
+    "cohort": "(cell, leg, rdq month)",
+    "within_cohort": "buy-and-hold, equal weight at entry: weight of position i on day t = g_i,t / sum_j g_j,t over active positions, g = cumulative gross return since entry",
+    "across_cohorts": "equal weight across the cohorts active on day t (leg daily return = mean of cohort returns)",
+    "monthly": "leg monthly return = product of (1 + daily leg return) over the month's trading days; LS = long leg - short leg; months with no position = 0",
+    "composite": "equal-weight mean of the 4 Lock D primary cells' monthly LS returns"
+  },
+
+  "costs": {
+    "quoted_spread": "qs = (ask - bid)/((ask + bid)/2) from dsf_v2 closing dlybid/dlyask on the trade day; valid iff bid > 0, ask >= bid, qs < 1",
+    "round_trip": "entry: half qs at close of d0; exit: half qs at close of the last window day",
+    "missing_qs": "use the same position's other-end qs; if both missing, median qs of positions in the same (universe, cell, leg, cohort); if still missing, median of the same (universe, cell, leg)",
+    "trade_size": "entry = position's leg weight on its first return day (start of day); exit = leg weight on its last return day x (1+r_i)/(1+r_leg) (end of day); cost booked in the month of the trade",
+    "not_charged": "implicit rebalancing trades from equal-weighting across cohorts and redistribution after exits (costs are a lower bound)",
+    "borrow": "short leg only, repo schedule by market cap (>= $10B 25 bps/yr; $2-10B 50; $300M-2B 200; $100-300M 800; < $100M 2000; missing 2000) using CRSP dlycap at d0 (Compustat cshoq*prccq if CRSP missing); accrues daily: sum_i w_i,t * bps_i/1e4 * (calendar days since previous trading day)/365",
+    "aux_fixed_bp": "auxiliary only: 20 bp per position round trip (10 bp at entry + 10 bp at exit) with the same trade sizes (paper's nominal convention applied by turnover)",
+    "net_definition": "net_spread = LS - spread costs (both legs); net_all = net_spread - borrow"
+  },
+
+  "inference": {
+    "primary": "monthly calendar-time LS: mean, Newey-West (Bartlett) SE with lag floor(4 (T/100)^(2/9)) (T=203 -> 4, T=96 -> 3), t-distribution df = T-1",
+    "bonferroni": "Bonferroni-12 at 5% family-wise, exact two-sided critical value t_{1-0.05/24}(T-1); pass iff mean > 0 and t > crit (verdict). Also reported, not used for the verdict: one-sided exact t_{1-0.05/12}(T-1), the published 2.78, nominal two-sided 5% passes with the correct sign, and chance expectation 12 x 0.05 = 0.6",
+    "sensitivity_declared": "NW lag 12 t reported next to the primary t (not used for the verdict)",
+    "sharpe": "annualised mean/sd x sqrt(12) of the calendar-time monthly series including months without positions",
+    "periods": "return months 2000-02..2016-12 (T=203, 'in-sample 2000-2016') and 2017-01..2024-12 (T=96, 'later subperiod 2017-2024, NOT a hold-out')"
+  },
+
+  "B1": "main spec with universe_B1",
+  "B2": "cohort-level test (published statistic) with simple buy-and-hold returns over the same window, main universe and link: per (cell, rdq month) mean(Q1 BH) - mean(Q5 BH); NW lag 12 (as published); periods by cohort month 2000-02..2016-12 and 2017-01..2024-12; exact Bonferroni-12 with df = n_months - 1",
+  "B3": "published construction as-is: log CAR with repo current-CUSIP link and full Compustat sorting universe (phase-1 panel_ret.parquet car_*, equal to repo to 4.6e-7), cohort statistic NW(12), cohort months <= 2016-12 and 2017-01..2024-12; thresholds 2.78 (published) and exact",
+  "B4": "composite (4 primary cells) calendar-time Sharpe and NW t: gross / net of quoted spread / net of spread + borrow; aux: net of 20 bp per round trip",
+
+  "D1": {
+    "unobserved_def": "events not in the Phase 0 sample = extended-panel rows with datadate >= 2025-01-01 (Phase 0 panel had datadate <= 2024-12-31, rdq up to 2025-04-10)",
+    "closed_window": "rdq + H <= 2025-12-31 (last dsf_v2 date), H in {60,120,180}",
+    "count_levels": "signal rows; + linked & valid entry; + Russell proxy (June-2024 membership for rdq <= 2025-06-30, June-2025 CIZ-flag membership after); distinct rdq months",
+    "rule": "if closed-window unobserved cohort months < 12: 'out-of-sample test not possible', counts only (no returns computed)"
+  },
+  "D2": {
+    "expected_date": "Chambers & Penman (1984): expected announcement date = actual announcement date of the same fiscal quarter in the previous fiscal year (source: Trueman 1990, JAE 13:285-301, footnote 1, verbatim: 'Chambers and Penman assume the expected announcement date for any quarter is equal to the actual announcement date of the same quarter in the previous fiscal year.'). dev_cp = rdq - (prior-year same-quarter rdq + 1 calendar year), days; prior-year rdq from raw fundq (any gap, latest datadate per gvkey-fyearq-fqtr)",
+    "sample": "panel rows (NT-excluded, as Lock C Strategy B) with dev_cp, main universe (Russell proxy + PIT link + duplicate rules), rdq <= 2024-12-31",
+    "sort": "dev_cp quintiles within (rdq month, FF12) inside the universe (repo convention); early = Q1 (lowest dev_cp), late = Q5; statistic early - late (direction corrected, D7)",
+    "window": "3 market trading days [t-1, t+1], t = first CRSP trading day >= rdq (market calendar = dsf_v2 dates); all 3 stock returns non-null",
+    "outcome_primary": "market-adjusted 3-day simple return = stock compounded return - CRSP VW index (dsix vwretd) compounded over the same days (events whose window passes 2024-12-31 drop, dsix ends there)",
+    "outcome_secondary": "raw 3-day simple return (reported in the same table, declared here)",
+    "inference": "monthly (rdq month) early-late mean; NW lag rule as primary; df = T-1; periods 2000-02..2016-12 and 2017-01..2024-12; single pooled test per period",
+    "label": "announcement-window price reaction (not a tradable strategy: early/late is partly known only at the announcement)"
+  },
+  "D3": {
+    "label": "exploratory, outside the pre-registration; run once, no re-specification",
+    "sample": "main universe trading events (Russell proxy, linked, valid entry, duplicate rules) with main-spec quintile, rdq 2000-02..2016-12 (estimation) and 2017-01..2024-12 (confirmation, identical spec)",
+    "y": "1 if the permno has a CIZ stkdelists record with delactiontype in {GLI, GDR} (= legacy dlstcd 400-599; one-to-one on 2000-2024 overlap: 400s=GLI 2,252, 500s=GDR 4,273) with delistingdt in (rdq, rdq+365]",
+    "x": "quintile dummies Q2..Q5 (Q1 omitted); coefficient of interest = Q5",
+    "controls": "log(CRSP dlycap at d0, $M); trailing volatility = sd of daily dlyret over CRSP days in [rdq-365, rdq-1] x sqrt(252), >= 100 days required; calendar-year (rdq) fixed effects",
+    "estimator": "OLS linear probability model, gvkey-clustered CR1 SE, t-distribution df = clusters - 1"
+  },
+  "D4": {
+    "table6": "4 primary cells, main spec calendar-time: next-day start vs one-week-delayed start, in-sample vs in-sample and later vs later",
+    "table8": "blocks under the main spec, each period separately: FF12 12 cells; FF49-tilt 12 cells; extended H 240/360 x 4 sub-cells (8); skip-week H 120/180 x 4 sub-cells (8). Report exact Bonferroni-12 passes (per block, as the paper used 12), nominal 5% passes, sign-correct counts, chance expectation (cells x 0.05)"
+  },
+
+  "pre_registered_criteria_for_E7": "launch SPEC §0.3(e) sub-gate; Lock C verdict rule; Lock D §1 primary criterion; Phase 1 entry §4 K1-K5 and §5 L1-L6 (quoted in the report). Sector criterion (Lock D §5, L3/K3) and WITH-NT (L4/K4) are evaluated only if L2 passes (moot otherwise, as in the original close).",
+
+  "deviations": [
+    {
+      "id": "DEV1",
+      "recorded_utc": "2026-11-20T13:40:00Z",
+      "item": "costs.trade_size",
+      "before": "entry/exit trade size = the position's leg weight in the cohort-EW return index on its first / last return day",
+      "after": "slot weight = 1 / (n_cohort_leg x mean active cohorts in the trade month): each position is bought once and sold once at an equal share of its cohort's capital (one cohort in + one cohort out per month)",
+      "reason": "measured after the first run (p04 before the change): the frozen rule charged 2.1-3.3x the natural turnover (sum of entry+exit weights per leg-month vs 2/N_cohorts) because the daily cohort-EW index gives a new cohort's first entrants (and its last exiters) the whole cohort weight; a real implementation buys each name once at its slot. The frozen rule therefore overstates costs. Gross returns, borrow accrual and all other rules are unchanged.",
+      "reporting": "both variants are reported: net_qs/net_all = frozen rule (before), net_qs_s/net_all_s = DEV1 (after); E4 quotes both"
+    }
+  ]
+}

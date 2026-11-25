@@ -1,0 +1,8 @@
+out/ct_stats.csv: FAILED
+out/cohort_stats.csv: OK
+out/d2_cp.csv: OK
+out/d3_lpm.csv: FAILED
+out/d1_counts.csv: OK
+out/corrected_tables.csv: OK
+out/criteria.json: OK
+sha256sum: WARNING: 2 computed checksums did NOT match

@@ -1,0 +1,128 @@
+{
+  "frozen_at_utc": "2026-11-20T20:33:00Z",
+  "frozen_before": "Written before any phase-4 return outcome was computed. Before this point phase 4 ran only: s00_data_checks.py (input ranges, gap distribution, duplicate counts, calendar, delisting-row layout, quote coverage, factor file check), s01_link.py (gvkey-permno link, shared-permno date assignment, membership coverage counts) and s02_events.py (announcement history, expected dates, R1 / R3 event dates and flags, entry-day price / cap / membership conditions, delisting dates). No holding-period, window or announcement return and no portfolio statistic had been computed.",
+  "spec_source": "RDQ_cadence/PHASE4_SPEC.md (fixed 2026-11-21) + PHASE4_PROTOCOL.md + PHASE3_PROTOCOL.md §3 + PROTOCOL.md §1",
+
+  "step0_findings": {
+    "factor_file": "The suggested X_sec_letter/phase3/cache/french_daily.parquet holds only mkt_rf, rf, mkt (no SMB/HML/RMW/CMA/UMD). Replacement: WRDS dump ff_all.fivefactors_daily.csv.gz (mktrf, smb, hml, rmw, cma, rf, umd; 1963-07-01..2026-03-31; every CRSP day 2000-2024 present, no nulls). Monthly: ff_all.fivefactors_monthly.csv.gz.",
+    "crsp": "dsf_v2_slim.parquet: 52,054,178 rows, 1999-01-04..2025-12-31, no duplicate (permno, date); 15,686 delisting rows (dlydelflg='Y'), each the last row of its permno, dated on its own day after the last normal row, dlyret = CRSP delisting return (726 null), dlycap null. dlyprc never negative. Universe stock-days 2000-2024: 18,308,490, null dlyret 10,713. Valid closing quotes 86-100% per year.",
+    "calendar": "market calendar = distinct dsf_v2_slim dates (6,791 days; 6,289 in 2000-2024; no day with only delisting rows)",
+    "fundq": "comp_na_daily_all.fundq INDL/STD/C/D: 2,110,658 rows, 45,420 gvkeys (228,279 non-USD rows), rdq non-null 1,375,252, max rdq 2026-05-01. gap = rdq - datadate (datadate >= 1998): <= 0 days 197 rows (0.02%), 1-9 0.20%, 10-120 97.05%, 121-180 1.42%, 181-365 0.92%, > 365 0.39%. 818 rows (all years) have rdq <= datadate. 7,699 (gvkey, rdq) pairs carry > 1 quarter (several quarters announced the same day). 3,646 gvkeys change fyr at least once.",
+    "link_coverage": "phase-3 link.parquet links 93.3% of R3000-proxy member-years 1999-2024 (79.7% in June 1999) because it was built only for the 18,818 phase-3 panel gvkeys; extended link (below) 94.2% (91.3% in 1999).",
+    "ibes": "tr_ibes.surpsum EPS/QTR: 877,706 rows, anndats 1992-04-21..2026-02-19; tr_ibes.id gives ticker-cusip8."
+  },
+
+  "announcements": {
+    "source": "cache/fundq_rdq.parquet = fundq rows with indfmt='INDL', datafmt='STD', consol='C', popsrc='D', any currency (phase-3 p01 used USD only; the announcement history should not miss a firm's announcement because of the reporting currency)",
+    "valid_record": "rdq not null and rdq > datadate. Rows with rdq <= datadate (818) are data errors and are treated as having no rdq everywhere (not an announcement, not a prior-year source, not an R3 event).",
+    "detection_set": "every valid record's rdq (any fiscal quarter, any gap, incl. very late ones). Used for 'announced' in R1, actual-announcement-in-window share in R2, exits in R1.",
+    "per_quarter_dedup": "one record per (gvkey, fyearq, fqtr): latest datadate (phase-3 p01 Chambers-Penman rule); rows with null fyearq/fqtr cannot be prior-year sources",
+    "abnormally_late": "prior-year source needs gap <= 120 days (spec); R3 current announcements need gap 1-180 days (repo panel upper bound 180); later rdq stay in the detection set"
+  },
+
+  "expected_date": {
+    "E": "same as phase-3 D2 (Chambers-Penman 1984 via Trueman 1990 fn. 1): source record P = (gvkey, fyearq - 1, fqtr) after per-quarter dedup; E_raw = P.rdq + 1 calendar year (pandas DateOffset(years=1): Feb 29 -> Feb 28); E = first market trading day >= E_raw (weekend / holiday -> next trading day). kE = calendar index of E; 'E + n trading days' = calendar index kE + n.",
+    "eligible_P": "1 <= P.gap <= 120 days (spec: prior-year announcement more than 120 days after quarter end is excluded; gap <= 0 = error) and E_raw >= 1999-01-04",
+    "dedup": "eligible slots de-duplicated on (gvkey, E): keep the slot whose P has the latest datadate (several quarters announced on one day last year give one expected date)",
+    "fiscal_year_change": "schedule check at tau = E - 45 calendar days (known before every R1 entry, every R2 window and every R2 monthly formation): L = latest valid record with rdq <= tau (ties -> latest datadate). The slot is dropped if L.fyr != P.fyr or (month(L.datadate) - month(P.datadate)) mod 3 != 0. Eligible slots failing: 3,247 of 902,460.",
+    "D_exp": "expected quarter end of the slot = P.datadate + 12 months",
+    "E_any": "for the R2 N group and coverage only: every valid record's rdq + 1 year -> first trading day >= it (no gap, label or schedule condition), de-duplicated per gvkey"
+  },
+
+  "link": {
+    "base": "phase-3 link.parquet (p02 rules A/B, 13,083 gvkeys) kept as is",
+    "extension": "every other fundq gvkey with a valid rdq >= 1998-01-01 linked with the same p02 rules: A = Compustat names CUSIP[:8] == CRSP dsenames ncusip whose records overlap the gvkey's announcement span [min rdq, max rdq] (rdq >= 1998); B (no A) = namesd security CUSIP[:8] == ncusip, same overlap; several candidates -> largest overlap days, then lowest permno. Added 2,734 (A) + 74 (B) gvkeys -> cache/link4.parquet, 15,891 gvkeys.",
+    "shared_permno": "p03 rule evaluated on every market trading day (cache/shared_assign.parquet): a permno linked to > 1 gvkey (340 permnos) belongs on date t to the gvkey whose names-CUSIP dsenames record covers t, else the nearest record (ties -> later record start, then first gvkey). A gvkey's event or stock-day on that permno is used only on dates assigned to it.",
+    "date_used": "R1 entry date, R2 stock-day, R3 entry date"
+  },
+
+  "universe": {
+    "definition": "phase-3 membership.parquet: last CRSP trading day of June of year Y, dsenames shrcd 10/11 and exchcd 1/2/3, top 3,000 by dsf_v2 dlycap; members for dates Jul 1 Y..Jun 30 Y+1 (Y <= 2024). Labelled 'Russell-3000 proxy'.",
+    "pit": "membership year of a date d = year(d) if month(d) >= 7 else year(d) - 1; known before d",
+    "applied_at": "R1: entry date; R2: each stock-day t (monthly version: the month); R3: entry date. Size rank buckets 1-500 / 501-1000 / 1001-3000 use the June rank rk of that membership year."
+  },
+
+  "returns": {
+    "daily": "dsf_v2 dlyret (simple, CIZ). Delisting rows carry the delisting return and are included when inside the holding window; null returns are skipped (not imputed).",
+    "holding_window": "a position entered at the close of day e and exited at the close of day x earns the returns of the market days d with e < d <= x on which the permno has a non-null return row (delisting row included)",
+    "data_end": "returns through 2024-12-31; positions still open are truncated there",
+    "value_weight": "weight of a stock on day d = its dlycap on its previous dsf row (lagged cap; for the first holding day the entry-day cap); stocks without a lagged cap drop from VW that day"
+  },
+
+  "R1": {
+    "slots": "eligible, de-duplicated, schedule-checked slots (expected_date) with entry day t_e = calendar[kE + o]; o = 5 (main), 1 and 10 (함께 보고). t_e in 2000-01-01..2024-12-31. Slots come from prior-year records, so a firm with no current-year Compustat row is still a slot.",
+    "not_announced": "(a) spec rule: no valid rdq of the gvkey in (E - 30 calendar days, t_e]; AND (b) clarification: no valid record of the gvkey with datadate >= D_exp - 15 days (the slot's own quarter or later) has rdq <= t_e. Reason for (b) (found in s02 before any return): 12,436 slots (E+5) have no rdq in (E - 30, t_e] although the slot's own quarter (same label in 97.5%, datadate = D_exp in 99.8%) was already announced 30-73 days before E (median 42), typically because last year's announcement was late; the literal window rule would trade them as 'not announced'. A real-time trader knows these announcements. The literal-rule-only variant is reported as EXPLORATORY.",
+    "rdq_after_entry": "used only for the exit (next valid rdq strictly after t_e); never for entry",
+    "entry_conditions": "gvkey linked (link4) and the permno assigned to the gvkey on t_e; permno in the universe on t_e; a normal (dlydelflg='N') CRSP row on t_e with |dlyprc| >= 5. Entry at the close of t_e.",
+    "exit": "earliest of: x_ann = first market trading day strictly after the next valid rdq > t_e (close of the trading day after the announcement date); x_40 = calendar[k_e + 40]; the permno's delisting-row date. Ties: delisting > announce > 40d for the reason label.",
+    "overlap": "one position per permno at a time: events sorted by (permno, t_e, datadate); a later event entering before the kept event's exit day is dropped (entry on the exit day is allowed: no shared return day)",
+    "portfolio": "daily equal weight of held positions with a return that day; days with < 10 such stocks are excluded from the regression (not set to 0)",
+    "statistic": "intercept of (R_p - rf) on FF5+UMD daily, NW(5) t; expected sign negative",
+    "halves": "separate portfolios of positions entered 2000-01-01..2012-12-31 and 2013-01-01..2024-12-31 (spec: by entry date); each half's days < 10 stocks excluded",
+    "with_report": {
+      "vs_universe": "intercept of (R_p - R_U) on FF5+UMD, R_U = equal-weight return of all universe members with a return row that day (linked or not, any price)",
+      "decomposition": "per position-day state: 'ann' if the day is on/after the first trading day >= rdq_next (announcement day and the next day), else 'wait'; contribution c_s,t = (1/n_t) * sum over stocks in state s of (r - rf); c_wait + c_ann = R_p - rf; intercept of each on FF5+UMD; also mean event-level compounded returns of the two segments",
+      "never_announced": "shares of events by exit reason, share whose gvkey has no valid rdq after entry at all (until the fundq end, 2026-05), contribution of 'not announced within the hold' (exit 40d / delist) positions: c_notann,t as above",
+      "entry_1_10": "same rules with o = 1 and o = 10",
+      "value_weighted": "lagged-cap weights (returns.value_weight)",
+      "size_buckets": "June rank 1-500 / 501-1000 / 1001-3000 of the entry membership year; separate portfolios, days < 10 excluded within each",
+      "costs": "short P&L net: per position, half quoted spread at the entry close + half at the exit close (charged on its first / last holding day) + borrow fee bps (repo table by CRSP cap at entry: >= $10B 25, $2-10B 50, $300M-2B 200, $100-300M 800, < $100M 2000 bps/yr) x calendar days since the previous trading day / 365 on every holding day; short net excess return = -(R_p - rf) - mean cost; intercept on FF5+UMD (expected positive). Gross short alpha = -(gross alpha).",
+      "counts": "events, events by current-year Compustat row (row / row with valid rdq / no row), exit reasons, mean stocks per day (all days with >= 1 stock and days used), days used"
+    }
+  },
+
+  "R2": {
+    "stock_day_universe": "universe member on t, linked (permno assigned to gvkey g on t), non-null return on t, and covered = some E_any of g within +-63 trading days of t (a quarterly schedule exists; E_any within t+63 trading days comes from an rdq at least ~9 months earlier, so known at t)",
+    "A": "covered stock-days with t in [E - 2, E + 2] trading days for some eligible, de-duplicated, schedule-checked E of g (window variants [E-1, E+1] and [E-5, E+5]); a stock counts once per day",
+    "N": "covered stock-days with no E_any of g within +-10 trading days of t (E_any includes slots with prior gap > 120 or failing the schedule check, so N excludes them too); the same N for all window variants",
+    "portfolio": "daily EW(A) - EW(N); days with < 10 A stocks excluded; intercept on FF5+UMD (no rf: zero investment), NW(5); expected sign positive",
+    "halves": "R2 is rebalanced daily: day t belongs to the half of its formation date t-1 (first half: t-1 <= 2012-12-31)",
+    "with_report": {
+      "value_weighted": "VW(A) - VW(N), lagged-cap weights",
+      "size_buckets": "A_b - N_b inside June rank buckets 1-500 / 501-1000 / 1001-3000",
+      "windows": "[E-1, E+1] and [E-5, E+5] (A changes, N fixed)",
+      "gap_var_t_terciles": "signal of stock i in month m = gap_var_t of the gvkey's latest phase-3 panel_ext row (lookahead=False) with rdq < first day of m; terciles across all covered universe stocks with a signal in month m (one value per stock, known at the month start); A_k - N_k for k = low / mid / high (low = regular cadence)",
+      "actual_in_window": "share of A events (permno, E) present in A on >= 1 day whose gvkey has a valid rdq with first-trading-day-on-or-after-rdq in the window",
+      "monthly": "month m: A_m = covered universe stocks (membership of month m, covered = E_any in months m-2..m+2) with an eligible schedule-checked E in month m; N_m = covered stocks with no E_any in month m; stock-month return = compounded daily returns in m (delisting row included, 0 after); EW(A_m) - EW(N_m), months with < 10 A stocks excluded; intercept on monthly FF5+UMD, NW lag floor(4 (T/100)^(2/9)); halves by month",
+      "costs": "per A run (maximal run of consecutive trading days in A for a permno): half quoted spread at the close of the day before the run (entry) and half at the close of the run's last day (exit), charged on the run's first / last day; net = EW(A - cost) - EW(N)",
+      "exploratory_declared_before_results": "EXPLORATORY (not in the spec, not used for the verdict): N-leg turnover cost (half spread at each N entry / exit run boundary)"
+    }
+  },
+
+  "R3": {
+    "events": "valid current records (per-quarter dedup) with gap 1-180 days; several records with the same (gvkey, rdq) -> latest datadate; entry d0 = first market trading day strictly after rdq (close of the trading day after the announcement), d0 in 2000-01-01..2024-12-31; linked and assigned on d0; universe member on d0; normal CRSP row with non-null price on d0. No price filter (spec has none for R3).",
+    "E": "from P = (gvkey, fyearq - 1, fqtr): eligible (gap 1-120), same fyr as the current record and current datadate exactly 12 months after P.datadate; otherwise the event has no E and is excluded (counted as 'noE')",
+    "deviation_td": "dev_td = index of the first trading day >= rdq minus index of E",
+    "groups": "EARLY: dev_td <= -5; LATE: dev_td >= +5 (thresholds fixed, known at the announcement)",
+    "holding": "20 trading days: returns of days d0 < d <= calendar[k(d0) + 20] or until the delisting row; 60-day variant the same with 60",
+    "overlap": "per permno, EARLY and LATE events only, sorted by d0: an event entering before the kept event's exit is dropped (separately for 20 and 60 days)",
+    "statistic": "daily EW(EARLY) - EW(LATE), days with < 10 stocks in either leg excluded; intercept on FF5+UMD (no rf), NW(5); expected sign positive; halves = separate portfolios by entry date d0",
+    "with_report": {
+      "legs": "intercept of (R_leg - rf) on FF5+UMD for each leg",
+      "h60": "60-day holding",
+      "value_weighted": "lagged-cap weights in each leg",
+      "ibes_split": "tr_ibes.surpsum measure='EPS', fiscalp='QTR'; surprise = actual - surpmean, positive (> 0) / negative (< 0), zero dropped. IBES ticker -> cusip8 (tr_ibes.id) -> CRSP dsenames ncusip -> permno; event match: same permno, (pyear, pmon) = (year, month) of the event datadate and |anndats - rdq| <= 3 days; several matches -> smallest |anndats - rdq|. EARLY+ - LATE+ and EARLY- - LATE- (each with the < 10 rule). Unmatched events are left out of the split only.",
+      "costs": "EARLY long: half spread at entry (d0) and exit closes; LATE short: the same plus borrow (repo table by cap at d0) on every holding day; net LS = gross LS - EW cost(EARLY) - EW cost(LATE)"
+    }
+  },
+
+  "costs_common": {
+    "quoted_spread": "qs = (ask - bid)/((ask + bid)/2) from dsf_v2_bidask on the trade day; valid iff bid > 0, ask >= bid, qs < 1 (phase-3 rule)",
+    "missing": "use the position's other end; if both missing, median qs of the same test-leg positions entered in the same calendar year; then the test-leg overall median",
+    "borrow": "bps/yr from the repo schedule on CRSP dlycap at entry ($M = dlycap/1000); daily accrual bps/1e4 x calendar days since the previous market trading day / 365"
+  },
+
+  "inference": {
+    "daily": "OLS on FF5+UMD (dump), Newey-West Bartlett maxlags 5, no small-sample correction (statsmodels HAC use_correction=False)",
+    "threshold": "Bonferroni over the 3 primary tests (R1, R2, R3), two-sided 5% -> |t| >= 2.39",
+    "grades": "PHASE4_PROTOCOL §3: 성립 = expected sign, |t| >= 2.39, both halves (2000-2012 / 2013-2024) with the expected sign; 약함 = expected sign and |t| >= 1.96 but < 2.39, or >= 2.39 with one half of the other sign; 성립 안 함 = otherwise (a significant opposite sign is reported separately)",
+    "units": "alphas reported in bp per day (x 252 for an annual figure, simple)"
+  },
+
+  "exploratory_declared_before_results": [
+    "R1 with the literal spec 'not announced' rule only (without clarification (b)) - EXPLORATORY, not used for the verdict",
+    "R2 N-leg turnover cost - EXPLORATORY, not used for the verdict"
+  ],
+
+  "deviations": []
+}

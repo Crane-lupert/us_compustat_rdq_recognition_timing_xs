@@ -1,0 +1,8 @@
+verified-silent events 6632; matched to the phase-4 event table 6470
+cost inputs: qs_missing_in 0.0070, qs_missing_out 0.0181, qs_in_mean 0.0029, qs_out_mean 0.0030, bps_mean 328.6719
+[R1, verified silent] daily equal-weighted short portfolio, FF5+UMD intercept, days with >= 10 names
+   2005-2024                      events  6468 days  1698 avg names  19.6 | gross +11.83bp (t +4.19) | net of costs  +6.32bp (t +2.26) | mean cost 5.52bp/day
+   entries 2005-2014              events  3815 days  1062 avg names  21.5 | gross +13.66bp (t +4.93) | net of costs  +8.55bp (t +3.15) | mean cost 5.13bp/day
+   entries 2015-2024              events  2653 days   635 avg names  16.5 | gross  +9.62bp (t +1.67) | net of costs  +3.44bp (t +0.60) | mean cost 6.18bp/day
+   size rank 1001-3000            events  4676 days  1259 avg names  17.5 | gross +15.38bp (t +4.29) | net of costs  +8.90bp (t +2.50) | mean cost 6.52bp/day
+   size rank 1-1000               events  1792 days   152 avg names  13.2 | gross +13.24bp (t +1.52) | net of costs +11.25bp (t +1.28) | mean cost 1.99bp/day

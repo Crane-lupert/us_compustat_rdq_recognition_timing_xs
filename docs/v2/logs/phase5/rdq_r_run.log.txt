@@ -1,0 +1,7 @@
+verified silent events: 6632
+events with a regularity measure: 6287 | median sd by tercile: {0: 2.9, 1: 5.1, 2: 9.8}
+[RDQ-R] holding-period abnormal return of verified-silent overdue firms by timing regularity (REG = most regular)
+   2005-2024                  n  6287 | mean abnormal return REG -1.11% (n 2096), MID -0.78%, IRR -1.38% (n 2102) | REG - IRR +0.275pp, t +0.77 (months 240)
+   2005-2014                  n  3723 | mean abnormal return REG -0.96% (n 1240), MID -1.30%, IRR -1.25% (n 1245) | REG - IRR +0.281pp, t +0.71 (months 120)
+   2015-2024                  n  2564 | mean abnormal return REG -1.32% (n 856), MID -0.03%, IRR -1.58% (n 857) | REG - IRR +0.267pp, t +0.40 (months 120)
+   all events: mean abnormal return -1.09% over an average holding period of 7.5 trading days

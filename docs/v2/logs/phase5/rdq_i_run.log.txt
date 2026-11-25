@@ -1,0 +1,39 @@
+[index] periodic filings 747589, NT filings 108230, 2001-01-02..2025-12-31, quarters 100
+[ann] valid announcement records since 2001-06: 807678; with a CIK that has periodic reports in the index: 570962
+[slots] firm-quarters with an expected gap (0-60 days): 453384; median expected gap 1 days, share with gap 0: 0.438; actual gap: median 1, no report found in the window 0.0183
+[overdue L=5] slots 418666; report still missing at entry 16093 (0.038); of these: an NT notice already filed 1627, a periodic report filed in [rdq-40d, rdq-5d) 1305; kept 13161
+[events L=5] linked to CRSP 11035, in the top-3,000 universe 5851, price >= $5 and no overlap: positions 5124; exit by report 4934, by NT notice 130, by 30 days 60; expected gap 0: 0.251; fiscal Q4 (10-K): 0.468; rank 1001-3000: 0.706; no later report within 400 days: 0.0031; by half: 3343 / 1781
+   holding period: mean 5.5 trading days, median 4; events by entry year: {2003: 592, 2004: 317, 2005: 397, 2006: 403, 2007: 224, 2008: 281, 2009: 170, 2010: 236, 2011: 235, 2012: 233, 2013: 255, 2014: 203, 2015: 196, 2016: 166, 2017: 182, 2018: 178, 2019: 192, 2020: 149, 2021: 169, 2022: 98, 2023: 98, 2024: 150}
+[RDQ-I primary] daily equal-weighted portfolio of firms whose periodic report is overdue (entry F_exp + 5); expected sign negative; pass needs |t| >= 2.58, both halves negative, later half |t| >= 1.96
+   all entries 2003-2024                                events   5124 days   851 names   21.9 | alpha  +0.95bp (t +0.41) | mean  -2.23bp (t -0.37) | minus universe EW  +2.17bp (t +0.97)
+   entries 2003-2013                                    events   3343 days   545 names   25.5 | alpha  +6.04bp (t +2.21) | mean  +4.36bp (t +0.71) | minus universe EW  +4.73bp (t +1.72)
+   entries 2014-2024                                    events   1781 days   306 names   15.5 | alpha  -7.40bp (t -1.73) | mean -13.96bp (t -1.11) | minus universe EW  -2.40bp (t -0.64)
+[RDQ-I side reports]
+   excluding positions that end in an NT notice         events   4994 days   826 names   21.6 | alpha  +1.23bp (t +0.52) | mean  -2.50bp (t -0.41) | minus universe EW  +2.61bp (t +1.14)
+   expected gap 0 (report used to come with earnings)   events   1285 days   217 names   14.4 | alpha  +3.45bp (t +0.90) | mean  +2.96bp (t +0.34) | minus universe EW  +7.01bp (t +1.61)
+   expected gap > 0                                     events   3839 days   529 names   19.8 | alpha  +1.38bp (t +0.50) | mean  -2.61bp (t -0.31) | minus universe EW  +1.31bp (t +0.48)
+   annual report (fiscal Q4)                            events   2397 days   422 names   24.1 | alpha  +0.75bp (t +0.25) | mean  -9.04bp (t -0.95) | minus universe EW  +1.69bp (t +0.56)
+   quarterly report (fiscal Q1-Q3)                      events   2727 days   357 names   19.8 | alpha  +0.64bp (t +0.16) | mean  +0.67bp (t +0.09) | minus universe EW  +1.87bp (t +0.50)
+   size rank 1001-3000                                  events   3615 days   605 names   19.9 | alpha  +5.95bp (t +2.03) | mean  +3.34bp (t +0.43) | minus universe EW  +6.15bp (t +2.08)
+   size rank 1-1000                                     events   1509 days   127 names   15.7 | alpha  -4.86bp (t -1.01) | mean  -5.76bp (t -0.57) | minus universe EW  -5.48bp (t -0.94)
+   value-weighted (entry market cap)                    events   5124 days   851 names   21.9 | alpha  -6.30bp (t -1.95) | mean  -9.79bp (t -1.51) | minus universe EW  -5.40bp (t -1.60)
+   excluding firms with no later report within 400 days events   5108 days   847 names   21.9 | alpha  +0.95bp (t +0.41) | mean  -2.82bp (t -0.46) | minus universe EW  +2.19bp (t +0.97)
+   entries 2003-2007                                    events   1933 days   325 names   29.3 | alpha  +4.94bp (t +1.70) | mean  +2.74bp (t +0.40) | minus universe EW  +4.27bp (t +1.39)
+   entries 2008-2012                                    events   1155 days   181 names   19.6 | alpha  +9.42bp (t +1.69) | mean  +8.78bp (t +0.64) | minus universe EW  +8.72bp (t +1.50)
+   entries 2013-2017                                    events   1002 days   165 names   17.7 | alpha  -1.23bp (t -0.34) | mean  +6.60bp (t +1.16) | minus universe EW  -1.61bp (t -0.44)
+   entries 2018-2024                                    events   1034 days   180 names   14.5 | alpha -13.35bp (t -1.98) | mean -30.35bp (t -1.49) | minus universe EW  -4.78bp (t -0.85)
+[RDQ-I short side net of costs] minus the excess return, minus half-spreads and a 1% borrow fee; expected sign positive
+   cost inputs: quoted spread missing at entry 0.0121, at exit 0.0154; mean spread at entry 30.4bp, at exit 30.3bp; mean round-trip spread cost per position 30.3bp, plus borrow
+   net short, all entries                               events   5124 days   851 names   21.9 | alpha  -6.78bp (t -2.89) | mean  -3.61bp (t -0.60)
+   net short, entries 2003-2013                         events   3343 days   545 names   25.5 | alpha -11.47bp (t -4.20) | mean  -9.79bp (t -1.59)
+   net short, entries 2014-2024                         events   1781 days   306 names   15.5 | alpha  +0.82bp (t +0.19) | mean  +7.39bp (t +0.59)
+[overdue L=1] slots 418593; report still missing at entry 53387 (0.128); of these: an NT notice already filed 1914, a periodic report filed in [rdq-40d, rdq-5d) 3545; kept 47928
+[events L=1] linked to CRSP 44053, in the top-3,000 universe 29140, price >= $5 and no overlap: positions 26574; exit by report 26036, by NT notice 451, by 30 days 87; expected gap 0: 0.162; fiscal Q4 (10-K): 0.333; rank 1001-3000: 0.646; no later report within 400 days: 0.0011; by half: 15811 / 10763
+   entry at F_exp + 1 trading days, all entries         events  26574 days  2121 names   46.7 | alpha  +0.45bp (t +0.35) | mean  +5.34bp (t +1.48) | minus universe EW  +0.59bp (t +0.44)
+   entry at F_exp + 1, 2003-2013                        events  15811 days  1224 names   51.3 | alpha  +2.53bp (t +1.57) | mean  +6.55bp (t +1.45) | minus universe EW  +1.94bp (t +1.20)
+   entry at F_exp + 1, 2014-2024                        events  10763 days   897 names   40.4 | alpha  -2.07bp (t -0.99) | mean  +3.68bp (t +0.63) | minus universe EW  -1.27bp (t -0.58)
+[overdue L=10] slots 418787; report still missing at entry 7471 (0.018); of these: an NT notice already filed 1220, a periodic report filed in [rdq-40d, rdq-5d) 607; kept 5644
+[events L=10] linked to CRSP 4129, in the top-3,000 universe 1608, price >= $5 and no overlap: positions 1301; exit by report 1223, by NT notice 46, by 30 days 32; expected gap 0: 0.390; fiscal Q4 (10-K): 0.651; rank 1001-3000: 0.765; no later report within 400 days: 0.0077; by half: 917 / 384
+   entry at F_exp + 10 trading days, all entries        events   1301 days   148 names   20.2 | alpha  +4.61bp (t +1.56) | mean  +2.98bp (t +0.37) | minus universe EW  +6.08bp (t +1.78)
+   entry at F_exp + 10, 2003-2013                       events    917 days   138 names   20.9 | alpha  +5.84bp (t +1.98) | mean  +4.09bp (t +0.48) | minus universe EW  +7.05bp (t +2.01)
+   entry at F_exp + 10, 2014-2024                       events    384: only 10 days with >= 10 names

@@ -1,0 +1,11 @@
+[slots] expected-date slots 2002-2025: 792539; with a CRSP link: 524461; with a CIK: 710527
+[ann] slots with an announcement date: 731846; 8-K history available: 439555; 8-K date earlier than rdq: 16861; rdq missing but 8-K found: 485
+[delay k=1] events 48965 (2005-2024: 39618); 8-K history available 0.939; by stage {'disc': 24477, 'conf': 22482, 'rec': 2006}
+[delay k=3] events 25382 (2005-2024: 20456); 8-K history available 0.941; by stage {'conf': 12863, 'disc': 11500, 'rec': 1019}
+[delay k=5] events 9154 (2005-2024: 7165); 8-K history available 0.950; by stage {'disc': 4525, 'conf': 4398, 'rec': 231}
+[delay k=10] events 3005 (2005-2024: 2319); 8-K history available 0.941; by stage {'conf': 1488, 'disc': 1465, 'rec': 52}
+[ann] announcement events 230928; [exp] expected-window events 211771
+[cond delay] events 86506; non-missing: prior SUE 0.99, delay history 0.93, 8-K history 0.94, insider data 0.40, short interest 0.73, momentum 0.95
+[cond ann] events 230928; non-missing: prior SUE 1.00, delay history 0.92, 8-K history 0.94, insider data 0.46, short interest 0.81, momentum 0.96
+[cond exp] events 211771; non-missing: prior SUE 1.00, delay history 0.94, 8-K history 0.94, insider data 0.46, short interest 0.80, momentum 0.95
+done

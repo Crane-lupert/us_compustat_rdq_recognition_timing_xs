@@ -1,0 +1,9 @@
+phase-0 linked events rdq<=2024: 488,442; after dropping look-ahead signal rows: 488,365
+shared-permno rule: 11,543 events on 256 shared permnos; dropped 1,865
+one event per (permno, rdq month): 510 events in duplicated groups -> kept 486,245 events
+[main] sorting universe 259,453 events, gvkeys 7,903; with quintile 258,778; Q1/Q5 tradable positions 105,236 (valid entry share of Q1/Q5 0.998)
+   positions per cell (Q1/Q5, FF12 tilt): {('L', 'H'): 25930, ('L', 'L'): 25788, ('S', 'H'): 26157, ('S', 'L'): 27361}
+   median CRSP cap at entry $M Q1 / Q5: 2516.0 / 425.0 ; short-leg borrow bps mean: 499.0
+[b1] sorting universe 359,038 events, gvkeys 10,541; with quintile 358,503; Q1/Q5 tradable positions 145,340 (valid entry share of Q1/Q5 1.000)
+   positions per cell (Q1/Q5, FF12 tilt): {('L', 'H'): 37723, ('L', 'L'): 33200, ('S', 'H'): 38634, ('S', 'L'): 35783}
+   median CRSP cap at entry $M Q1 / Q5: 1615.0 / 104.0 ; short-leg borrow bps mean: 1194.0

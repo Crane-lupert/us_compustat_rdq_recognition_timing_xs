@@ -1,0 +1,18 @@
+mean gap_dev_t by repo quintile (Q1 lowest): {1.0: -5.86, 2.0: 0.7, 3.0: 3.12, 4.0: 5.99, 5.0: 14.96}
+   cell  early_minus_late       t  early_res  t_early  late_res  t_late
+ B60-LH           -0.0010 -0.2286    -0.0002  -0.1128    0.0008  0.2613
+ B60-LL           -0.0045 -1.3028    -0.0021  -1.2397    0.0016  0.6965
+ B60-SH            0.0082  1.5253     0.0034   0.8775   -0.0018 -0.7666
+ B60-SL           -0.0001 -0.0274    -0.0009  -0.2695   -0.0004 -0.1980
+B120-LH            0.0030  0.5780     0.0001   0.0261   -0.0030 -0.7658
+B120-LL           -0.0028 -0.5405    -0.0016  -0.6476    0.0005  0.1482
+B120-SH            0.0141  1.4094     0.0056   0.8433   -0.0054 -1.2604
+B120-SL            0.0066  0.9985     0.0018   0.3904   -0.0053 -1.6356
+B180-LH            0.0054  0.7453     0.0022   0.7143   -0.0035 -0.5820
+B180-LL           -0.0012 -0.1675    -0.0015  -0.4195   -0.0000 -0.0033
+B180-SH            0.0246  2.3575     0.0112   1.6805   -0.0093 -2.1352
+B180-SL            0.0129  1.4519     0.0031   0.5121   -0.0098 -2.4361
+symmetric: CP-sign-correct (early>late): 7 /12;  |t|>2.78 with CP sign: 0
+asymmetric: CP-sign-correct legs: 16 /24;  passes |t|>2.92 with CP sign: 0
+CP-style 3-day [rdq-1,rdq+1] early-late (all firms, permno link) IS: mean 0.657% t(NW3) 5.83 n=200
+CP-style 3-day [rdq-1,rdq+1] early-late (all firms, permno link) OOS: mean 0.204% t(NW3) 1.27 n=96

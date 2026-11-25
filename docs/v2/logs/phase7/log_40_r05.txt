@@ -1,0 +1,52 @@
+=== R05 follow-up, 2004-2024: delay k=1 events 42379; groups {'IRR': 14091, 'MID': 13628, 'REG': 13093, 'NA': 1567}
+[1] what the groups look like (no returns)
+     events  days_held_mean  days_held_median  eventual_lateness_median  eventual_lateness_p75  late_5plus_share  size_rank_median  price_median  prior_loss_share
+grp                                                                                                                                                               
+IRR   14091             6.3               4.0                       4.0                    6.0             0.345            1595.0          21.3             0.299
+MID   13628             4.5               4.0                       4.0                    4.0             0.220            1332.0          27.3             0.208
+REG   13093             4.0               3.0                       3.0                    4.0             0.141            1130.0          32.9             0.152
+[2] event-level abnormal return (stock minus equal-weighted universe), percent
+   hold  | IRR -0.570 (t -7.55) | MID -0.083 (t -0.97) | REG +0.025 (t +0.35) | IRR - REG -0.593 (t -5.65)
+   w1    | IRR -0.033 (t -1.23) | MID +0.001 (t +0.02) | REG +0.052 (t +1.99) | IRR - REG -0.083 (t -2.18)
+   w5    | IRR -0.271 (t -3.95) | MID +0.023 (t +0.29) | REG +0.119 (t +1.52) | IRR - REG -0.387 (t -3.99)
+   w10   | IRR -0.383 (t -4.32) | MID +0.081 (t +0.80) | REG +0.125 (t +1.04) | IRR - REG -0.516 (t -4.08)
+   w20   | IRR -0.476 (t -3.95) | MID +0.119 (t +0.94) | REG +0.141 (t +0.86) | IRR - REG -0.678 (t -4.28)
+   per day held: abnormal return / days held
+   IRR: -9.09 bp per position-day (88304 position-days)
+   MID: -1.82 bp per position-day (61993 position-days)
+   REG: +0.64 bp per position-day (52525 position-days)
+[3] IRR - REG on the holding-period return by subsample (year fixed effects, month clusters)
+   2004-2024                                n 14091 / 13093 | IRR - REG -0.593 (t -5.65) | IRR level -0.570 (t -7.55)
+   2004-2013                                n  7932 /  5912 | IRR - REG -0.741 (t -5.08) | IRR level -0.606 (t -6.41)
+   2014-2024                                n  6159 /  7181 | IRR - REG -0.447 (t -3.01) | IRR level -0.523 (t -4.27)
+   2004-2008                                n  4995 /  3136 | IRR - REG -0.880 (t -4.26) | IRR level -0.660 (t -5.39)
+   2009-2013                                n  2937 /  2776 | IRR - REG -0.558 (t -2.83) | IRR level -0.514 (t -3.44)
+   2014-2018                                n  2853 /  3314 | IRR - REG -0.319 (t -1.61) | IRR level -0.584 (t -3.23)
+   2019-2024                                n  3306 /  3867 | IRR - REG -0.558 (t -2.55) | IRR level -0.471 (t -2.81)
+   size rank 1-1000                         n  4118 /  5887 | IRR - REG -0.184 (t -1.12) | IRR level -0.095 (t -0.73)
+   size rank 1001-2000                      n  5096 /  4362 | IRR - REG -0.686 (t -3.50) | IRR level -0.528 (t -3.76)
+   size rank 2001-3000                      n  4877 /  2844 | IRR - REG -0.692 (t -3.28) | IRR level -1.015 (t -6.56)
+   8-K history available (silence verified) n 13619 / 12407 | IRR - REG -0.570 (t -5.29) | IRR level -0.547 (t -7.17)
+   fiscal Q4                                n  3565 /  3563 | IRR - REG -0.663 (t -3.27) | IRR level -0.829 (t -5.70)
+   fiscal Q1-Q3                             n 10526 /  9530 | IRR - REG -0.577 (t -4.89) | IRR level -0.482 (t -5.54)
+   never 5+ days late in the previous 8 quarters n  5560 / 12894 | IRR - REG -0.372 (t -2.68) | IRR level -0.349 (t -2.95)
+   5+ days late at least once before        n  8531 /   199 | IRR - REG -0.867 (t -1.39) | IRR level -0.714 (t -7.04)
+[4] calendar-time portfolios (daily equal-weighted, days with >= 10 names), FF5+UMD intercept, Newey-West(5)
+   median quoted spread at entry/exit 9bp; mean by group at entry: IRR 25bp, MID 23bp, NA 32bp, REG 22bp
+   IRR, 2004-2024                                 days  2654 names   28.3 | alpha  -7.10bp/day (t -3.48)
+   MID, 2004-2024                                 days  1908 names   26.5 | alpha  +2.81bp/day (t +1.08)
+   REG, 2004-2024                                 days  1680 names   24.6 | alpha  +1.22bp/day (t +0.50)
+   IRR (again, for the spread)                    days  2654 names   28.3 | alpha  -7.10bp/day (t -3.48)
+   REG (again, for the spread)                    days  1680 names   24.6 | alpha  +1.22bp/day (t +0.50)
+   IRR minus REG on common days                   days  1540               | alpha  -7.71bp/day (t -2.46)
+   IRR, entries 2004-2013                         days  1530 names   31.6 | alpha  -6.53bp/day (t -2.87)
+   IRR, entries 2014-2024                         days  1124 names   23.9 | alpha  -7.81bp/day (t -2.13)
+   IRR, discovery (even) years                    days  1407 names   27.6 | alpha  -8.09bp/day (t -2.88)
+   IRR, confirmation (odd) years                  days  1235 names   29.2 | alpha  -7.17bp/day (t -2.44)
+   IRR, size rank 1-1000                          days   749 names   15.5 | alpha  -7.54bp/day (t -1.90)
+   IRR, size rank 1001-3000                       days  2210 names   23.5 | alpha  -9.13bp/day (t -3.78)
+   short side net of half-spreads and a 1% borrow fee (expected sign positive):
+   short IRR, net, 2004-2024                      days  2654 names   28.3 | alpha  +2.55bp/day (t +1.25)
+   short IRR, net, 2004-2013                      days  1530 names   31.6 | alpha  +2.36bp/day (t +1.04)
+   short IRR, net, 2014-2024                      days  1124 names   23.9 | alpha  +2.75bp/day (t +0.75)
+   short IRR, net, size rank 1-1000               days   749 names   15.5 | alpha  +5.49bp/day (t +1.38)

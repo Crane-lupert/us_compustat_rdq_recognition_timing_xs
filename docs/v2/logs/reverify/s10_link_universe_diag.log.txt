@@ -1,0 +1,7 @@
+permno-link only (dropped by repo link): 80071  repo-linked: 371847  both: 367894  repo-only: 3953
+dropped share by period: IS 0.204  OOS 0.127
+Q1: share dropped 0.152; mean simple 180d ret dropped 3.64% vs kept 6.82%; share <=-50%: dropped 0.068 vs kept 0.027
+Q5: share dropped 0.213; mean simple 180d ret dropped -1.75% vs kept 6.26%; share <=-50%: dropped 0.147 vs kept 0.063
+repo return sample: common-stock flag share 0.82
+repo sample Q1: entry price<$5 0.089, <$1 0.009; CRSP cap <$100M 0.103, <$300M 0.228; median cap $M 1512
+repo sample Q5: entry price<$5 0.302, <$1 0.061; CRSP cap <$100M 0.425, <$300M 0.617; median cap $M 148

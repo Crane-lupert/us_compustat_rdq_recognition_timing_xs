@@ -1,0 +1,18 @@
+=== R05 timing, 2004-2024: one-day-late events 42379; groups {'IRR': 14091, 'MID': 13628, 'REG': 13093, 'NA': 1567}; no announcement inside 40 days: 985
+[1] silence vs announcement (percent; each part winsorized at the holding-period cut-offs of the discovery years)
+   whole holding period         | IRR -0.570 (t -7.55, n 14091, 6.3 d) | MID -0.083 (t -0.97, n 13628, 4.5 d) | REG +0.025 (t +0.35, n 13093, 4.0 d) | IRR - REG -0.593 (t -5.65)
+   silent days only             | IRR -0.282 (t -6.28, n 14091, 4.3 d) | MID -0.018 (t -0.56, n 13628, 2.6 d) | REG -0.008 (t -0.31, n 13093, 2.0 d) | IRR - REG -0.276 (t -5.25)
+   announcement day + next day  | IRR -0.303 (t -4.46, n 13519, 2.0 d) | MID -0.056 (t -0.73, n 13427, 2.0 d) | REG +0.046 (t +0.69, n 12939, 2.0 d) | IRR - REG -0.342 (t -3.68)
+      IRR: silent days -6.5 bp per position-day over 61264 days; announcement window -15.1 bp per day over 27033 days
+      REG: silent days -0.4 bp per position-day over 26646 days; announcement window +2.3 bp per day over 25878 days
+[2] how long the silence lasts after the first missed day (trading days after the expected date; no returns)
+   IRR: n 14091 | announced by day 2: 0.198 | by day 3: 0.417 | still silent after day 3: 0.577 | after day 5: 0.271 | after day 10: 0.101 | after day 20: 0.051 | median 4
+   MID: n 13628 | announced by day 2: 0.203 | by day 3: 0.472 | still silent after day 3: 0.525 | after day 5: 0.157 | after day 10: 0.039 | after day 20: 0.016 | median 4
+   REG: n 13093 | announced by day 2: 0.257 | by day 3: 0.589 | still silent after day 3: 0.407 | after day 5: 0.096 | after day 10: 0.026 | after day 20: 0.012 | median 3
+[3] holding-period return by eventual lateness (percent; lateness is known only afterwards)
+   announced 2 days     | IRR -0.047 (t -0.33, n 2784) | REG +0.154 (t +1.30, n 3359) | IRR - REG -0.215 (t -1.15)
+   announced 3 days     | IRR -0.142 (t -0.89, n 3097) | REG +0.270 (t +2.35, n 4358) | IRR - REG -0.379 (t -1.93)
+   announced 4-5 days   | IRR -0.291 (t -2.21, n 4308) | REG +0.001 (t +0.01, n 4072) | IRR - REG -0.300 (t -1.69)
+   announced 6-10 days  | IRR -1.013 (t -4.82, n 2400) | REG -0.796 (t -2.55, n 917) | IRR - REG -0.255 (t -0.61)
+   announced 11+ days   | IRR -2.397 (t -7.25, n 1423) | REG -1.703 (t -2.56, n 343) | IRR - REG -0.726 (t -0.97)
+   IRR mean -0.547, REG mean +0.029, REG reweighted to the IRR lateness mix -0.219 -> of the difference -0.576, lateness mix -0.248, within-bin -0.328

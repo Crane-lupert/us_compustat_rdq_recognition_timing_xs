@@ -1,0 +1,106 @@
+universe stock-days 2000-2024 with return: 18,297,777; linked (gvkey assigned): 17,266,446 (4s)
+flags: (17266446, 16917118, 1336831, 802117, 2940800, 11274255) (26s)
+stock-months with signal: 776798  of 810583
+cost runs A2: runs 267,563, qs missing in/out 0.0163/0.0177, mean qs in/out 0.00391/0.00385
+cost runs N: runs 277,646, qs missing in/out 0.0176/0.0242, mean qs in/out 0.00407/0.00407
+duplicate (permno, date) stock-days: 0 (43s)
+daily aggregates: 6,289 days (53s)
+actual announcement in window: [{'window': 2, 'n_events': 267569, 'share_actual_in_window': 0.6703654010741155}, {'window': 1, 'n_events': 267488, 'share_actual_in_window': 0.48746859672209597}, {'window': 5, 'n_events': 267844, 'share_actual_in_window': 0.8832044025626857}]
+monthly: 300 months, mean nA 893, mean nN 1792 (66s)
+
+stat                                                   alpha_bp      t  n_days  mean_n_stocks_days_used
+test_id                                  sample                                                        
+R2_main                                  full             0.777  0.872  6195.0                  215.711
+                                         h1_2000_2012     1.303  1.160  3227.0                  213.236
+                                         h2_2013_2024    -0.073 -0.053  2968.0                  218.401
+R2_main__A_leg_excess                    full             1.043  1.205  6195.0                  215.711
+                                         h1_2000_2012     1.956  1.710  3227.0                  213.236
+                                         h2_2013_2024    -0.101 -0.080  2968.0                  218.401
+R2_main__N_leg_excess                    full             0.266  0.787  6195.0                  215.711
+                                         h1_2000_2012     0.652  1.307  3227.0                  213.236
+                                         h2_2013_2024    -0.028 -0.069  2968.0                  218.401
+R2_main__gap_var_tercile_high_irregular  full             0.460  0.359  5463.0                   77.824
+                                         h1_2000_2012    -0.699 -0.439  2918.0                   73.761
+                                         h2_2013_2024     1.886  0.921  2545.0                   82.483
+R2_main__gap_var_tercile_low_regular     full             2.286  1.588  4196.0                   99.063
+                                         h1_2000_2012     3.441  1.784  2144.0                   97.420
+                                         h2_2013_2024     0.476  0.228  2052.0                  100.780
+R2_main__gap_var_tercile_mid             full             3.499  2.614  4929.0                   85.112
+                                         h1_2000_2012     4.629  2.653  2663.0                   79.412
+                                         h2_2013_2024     1.974  0.944  2266.0                   91.812
+R2_main__net_incl_N_leg_cost_EXPLORATORY full            -9.264 -9.950  6195.0                  215.711
+                                         h1_2000_2012   -11.386 -9.287  3227.0                  213.236
+                                         h2_2013_2024    -7.198 -5.203  2968.0                  218.401
+R2_main__net_of_A_spread_costs           full            -7.900 -8.542  6195.0                  215.711
+                                         h1_2000_2012    -9.656 -8.006  3227.0                  213.236
+                                         h2_2013_2024    -6.233 -4.489  2968.0                  218.401
+R2_main__size_rank_1001_3000             full             0.786  0.712  6122.0                  143.090
+                                         h1_2000_2012     0.491  0.362  3204.0                  142.011
+                                         h2_2013_2024     0.848  0.486  2918.0                  144.276
+R2_main__size_rank_1_500                 full             2.855  2.163  3763.0                   58.315
+                                         h1_2000_2012     3.232  1.795  1966.0                   56.129
+                                         h2_2013_2024     2.015  1.054  1797.0                   60.707
+R2_main__size_rank_501_1000              full             3.564  2.394  3736.0                   57.756
+                                         h1_2000_2012     6.241  3.139  2009.0                   54.646
+                                         h2_2013_2024     0.085  0.040  1727.0                   61.375
+R2_main__value_weighted                  full             2.671  2.105  6195.0                  215.709
+                                         h1_2000_2012     4.134  2.422  3227.0                  213.235
+                                         h2_2013_2024     0.541  0.289  2968.0                  218.399
+R2_main__window_E-1_E+1                  full             1.423  1.219  5939.0                  134.739
+                                         h1_2000_2012     1.606  1.076  3140.0                  131.323
+                                         h2_2013_2024     0.992  0.553  2799.0                  138.572
+R2_main__window_E-5_E+5                  full             1.175  1.871  6289.0                  467.610
+                                         h1_2000_2012     1.964  2.542  3270.0                  463.070
+                                         h2_2013_2024     0.147  0.148  3019.0                  472.528
+R2_monthly                               full               NaN  2.637     NaN                      NaN
+                                         h1_2000_2012       NaN  2.452     NaN                      NaN
+                                         h2_2013_2024       NaN  0.976     NaN                      NaN
+
+        test_id       sample                                stat         value
+R2_main__counts         full                         A_cost_runs 267563.000000
+R2_main__counts         full                A_cost_qs_missing_in      0.016262
+R2_main__counts         full               A_cost_qs_missing_out      0.017723
+R2_main__counts         full                   A_cost_mean_qs_in      0.003906
+R2_main__counts         full                  A_cost_mean_qs_out      0.003853
+R2_main__counts         full                         N_cost_runs 277646.000000
+R2_main__counts         full                N_cost_qs_missing_in      0.017580
+R2_main__counts         full               N_cost_qs_missing_out      0.024203
+R2_main__counts         full                   N_cost_mean_qs_in      0.004072
+R2_main__counts         full                  N_cost_mean_qs_out      0.004073
+    R2_window_2         full                          n_A_events 267569.000000
+    R2_window_2         full share_actual_announcement_in_window      0.670365
+    R2_window_1         full                          n_A_events 267488.000000
+    R2_window_1         full share_actual_announcement_in_window      0.487469
+    R2_window_5         full                          n_A_events 267844.000000
+    R2_window_5         full share_actual_announcement_in_window      0.883204
+R2_main__counts         full               mean_A_stocks_per_day    212.566545
+R2_main__counts         full               mean_N_stocks_per_day   1792.694387
+R2_main__counts         full                        days_A_ge_10   6195.000000
+R2_main__counts         full                          days_total   6289.000000
+R2_main__counts         full      mean_cost_A_bp_per_A_stock_day      7.764028
+     R2_monthly         full                     alpha_pct_month      0.276649
+     R2_monthly         full                                   t      2.636830
+     R2_monthly         full                            n_months    300.000000
+     R2_monthly         full                              nw_lag      5.000000
+     R2_monthly         full                      mean_pct_month      0.227952
+     R2_monthly         full                              t_mean      2.279442
+     R2_monthly         full                             mean_nA    893.380000
+     R2_monthly         full                             mean_nN   1792.116667
+     R2_monthly h1_2000_2012                     alpha_pct_month      0.345115
+     R2_monthly h1_2000_2012                                   t      2.451912
+     R2_monthly h1_2000_2012                            n_months    156.000000
+     R2_monthly h1_2000_2012                              nw_lag      4.000000
+     R2_monthly h1_2000_2012                      mean_pct_month      0.311421
+     R2_monthly h1_2000_2012                              t_mean      2.241281
+     R2_monthly h1_2000_2012                             mean_nA    884.782051
+     R2_monthly h1_2000_2012                             mean_nN   1778.089744
+     R2_monthly h2_2013_2024                     alpha_pct_month      0.180578
+     R2_monthly h2_2013_2024                                   t      0.975944
+     R2_monthly h2_2013_2024                            n_months    144.000000
+     R2_monthly h2_2013_2024                              nw_lag      4.000000
+     R2_monthly h2_2013_2024                      mean_pct_month      0.137527
+     R2_monthly h2_2013_2024                              t_mean      0.889055
+     R2_monthly h2_2013_2024                             mean_nA    902.694444
+     R2_monthly h2_2013_2024                             mean_nN   1807.312500
+
+R2 verdict (expected sign +): 성립 안 함 (total 66s)

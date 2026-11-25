@@ -1,0 +1,28 @@
+fundq INDL/STD/C/D rows: 2110658  gvkeys: 45420  USD rows: 1882379  non-USD rows: 228279
+  rdq non-null: 1375252  datadate range: 1961-03-31 2026-04-30  rdq range: 1971-07-28 2026-05-01
+  gap (rdq - datadate, days) for datadate >= 1998: n 957434  quantiles {0.001: 7.0, 0.01: 14.0, 0.05: 19.0, 0.5: 40.0, 0.95: 104.0, 0.99: 218.0, 0.999: 645.5670000001555}
+    gap in [-1000000,0]: 197 (0.021%)
+    gap in [1,9]: 1,937 (0.202%)
+    gap in [10,120]: 929,214 (97.053%)
+    gap in [121,180]: 13,620 (1.423%)
+    gap in [181,365]: 8,763 (0.915%)
+    gap in [366,1000000]: 3,703 (0.387%)
+  rows with fyearq/fqtr null among rdq rows (datadate>=1998): 309
+  duplicate (gvkey,fyearq,fqtr) among rdq rows: 1478  duplicate (gvkey,datadate): 1200
+  (gvkey, rdq) with >1 row (several quarters announced the same day): 7699  rows in them: 17244
+  gvkeys with >1 fyr value over history: 3646 of 45420
+  fyr null share: 0.0
+
+calendar (distinct dsf_v2 dates): 6791 1999-01-04 2025-12-31  in 2000-2024: 6289
+dsf_v2_slim rows / delisting rows / delisting rows with null dlyret / dlyprc<0 / date range: (52054178, 15686, 726, 0, datetime.date(1999, 1, 4), datetime.date(2025, 12, 31))
+calendar days with only delisting rows / min normal rows per day 2000-2024: (0, 6659)
+duplicate (permno, date) rows in dsf_v2_slim: (0,)
+
+FF5+UMD daily (dump ff_all.fivefactors_daily): 1963-07-01 2026-03-31  cols ['date', 'mktrf', 'smb', 'hml', 'rmw', 'cma', 'rf', 'umd']  null rows 2000-2024: 0
+X_sec_letter/phase3/cache/french_daily.parquet columns (prompt-suggested file): ['dt', 'mkt_rf', 'rf', 'mkt']
+  CRSP days 2000-2024 without FF row: 0 []  FF days without CRSP: 0
+
+R3000 proxy members linked by phase-3 link.parquet, share by year: {1999: 0.797, 2004: 0.931, 2009: 0.944, 2014: 0.953, 2019: 0.957, 2024: 0.936}  overall: 0.9328
+gvkeys: full fundq (rdq non-null) 32839  in phase-3 panel_ext 18818  in link.parquet 13083
+
+IBES surpsum (EPS, QTR): (877706, '1992-04-21', '2026-02-19', 32917)

@@ -1,0 +1,12 @@
+paper basis repo S1 (bps/12 per cohort): HAC Sharpe IS 0.781 OOS 0.683
+paper basis S1 with H/365 charge: HAC Sharpe IS -0.153 OOS 0.082
+   A120-LH IS: mean Q5 borrow 500 bps/yr -> 42 bp/month on the short leg
+   A120-SH IS: mean Q5 borrow 1735 bps/yr -> 145 bp/month on the short leg
+   A180-LH IS: mean Q5 borrow 503 bps/yr -> 42 bp/month on the short leg
+   A180-SL IS: mean Q5 borrow 1500 bps/yr -> 125 bp/month on the short leg
+calendar-time simple composite net of 20bp/round-trip + S1 borrow, IS: ann ret -8.0%  Sharpe -0.77  t -3.17
+   A120-LH OOS: mean Q5 borrow 272 bps/yr -> 23 bp/month on the short leg
+   A120-SH OOS: mean Q5 borrow 1363 bps/yr -> 114 bp/month on the short leg
+   A180-LH OOS: mean Q5 borrow 271 bps/yr -> 23 bp/month on the short leg
+   A180-SL OOS: mean Q5 borrow 1231 bps/yr -> 103 bp/month on the short leg
+calendar-time simple composite net of 20bp/round-trip + S1 borrow, OOS: ann ret -4.3%  Sharpe -0.45  t -1.15

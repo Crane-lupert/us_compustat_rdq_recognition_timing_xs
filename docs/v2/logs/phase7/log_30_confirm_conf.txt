@@ -1,0 +1,29 @@
+=== stage: conf ===
+events: delay k=1 19865, delay k=3 11255, announcements 96587, expected window 88365; years [np.int32(2005), np.int32(2007), np.int32(2009), np.int32(2011), np.int32(2013), np.int32(2015), np.int32(2017), np.int32(2019), np.int32(2021), np.int32(2023)]
+[family R - the ten frozen candidates]
+   R01  announced-quarter SUE top vs bottom tercile, rank 1001-3000    n1  20989 n0  21843 | diff  +1.215 (t +7.26) | level  +0.680 (t +5.04)
+   R02  delay k=3: size rank beyond 2000                               n1   3452 n0   7803 | diff  -0.630 (t -2.02) | level  -0.761 (t -2.55)
+   R03  delay k=1: fiscal fourth quarter, rank 1001-3000               n1   3497 n0   9241 | diff  -0.185 (t -0.68) | level  -0.391 (t -1.33)
+   R04  delay k=3: loss in the prior quarter, 8-K history              n1   2447 n0   8288 | diff  +0.109 (t +0.40) | level  -0.313 (t -1.26)
+   R05  delay k=1: irregular announcement dates, top vs bottom tercile n1   6875 n0   5752 | diff  -0.595 (t -4.21) | level  -0.529 (t -5.32)
+   R06  announced 10+ trading days late: days 2-21 after               n1   1098 n0  95470 | diff  -0.444 (t -1.28) | level  -0.340 (t -1.01)
+   R07  delay k=1: insiders only sold in prior 180 days, rank 1-1000   n1   1864 n0   1034 | diff  +0.197 (t +0.43) | level  +0.495 (t +1.27)
+   R08  delay k=1: insider bought in prior 180 days, 8-K history       n1   1981 n0   5532 | diff  +0.306 (t +1.43) | level  -0.092 (t -0.45)
+   R09  delay k=1: NT filing in prior 365 days                         n1   1414 n0  18451 | diff  -0.266 (t -0.94) | level  -0.373 (t -1.38)
+   R10  expected window: insider bought in prior 180 days, 8-K history n1  10321 n0  27456 | diff  +0.288 (t +1.69) | level  +0.327 (t +1.85)
+[family R - reported with the candidates, not used for the verdict]
+   R06    with controls (size, price, prior loss, momentum, prior SUE) n1   1098 n0  95470 | diff  -0.369 (t -1.04) | level  -0.340 (t -1.01)
+   R06    among negative announced SUE                                 n1    568 n0  40779 | diff  -0.299 (t -0.51) | level  -0.755 (t -1.33)
+   R06    rank 1001-3000                                               n1    838 n0  59433 | diff  -0.412 (t -1.00) | level  -0.407 (t -1.04)
+   R06    rank 1-1000                                                  n1    260 n0  36037 | diff  -0.407 (t -0.71) | level  -0.126 (t -0.22)
+   R06    days 2-61                                                    n1   1098 n0  95470 | diff  -0.429 (t -0.75) | level  -0.620 (t -0.93)
+   R06    5+ trading days late                                         n1   4715 n0  91853 | diff  -0.246 (t -1.75) | level  -0.150 (t -0.92)
+   R07    with controls                                                n1   1864 n0   1034 | diff  +0.186 (t +0.45) | level  +0.495 (t +1.27)
+   R08    with controls                                                n1   1981 n0   5532 | diff  +0.366 (t +1.69) | level  -0.092 (t -0.45)
+   R05    with controls                                                n1   6875 n0   5752 | diff  -0.586 (t -3.85) | level  -0.529 (t -5.32)
+   R03    with controls                                                n1   3497 n0   9241 | diff  -0.128 (t -0.47) | level  -0.391 (t -1.33)
+   base effect, delay k=1 hold: -0.271% (t -4.16), n 19865
+   base effect, delay k=3 hold: -0.404% (t -4.27), n 11255
+   R06 by year (level, n): {2005: (np.float64(-0.38), 280), 2007: (np.float64(-0.39), 197), 2009: (np.float64(-2.07), 98), 2011: (np.float64(-0.09), 69), 2013: (np.float64(-1.32), 74), 2015: (np.float64(-0.31), 69), 2017: (np.float64(-0.46), 91), 2019: (np.float64(-0.18), 78), 2021: (np.float64(-1.04), 76), 2023: (np.float64(4.13), 66)}
+[family S - a candidate of another project run under the same protocol; its output is omitted from this copy]
+   all conversations of newly listed firms, 126 days: -11.20% (t -6.95), n 2391

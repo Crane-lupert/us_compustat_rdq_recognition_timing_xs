@@ -1,0 +1,4 @@
+calendar 6791 1999-01-04 2025-12-31
+members 81000 1999 2025
+ret_k -> $RDQ_V2_WORK/_main_checks/phase7/cache/ret_k.parquet
+bench 6791 2.4222358484635893

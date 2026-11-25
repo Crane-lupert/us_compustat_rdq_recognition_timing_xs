@@ -1,0 +1,13 @@
+=== R05 placebo, 2004-2024. [A] on-time announcers (announced no later than expected date + 1): 161254; groups {'REG': 58806, 'IRR': 46503, 'MID': 45410, 'NA': 10535}
+   five trading days before the announcement    | IRR +0.157 (t +4.42, n 46503) | MID +0.099 (t +2.80, n 45410) | REG +0.132 (t +3.68, n 58806) | IRR - REG +0.027 (t +0.68)
+   announcement day + next day                  | IRR +0.202 (t +4.25, n 46503) | MID +0.234 (t +5.34, n 45410) | REG +0.206 (t +5.35, n 58806) | IRR - REG +0.002 (t +0.03)
+   announcement day + next day, size rank 1001-3000 | IRR +0.234 (t +4.03, n 32044) | MID +0.315 (t +5.64, n 27417) | REG +0.268 (t +5.08, n 31913) | IRR - REG -0.006 (t -0.09)
+   announcement day + next day, size rank 1-1000 | IRR +0.132 (t +1.96, n 14459) | MID +0.112 (t +1.87, n 17993) | REG +0.132 (t +2.83, n 26893) | IRR - REG -0.013 (t -0.18)
+[B] every firm, entry six trading days before the expected date, exit one day after it: 185324; groups {'REG': 69572, 'MID': 55384, 'IRR': 52151, 'NA': 8217}
+   expected-date week                           | IRR +0.038 (t +0.73, n 52151) | MID +0.094 (t +1.71, n 55384) | REG +0.196 (t +3.29, n 69572) | IRR - REG -0.158 (t -2.34)
+   expected-date week, size rank 1001-3000      | IRR -0.033 (t -0.50, n 36093) | MID +0.082 (t +1.28, n 33742) | REG +0.198 (t +2.77, n 37811) | IRR - REG -0.220 (t -2.53)
+[C] one-day-late firms (R05): 42379
+   holding period (entry to day after announcement) | IRR -0.570 (t -7.55, n 14091) | MID -0.083 (t -0.97, n 13628) | REG +0.025 (t +0.35, n 13093) | IRR - REG -0.593 (t -5.65)
+   announcement day + next day                  | IRR -0.303 (t -4.46, n 13519) | MID -0.056 (t -0.73, n 13427) | REG +0.046 (t +0.69, n 12939) | IRR - REG -0.342 (t -3.68)
+[D] difference in differences, announcement window: late (IRR - REG) -0.342 minus on-time (IRR - REG) +0.002 = -0.344
+    pooled regression of the announcement-window return on late x irregular (controls: late, irregular; year FE; month clusters): -0.337 (t -3.20); n 131767

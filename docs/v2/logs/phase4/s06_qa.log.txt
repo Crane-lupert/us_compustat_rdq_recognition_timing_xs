@@ -1,0 +1,20 @@
+R1 events with a valid rdq in (E-30, entry]: 0 PASS 
+R1 events whose slot quarter was announced on/before entry: 0 PASS 
+R1 rdq_next = first valid rdq after entry (share): 1.0 PASS 
+R1 entry = E + 5 trading days (share): 1.0 PASS 
+R1 E = first trading day >= prior-year rdq + 1 year (share): 1.0 PASS 
+R1 events without a current-year Compustat row (survivorship check: slots need no current row): 334 PASS 
+R1 prior-year gap within 1..120 days (share): 1.0 PASS 
+R1 membership ranking date (<= Jun 30 of membership year) before entry (share): 1.0 PASS 
+R1 duplicate permno-days in the portfolio: 0 PASS 
+R1 delisting-return rows inside holdings: 150 PASS 
+R1 daily EW: max |SQL - engine|: 2.7755575615628914e-17 PASS 
+R1 main alpha recomputed (bp/day, t): -8.430, -4.015  
+R2 A events whose E is an eligible prior-year slot (share): 1.0 PASS 
+R2 E - prior-year rdq (days) min / max: 365 / 371 PASS 
+R2 main alpha recomputed from daily aggregates (bp/day, t): 0.777, 0.872  
+R3 dev_td recomputed equals table (share): 1.0 PASS 
+R3 entry = first trading day after rdq (share): 1.0  
+R3 duplicate permno-days within a leg: 0 PASS 
+R3 main alpha recomputed (bp/day, t): -0.561, -0.353  
+R3 permno-days held in both legs: 0 PASS 

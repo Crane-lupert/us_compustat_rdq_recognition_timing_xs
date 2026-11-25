@@ -1,0 +1,5 @@
+$RDQ_V2_WORK\RDQ_cadence\s11_universe_only_and_fig.py:17: FutureWarning: Downcasting object dtype arrays on .fillna, .ffill, .bfill is deprecated and will change in a future version. Call result.infer_objects(copy=False) instead. To opt-in to the future behavior, set `pd.set_option('future.no_silent_downcasting', True)`
+  ("common-stock, log, repo link", P[P.common.fillna(False).astype(bool) & P.car_180.notna()])):
+R3000-proxy, log, repo link (n firm-q 222,547); IS passes 0/12: A60-SL IS 1.81 OOS -0.72 | A120-LH IS 0.55 OOS -0.02 | A120-SH IS 2.11 OOS 3.06 | A180-LH IS 0.77 OOS 0.64 | A180-LL IS 1.85 OOS 3.37 | A180-SL IS 1.74 OOS 0.62
+common-stock, log, repo link (n firm-q 301,829); IS passes 6/12: A60-SL IS 4.52 OOS -0.54 | A120-LH IS 2.05 OOS 0.16 | A120-SH IS 3.02 OOS 1.56 | A180-LH IS 2.65 OOS 0.88 | A180-LL IS 3.03 OOS 2.17 | A180-SL IS 2.69 OOS 1.45
+calendar-time net20 composite vol-matched to 3.9%: cumulative by 2016-12 16.1%, by 2024-12 26.7%

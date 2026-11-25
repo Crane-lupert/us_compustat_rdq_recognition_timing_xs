@@ -1,0 +1,12 @@
+   delay of  1 day(s): events  42379 | IRR -0.570% (t -7.55, n 14091, 6.3 days) | MID -0.083% (t -0.97, n 13628, 4.5 days) | REG +0.025% (t +0.35, n 13093, 4.0 days) | IRR - REG -0.593 (t -5.65)
+      IRR: -9.1 bp per position-day; share of all events 0.33
+      REG: +0.6 bp per position-day; share of all events 0.31
+   delay of  3 day(s): events  21580 | IRR -0.860% (t -7.81, n 8192, 7.1 days) | MID -0.215% (t -2.01, n 7172, 4.3 days) | REG -0.232% (t -1.98, n 5369, 4.1 days) | IRR - REG -0.640 (t -4.05)
+      IRR: -12.2 bp per position-day; share of all events 0.38
+      REG: -5.6 bp per position-day; share of all events 0.25
+   delay of  5 day(s): events   7730 | IRR -1.372% (t -7.46, n 3877, 10.7 days) | MID -0.662% (t -2.82, n 2156, 7.6 days) | REG -0.769% (t -3.01, n 1282, 8.5 days) | IRR - REG -0.677 (t -2.05)
+      IRR: -12.8 bp per position-day; share of all events 0.50
+      REG: -9.1 bp per position-day; share of all events 0.17
+   delay of 10 day(s): events   2524 | IRR -1.373% (t -4.19, n 1466, 19.3 days) | MID -0.668% (t -1.16, n 539, 16.4 days) | REG -1.431% (t -2.59, n 353, 18.4 days) | IRR - REG +0.021 (t +0.03)
+      IRR: -7.1 bp per position-day; share of all events 0.58
+      REG: -7.8 bp per position-day; share of all events 0.14

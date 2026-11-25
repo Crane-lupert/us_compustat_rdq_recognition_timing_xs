@@ -1,0 +1,5 @@
+phase 4 done
+
+real	2m56.940s
+user	0m0.077s
+sys	0m0.336s

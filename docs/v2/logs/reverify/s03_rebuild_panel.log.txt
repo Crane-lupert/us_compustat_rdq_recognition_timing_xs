@@ -1,0 +1,32 @@
+fundq INDL/STD/C/D/USD rows: 1882379
+rdq coverage by datadate year (1985-2001):
+          n  rdq_nonnull  rdq_frac
+year                              
+1985  31378        15743     0.502
+1986  33381        16294     0.488
+1987  34051        17657     0.519
+1988  33961        17516     0.516
+1989  33717        17304     0.513
+1990  33945        17339     0.511
+1991  34239        17552     0.513
+1992  36486        19200     0.526
+1993  39170        21207     0.541
+1994  41253        24496     0.594
+1995  44669        25706     0.575
+1996  45041        27661     0.614
+1997  44423        28870     0.650
+1998  45836        30299     0.661
+1999  46130        34754     0.753
+2000  44689        39437     0.882
+2001  42460        37574     0.885
+after non-null + period: 753594
+duplicate (gvkey, datadate) rows in this subset: 1028
+after gap [10,180]: 740523
+after rolling >=6: 639604
+8-row window calendar span (days) for rows with 8 rows: quantiles {0.5: 639.0, 0.9: 641.0, 0.99: 1279.0}  share > 2.25y: 0.0256
+after NT proxy: 620290 (dropped 19314, 3.02%)
+cusip8 null: 0  unique gvkey: 18594
+repo panel rows: 620290  unique gvkey: 18594
+{'both': 620782, 'left_only': 0, 'right_only': 0}
+max |gap_var_t diff|: 12.5440469743555  cusip8 equal: 1.0  ff12 equal: 1.0
+wrote panel_rebuild.parquet

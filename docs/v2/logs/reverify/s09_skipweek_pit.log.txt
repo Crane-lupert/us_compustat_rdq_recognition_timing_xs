@@ -1,0 +1,15 @@
+(a) Table 6 like-for-like: t(NW12) next-day window vs one-week-delayed window
+   A120-LH [log] IS: 3.37->2.99 | OOS: 1.55->1.46 | FULL<=2024: 3.63->3.30 | FULL+2025: 3.74->3.44
+   A120-LH [simple] IS: 2.45->2.03 | OOS: 0.27->0.25 | FULL<=2024: 2.09->1.80 | FULL+2025: 2.32->2.05
+   A120-SH [log] IS: 2.06->2.37 | OOS: 1.86->1.98 | FULL<=2024: 2.76->3.07 | FULL+2025: 2.89->3.19
+   A120-SH [simple] IS: 1.10->2.25 | OOS: 0.33->0.33 | FULL<=2024: 1.08->1.82 | FULL+2025: 1.24->1.98
+   A180-LH [log] IS: 3.31->2.89 | OOS: 1.85->1.82 | FULL<=2024: 3.78->3.45 | FULL+2025: 3.89->3.59
+   A180-LH [simple] IS: 2.01->1.58 | OOS: 0.26->0.23 | FULL<=2024: 1.77->1.44 | FULL+2025: 1.93->1.64
+   A180-SL [log] IS: 3.62->3.31 | OOS: 1.74->1.98 | FULL<=2024: 3.85->3.80 | FULL+2025: 3.73->3.69
+   A180-SL [simple] IS: 1.60->1.40 | OOS: 1.24->1.44 | FULL<=2024: 2.00->1.99 | FULL+2025: 1.77->1.72
+
+(b) PIT-clean variant (trailing-30d FF12 cohort, rdq+8 start): t(NW12)  [repo strategy_A_pit_clean.json is_oos_per_cell for log]
+   A120-LH-SW1  log: IS 3.54 OOS 2.38 FULL+2025 4.27 | simple: IS 2.63 OOS 1.11 FULL+2025 2.65
+   A120-SH-SW1  log: IS 1.46 OOS 3.34 FULL+2025 2.51 | simple: IS 1.30 OOS 1.89 FULL+2025 1.92
+   A180-LH-SW1  log: IS 2.79 OOS 2.86 FULL+2025 3.82 | simple: IS 1.48 OOS 0.62 FULL+2025 1.58
+   A180-SL-SW1  log: IS 4.75 OOS 2.98 FULL+2025 5.85 | simple: IS 1.17 OOS 2.45 FULL+2025 2.45

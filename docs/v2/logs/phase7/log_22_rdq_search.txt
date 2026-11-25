@@ -1,0 +1,116 @@
+[delay k=1] base effect, hold : -0.199% (t -2.86), n 22514
+[delay k=1] base effect, w5   : -0.020% (t -0.29), n 22514
+[delay k=1] base effect, w10  : -0.065% (t -0.62), n 22514
+[delay k=1] base effect, w20  : -0.133% (t -0.90), n 22514
+[delay k=3] base effect, hold : -0.631% (t -7.07), n 10325
+[delay k=3] base effect, w5   : -0.435% (t -4.93), n 10325
+[delay k=3] base effect, w10  : -0.508% (t -3.88), n 10325
+[delay k=3] base effect, w20  : -0.611% (t -3.69), n 10325
+[delay k=5] base effect, hold : -1.153% (t -6.81), n 4006
+[delay k=5] base effect, w5   : -0.820% (t -5.68), n 4006
+[delay k=5] base effect, w10  : -1.065% (t -6.03), n 4006
+[delay k=5] base effect, w20  : -1.302% (t -6.03), n 4006
+[delay k=10] base effect, hold : -1.117% (t -2.72), n 1284
+[delay k=10] base effect, w5   : -0.580% (t -2.59), n 1284
+[delay k=10] base effect, w10  : -0.768% (t -2.50), n 1284
+[delay k=10] base effect, w20  : -1.439% (t -3.38), n 1284
+[ann] base effect, d2_21: -0.025% (t -0.21), n 106126
+[ann] base effect, d2_61: -0.464% (t -2.16), n 106126
+[exp] base effect, expected window: +0.119% (t +2.26), n 96959
+combinations evaluated: 1904; with at least 200 events on each side: 1612; |t| >= 3.0: 75; |t| >= 4.0: 11; expected by chance at |t| >= 3.0 if independent: 4.4
+--- delay1: 376 combinations, |t| >= 3: 25
+   set              cond           univ  out   diff      t    n1    n0  level1  t_level1
+delay1      small_rk2000            all hold -0.621 -4.037  6272 16242  -0.663    -4.614
+delay1               fq4 rank_1001_3000  w20 -1.092 -3.957  3595 10714  -1.093    -4.468
+delay1        sd_dev8_hi            all hold -0.592 -3.853  7216  7341  -0.609    -5.380
+delay1      small_rk2000     8k_history hold -0.621 -3.812  5824 15507  -0.672    -4.373
+delay1      small_rk1000     8k_history hold -0.558 -3.641 13376  7955  -0.422    -4.062
+delay1      small_rk1000            all hold -0.547 -3.640 14309  8205  -0.407    -4.077
+delay1        sd_dev8_hi     8k_history hold -0.564 -3.613  6947  6917  -0.597    -5.148
+delay1      small_rk2000            all  w20 -0.797 -3.515  6272 16242  -0.685    -2.961
+delay1      small_rk2000     8k_history  w20 -0.812 -3.512  5824 15507  -0.727    -3.045
+delay1          prc_lt10            all hold -0.695 -3.480  3160 19354  -0.808    -4.052
+delay1 insider_sell_only    rank_1_1000  w20 -1.302 -3.409  2314  1471  -0.767    -2.010
+delay1       insider_buy     8k_history hold  0.770  3.393  2714  6642   0.590     2.618
+delay1       insider_buy rank_1001_3000 hold  0.943  3.326  1787  3852   0.652     2.178
+delay1             nt365            all  w10 -0.924 -3.284  1442 21072  -0.922    -3.423
+--- delay3: 356 combinations, |t| >= 3: 15
+   set         cond       univ  out   diff      t   n1   n0  level1  t_level1
+delay3 small_rk2000        all  w20 -1.303 -4.287 3133 7192  -1.528    -5.220
+delay3 small_rk2000        all hold -0.904 -4.271 3133 7192  -1.274    -7.159
+delay3 small_rk2000 8k_history  w20 -1.366 -4.231 2934 6896  -1.579    -5.127
+delay3 small_rk2000 8k_history hold -0.943 -4.138 2934 6896  -1.309    -6.701
+delay3    loss_prev 8k_history hold -1.012 -3.902 2415 7309  -1.375    -5.923
+delay3    loss_prev        all hold -0.935 -3.710 2523 7692  -1.315    -5.834
+delay3    loss_prev 8k_history  w20 -1.499 -3.458 2415 7309  -1.746    -4.385
+delay3 small_rk2000        all  w10 -0.853 -3.427 3133 7192  -1.099    -5.093
+delay3 small_rk1000        all hold -0.657 -3.422 6849 3476  -0.858    -6.945
+delay3 small_rk2000 8k_history  w10 -0.889 -3.381 2934 6896  -1.131    -4.966
+delay3 small_rk1000 8k_history hold -0.669 -3.320 6451 3379  -0.870    -6.626
+delay3     prc_lt10 8k_history hold -1.049 -3.241 1488 8342  -1.536    -5.051
+delay3     prc_lt10 8k_history   w5 -0.800 -3.234 1488 8342  -1.124    -4.883
+delay3    loss_prev        all  w20 -1.398 -3.226 2523 7692  -1.675    -4.201
+--- delay5: 312 combinations, |t| >= 3: 9
+   set         cond           univ  out   diff      t   n1   n0  level1  t_level1
+delay5 small_rk1000            all hold -1.111 -3.766 2915 1091  -1.449    -7.171
+delay5 small_rk2000            all  w20 -1.621 -3.518 1469 2537  -2.308    -6.221
+delay5 small_rk1000     8k_history hold -1.062 -3.492 2794 1064  -1.446    -6.914
+delay5 small_rk2000            all hold -1.244 -3.400 1469 2537  -1.937    -6.576
+delay5 small_rk2000     8k_history  w20 -1.566 -3.234 1399 2459  -2.292    -5.933
+delay5 small_rk2000     8k_history hold -1.229 -3.215 1399 2459  -1.935    -6.214
+delay5    loss_prev     8k_history  w20 -1.814 -3.165 1120 2642  -2.508    -5.013
+delay5    loss_prev     8k_history hold -1.334 -3.115 1120 2642  -2.005    -5.332
+delay5    loss_prev            all hold -1.316 -3.105 1161 2746  -1.994    -5.395
+delay5    loss_prev     8k_history  w10 -1.356 -2.984 1120 2642  -1.988    -5.138
+delay5    loss_prev            all  w20 -1.734 -2.979 1161 2746  -2.451    -4.877
+delay5    loss_prev            all  w10 -1.264 -2.727 1161 2746  -1.908    -4.857
+delay5   sd_dev8_hi            all hold -1.069 -2.562 1262 1268  -1.562    -5.247
+delay5    loss_prev rank_1001_3000 hold -1.269 -2.556  965 1869  -2.143    -5.220
+--- delay10: 192 combinations, |t| >= 3: 0
+    set              cond           univ  out   diff      t   n1  n0  level1  t_level1
+delay10      small_rk2000            all hold -2.010 -2.987  575 709  -2.230    -4.368
+delay10      small_rk2000     8k_history hold -2.091 -2.812  540 683  -2.258    -4.049
+delay10 late_before_1plus     8k_history   w5  1.055  2.564  667 495  -0.088    -0.326
+delay10 late_before_1plus            all   w5  1.040  2.549  703 516  -0.081    -0.321
+delay10       sue_prev_hi     8k_history  w20  2.014  2.529  374 370  -0.880    -1.452
+delay10 late_before_1plus rank_1001_3000   w5  1.338  2.484  574 391  -0.143    -0.463
+delay10       sue_prev_hi     8k_history   w5  1.645  2.451  374 370   0.180     0.443
+delay10 late_before_1plus rank_1001_3000  w10  1.664  2.431  574 391  -0.169    -0.417
+delay10      small_rk2000            all  w20 -1.595 -2.417  575 709  -2.355    -4.315
+delay10       sue_prev_hi            all  w20  1.989  2.371  388 388  -0.896    -1.553
+delay10      small_rk2000     8k_history  w20 -1.673 -2.370  540 683  -2.407    -4.124
+delay10      small_rk1000            all hold -1.649 -2.334 1027 257  -1.465    -3.630
+delay10      small_rk1000            all  w20 -1.805 -2.279 1027 257  -1.809    -4.234
+delay10       sue_prev_hi            all   w5  1.525  2.268  388 388   0.112     0.278
+--- ann: 280 combinations, |t| >= 3: 24
+set              cond           univ   out   diff      t    n1     n0  level1  t_level1
+ann        sue_act_hi rank_1001_3000 d2_21  0.949  4.895 23417  24038   0.462     3.245
+ann        sue_act_hi rank_1001_3000 d2_61  1.595  4.875 23417  24038   0.369     1.495
+ann       sue_act_neg rank_1001_3000 d2_61 -1.232 -4.705 29321  36572  -1.173    -3.625
+ann       sue_act_neg rank_1001_3000 d2_21 -0.700 -4.291 29321  36572  -0.434    -2.396
+ann        sue_act_hi            all d2_21  0.743  4.076 35280  35280   0.352     2.837
+ann        sue_act_hi            all d2_61  1.302  4.054 35280  35280   0.198     0.834
+ann        sue_act_hi     8k_history d2_61  1.269  3.954 33410  33568   0.166     0.681
+ann        sue_act_hi     8k_history d2_21  0.721  3.840 33410  33568   0.348     2.693
+ann       sue_act_neg            all d2_61 -0.985 -3.805 44984  60859  -1.131    -4.002
+ann late5_and_sue_neg rank_1001_3000 d2_21 -1.231 -3.801  1876  64017  -1.256    -4.210
+ann       sue_act_neg     8k_history d2_61 -0.960 -3.675 42809  57671  -1.141    -3.984
+ann       late_10plus rank_1001_3000 d2_21 -1.610 -3.565   881  65226  -1.614    -3.513
+ann        late_5plus rank_1001_3000 d2_21 -0.673 -3.538  3424  62683  -0.657    -3.141
+ann       late_10plus            all d2_21 -1.500 -3.497  1096 105030  -1.506    -3.613
+--- exp: 96 combinations, |t| >= 3: 2
+set                cond           univ  out   diff      t    n1    n0  level1  t_level1
+exp         insider_buy     8k_history hold  0.344  3.260 12255 29340   0.367     2.279
+exp         insider_buy            all hold  0.331  3.127 12353 29673   0.357     2.211
+exp         insider_buy rank_1001_3000 hold  0.386  2.879  8106 16913   0.471     2.852
+exp         sue_prev_hi rank_1001_3000 hold -0.341 -2.819 21030 21801  -0.078    -0.883
+exp          letter_365 rank_1001_3000 hold -0.320 -2.759  7931 51836  -0.035    -0.253
+exp              r1m_hi     8k_history hold -0.306 -2.722 30611 30697  -0.058    -0.635
+exp         sue_prev_hi            all hold -0.278 -2.684 32191 32191  -0.046    -0.610
+exp              r1m_hi rank_1001_3000 hold -0.373 -2.666 20458 20771  -0.100    -1.064
+exp         sue_prev_hi     8k_history hold -0.274 -2.604 30413 30670  -0.039    -0.496
+exp              r1m_hi            all hold -0.282 -2.577 32320 32320  -0.053    -0.597
+exp            prc_lt10 rank_1001_3000 hold -0.418 -2.564 11647 48120  -0.210    -1.402
+exp           financial rank_1001_3000 hold  0.515  2.539 14174 45593   0.519     2.921
+exp k502_officer_change     8k_history hold -0.156 -2.438 53492 38479   0.065     0.968
+exp k502_officer_change            all hold -0.156 -2.438 53492 38479   0.065     0.968

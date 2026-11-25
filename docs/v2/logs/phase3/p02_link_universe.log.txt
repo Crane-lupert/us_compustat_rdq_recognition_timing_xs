@@ -1,0 +1,13 @@
+A: gvkeys with names-CUSIP match: 13582  with span overlap: 12876  multi-permno: 0
+B: extra gvkeys via namesd security CUSIPs: 207  (had >1 candidate: 8 )
+linked gvkeys: 13083 of 18818 ; permnos shared by >1 gvkey: 517
+R3000 proxy: years 1999 - 2025  members/yr [3000]  cutoff cap $M (rank 3000) 1999/2008/2016/2024: [167.0, 118.0, 74.0, 75.0]
+
+phase-0 events (rdq<=2024): 615126
+  linked: 488442  valid entry: 443692  in R3000 proxy & valid entry: 259663  CRSP common at rdq & valid entry: 359969
+  d0 - rdq (days) quantiles among linked with d0: {0.5: 1.0, 0.9: 3.0, 0.99: 3194.0, 0.999: 6467.410000000149}  share > 10: 0.04
+  R3000 universe: Compustat mcap NaN share: 0.00057  lookahead rows: 7  gvkeys: 7907
+  vs repo CUSIP link (car_180 non-null): 367907  | vs phase-1 hdrcusip permno link (pcar_180): 444046  | phase-3 linked & valid entry: 443930
+  repo-linked events NOT valid in phase-3 link: 2179  phase-3 valid but not repo-linked: 78202
+  permno agreement with phase-1 hdrcusip link where both exist: 0.99835
+  [Step 0] repo/phase-1 CUSIP-link CARs whose first return-series day is > rdq+10: [(371847, 7394)]

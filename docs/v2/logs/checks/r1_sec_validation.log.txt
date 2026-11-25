@@ -1,0 +1,14 @@
+earnings 8-K (Item 2.02) filings available: 299039, CIKs 5885; CIKs with any 8-K history 6085
+events since 2005 by verification: {'verified silent': 6632, 'not silent (8-K in window)': 1014, 'unverifiable': 56}
+  share with an earnings 8-K inside the window among verifiable: 0.1326
+  by 5-year block: {2005: 0.176, 2010: 0.102, 2015: 0.101, 2020: 0.107}
+[R1 with SEC verification] daily equal-weighted portfolio, FF5+UMD intercept
+   all events 2005-2024                           events   7702 days  2287 avg names  23.4 | alpha  -9.80bp (t -4.04) | mean excess  -7.67bp (t -1.82)
+   VERIFIED SILENT 2005-2024                      events   6632 days  1824 avg names  19.8 | alpha -12.69bp (t -4.80) | mean excess -12.11bp (t -2.65)
+     verified silent, entries 2005-2014           events   3899 days  1124 avg names  21.6 | alpha -14.89bp (t -5.40) | mean excess -13.78bp (t -2.70)
+     verified silent, entries 2015-2024           events   2733 days   698 avg names  16.9 | alpha  -9.86bp (t -1.92) | mean excess  -9.49bp (t -1.10)
+     verified silent, entries 2020-2024           events   1273 days   279 avg names  17.4 | alpha -11.33bp (t -1.11) | mean excess -18.77bp (t -1.07)
+     verified silent, size rank 1001-3000         events   4796 days  1341 avg names  17.7 | alpha -16.15bp (t -4.87) | mean excess -17.08bp (t -3.09)
+     verified silent, size rank 1-1000            events   1836 days   176 avg names  13.2 | alpha -18.27bp (t -2.12) | mean excess -16.34bp (t -1.16)
+   not silent (earnings 8-K already filed)        events   1014 days   415 avg names  17.1 | alpha  +1.45bp (t +0.42) | mean excess  +3.67bp (t +0.61)
+   unverifiable (no SEC 8-K history)              events     56: too few days with >= 10 names (0)

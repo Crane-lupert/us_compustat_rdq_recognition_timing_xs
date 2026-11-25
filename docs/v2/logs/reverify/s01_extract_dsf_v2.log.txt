@@ -1,0 +1,2 @@
+done in 124s -> $RDQ_V2_WORK\RDQ_cadence\dsf_v2_slim.parquet
+[(52054178, 26371, datetime.date(1999, 1, 4), datetime.date(2025, 12, 31))]

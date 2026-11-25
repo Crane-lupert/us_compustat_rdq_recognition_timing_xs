@@ -1,0 +1,59 @@
+[R3 H=20] events EARLY 22,246 LATE 15,939; position-days 760,421; dup (pid,date) 0
+[R3 H=60] events EARLY 20,312 LATE 14,732; position-days 2,072,585; dup (pid,date) 0
+
+stat                                          alpha_bp      t  mean_bp  t_mean  n_days
+test_id                         sample                                                
+R3_main                         full            -0.561 -0.353   -0.862  -0.526  4869.0
+                                h1_2000_2012    -1.122 -0.541   -1.804  -0.827  2755.0
+                                h2_2013_2024     0.031  0.013    0.366   0.148  2114.0
+R3_main__hold_60d               full             1.029  1.646    0.657   0.954  6278.0
+                                h1_2000_2012     2.018  2.536    1.206   1.275  3296.0
+                                h2_2013_2024     0.109  0.116    0.065   0.065  2997.0
+R3_main__ibes_surprise_negative full             0.959  0.441    0.366   0.160  2956.0
+                                h1_2000_2012     2.516  0.934    1.831   0.629  1671.0
+                                h2_2013_2024    -1.789 -0.507   -1.538  -0.419  1285.0
+R3_main__ibes_surprise_positive full             1.995  1.376    1.563   1.042  3499.0
+                                h1_2000_2012     2.470  1.348    2.034   1.091  1929.0
+                                h2_2013_2024     1.178  0.484    0.984   0.404  1570.0
+R3_main__leg_EARLY_excess       full             1.629  1.768    4.224   1.792  4869.0
+                                h1_2000_2012     2.505  2.093    3.959   1.230  2755.0
+                                h2_2013_2024     0.230  0.166    4.569   1.326  2114.0
+R3_main__leg_LATE_excess        full             2.190  1.518    5.086   1.906  4869.0
+                                h1_2000_2012     3.627  2.035    5.763   1.578  2755.0
+                                h2_2013_2024     0.199  0.086    4.202   1.081  2114.0
+R3_main__net_of_costs           full            -8.699 -5.396   -9.029  -5.414  4869.0
+                                h1_2000_2012   -10.693 -5.044  -11.476  -5.119  2755.0
+                                h2_2013_2024    -6.179 -2.537   -5.840  -2.351  2114.0
+R3_main__value_weighted         full            -0.796 -0.486   -1.405  -0.828  4869.0
+                                h1_2000_2012    -0.707 -0.314   -2.275  -0.968  2755.0
+                                h2_2013_2024    -0.547 -0.232   -0.270  -0.111  2114.0
+
+        test_id sample                        stat         value
+R3_main__counts   full      universe_announcements 271516.000000
+R3_main__counts   full                         noE   6235.000000
+R3_main__counts   full                   share_noE      0.022964
+R3_main__counts   full                         MID 226981.000000
+R3_main__counts   full        EARLY_before_overlap  22265.000000
+R3_main__counts   full         LATE_before_overlap  16035.000000
+R3_main__counts   full     ibes_matched_EARLY_LATE  33467.000000
+R3_main__counts   full ibes_match_share_EARLY_LATE      0.873812
+R3_main__counts   full         H20_overlap_dropped    115.000000
+R3_main__counts   full                   H20_EARLY  22246.000000
+R3_main__counts   full                    H20_LATE  15939.000000
+R3_main__counts   full           H20_qs_missing_in      0.020086
+R3_main__counts   full          H20_qs_missing_out      0.024067
+R3_main__counts   full              H20_qs_in_mean      0.005241
+R3_main__counts   full             H20_qs_out_mean      0.005009
+R3_main__counts   full                H20_bps_mean    422.464318
+R3_main__counts   full   H20_duplicate_permno_days      0.000000
+R3_main__counts   full         H60_overlap_dropped   3256.000000
+R3_main__counts   full                   H60_EARLY  20312.000000
+R3_main__counts   full                    H60_LATE  14732.000000
+R3_main__counts   full           H60_qs_missing_in      0.019490
+R3_main__counts   full          H60_qs_missing_out      0.037895
+R3_main__counts   full              H60_qs_in_mean      0.005170
+R3_main__counts   full             H60_qs_out_mean      0.004970
+R3_main__counts   full                H60_bps_mean    417.153436
+R3_main__counts   full   H60_duplicate_permno_days      0.000000
+
+R3 verdict (expected sign +): 성립 안 함

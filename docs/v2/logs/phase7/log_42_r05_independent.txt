@@ -1,0 +1,8 @@
+agent-built one-day-delay events with an irregularity measure, 2005-2024: 40414; median sd (calendar days) by tercile: {0: 2.3, 1: 3.8, 2: 7.1}
+   2005-2024                    | IRR -0.485% (t -5.58, n 13480) | REG -0.022% (t -0.30, n 13472) | IRR - REG -0.462pp (t -4.30)
+   2005-2014                    | IRR -0.584% (t -5.74, n 7110) | REG -0.030% (t -0.33, n 7106) | IRR - REG -0.554pp (t -4.27)
+   2015-2024                    | IRR -0.374% (t -2.62, n 6370) | REG -0.013% (t -0.11, n 6366) | IRR - REG -0.360pp (t -2.07)
+   even years                   | IRR -0.374% (t -3.07, n 6681) | REG -0.089% (t -0.77, n 6681) | IRR - REG -0.285pp (t -1.86)
+   odd years                    | IRR -0.593% (t -4.83, n 6799) | REG +0.043% (t +0.46, n 6791) | IRR - REG -0.636pp (t -4.27)
+   size rank 1-1000             | IRR -0.099% (t -0.71, n 3718) | REG +0.044% (t +0.45, n 6120) | IRR - REG -0.129pp (t -0.78)
+   size rank 1001-3000          | IRR -0.632% (t -5.67, n 9762) | REG -0.078% (t -0.70, n 7352) | IRR - REG -0.547pp (t -3.84)

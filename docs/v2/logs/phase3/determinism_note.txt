@@ -1,0 +1,6 @@
+Determinism check (2026-11-20): full `bash run_phase3.sh` re-run vs the first run.
+Byte-identical: cohort_stats.csv, d2_cp.csv, d1_counts.csv, corrected_tables.csv, criteria.json; step0 logs (s05/s06/s08) identical to the phase-1/2 logs.
+Not byte-identical: ct_monthly.csv.gz / ct_stats.csv / d3_lpm.csv, because DuckDB's parallel aggregation sums in a varying order.
+Measured (third run vs second run): ct_monthly max|diff| R 1.6e-15, borrow 1.0e-16, c_qs 1.0e-16 (slot-cost columns 0);
+ct_stats max|diff| t_nw 5.6e-14, t_nw12 7.4e-14, sharpe 1.8e-14, every pass/sign flag identical; d3_lpm max|diff| t 2.2e-16, coef 0.
+Temporary comparison copies left in logs/: _ct_monthly_run2.csv.gz, _ct_stats_run2.csv, _d3_run2.csv, _p04_run3.log, _p05_run3.log, _p09_run3.log (about 2 MB; safe to delete).
